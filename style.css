@@ -20,7 +20,7 @@ section
 {
     position: relative;
     min-height: 100vh;
-    background: url(./Photos/832152.jpg);
+    background: url(./Photos/410234.jpg);
     background-size: cover;
     background-position: right;
     display: flex;
@@ -30,6 +30,7 @@ section
 
 .banner h2
 {
+    padding-top: 150px;
     font-size: 3em;
     color: white;
     font-weight:500;
@@ -52,9 +53,9 @@ section
 .btn
 {
     position: relative;
-    background:#2196f3;
+    background:#181818;
     display: inline-block;
-    color: white;
+    color: rgb(255, 255, 255);
     margin-top: 20px;
     padding: 10px 30px;
     font-size: 18px;
@@ -62,12 +63,14 @@ section
     text-decoration: none;
     letter-spacing: 2px;
     font-weight: 500;
-    border-radius: 8px;
+    border-radius: 5px;
+    font-weight: 600;
+    transition-duration: 0.4s;
 }
 
 .btn:hover{
-    color: black;
-    background:cyan;
+    background-color: #E0E0E0;
+    color: rgb(0, 0, 0);
 }
 
 header
@@ -88,12 +91,12 @@ header.sticky
 {
     background: white;
     padding: 20px 100px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
 }
 
 header .logo
 {
-    color: white;
+    color: #181818;
     font-size: 24px;
     text-transform: uppercase;
     text-decoration: none;
@@ -103,7 +106,8 @@ header .logo
 
 header.sticky .logo
 {
-    color: #111;
+    color: #181818;
+    font-weight: 800;
 }
 
 header ul
@@ -123,20 +127,20 @@ header ul li a
     position: relative;
     display: inline-block;
     margin: 0 15px;
-    color: white;
+    color: #181818;
     text-decoration: none;
+    font-weight: 580;
     transition: 0.4s ease all;   
 }
 
 header ul li a:hover{
-    color: cyan;
-    transition: 0.4s ease background-color;
-    
+    color: #7c7c7c;
+    transition: 0.5s ease background-color; 
   }
 
 header.sticky ul li a
 {
-    color: #111;
+    color: #181818;
 }
 
 .heading
@@ -144,7 +148,7 @@ header.sticky ul li a
     width: 100%;
     text-align: center;
     margin-bottom:30px;
-    color: black;
+    color: #181818;
 }
 
 .heading h2
@@ -153,10 +157,14 @@ header.sticky ul li a
     font-size: 30px;
 }
 
+.about{
+    background-color: #ffffff;
+}
+
 .content
 {
     display: flex;
-    justify-content: space-between;
+    justify-content:safe;   
 }
 
 .contentBx
@@ -179,12 +187,12 @@ header.sticky ul li a
 
 img
 {
-    max-width: 100%;
+    max-width: 78%;
 }
 
 .services
 {
-    background: black;
+    background: #0D0D0D;
 
 }
 
@@ -204,7 +212,7 @@ img
 .services .content .servicesBx
 {
     padding: 40px 20px;
-    background: #222;
+    background: #111111;
     color: white;
     max-width: 340px;
     margin: 20px;
@@ -214,7 +222,7 @@ img
 
 .services .content .servicesBx:hover
 {
-    background: rgb(46, 48, 48);
+    background: #0D0D0D;
     color:white;
     transition: 0.4s ease background-color;
 }
@@ -228,7 +236,15 @@ img
 .services .content .servicesBx h2
 {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
+}
+
+.work{
+    background-color: white;
+}
+
+.work p{
+    font-weight: 550;
 }
 
 .work .content
@@ -248,6 +264,20 @@ img
 {
     max-width: 100%;
 }
+
+#gallery{
+    background-color: #0D0D0D;
+}
+
+#gallery h2{
+    color: white;
+}
+
+#gallery p{
+    color: white;
+}
+
+
 
 /*
 .testimonial
@@ -301,7 +331,18 @@ img
 
 .contact
 {
-    background: black;
+    background-color: #ffffff;
+}
+
+.contact h2{
+    color: #0D0D0D;
+    font-weight: 900;
+}
+
+.contact p{
+    color: #0D0D0D;
+    font-weight: 700;
+    margin-top: 10px;
 }
 
 .formBx
@@ -319,9 +360,9 @@ img
 .formBx form h3,
 .contactInfo h3
 {
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 10px;
 }
 
@@ -331,9 +372,9 @@ img
     margin-bottom: 20px;
     padding: 15px;
     font-size: 16px;
-    border: none;
-    background: #222;
-    color: white;
+    border:#0D0D0D;
+    background: #0D0D0D;
+    color: rgb(255, 255, 255);
     resize: none;
 }
 
@@ -345,13 +386,13 @@ img
 .formBx form input::placeholder,
 .formBx form textarea::placeholder
 {
-    color: #999;
+    color: rgb(172, 172, 172);
 }
 
 .formBx form input[type="submit"]
 {
     max-width: 100px;
-    background: #2196f3;
+    background: #0D0D0D;
     cursor: pointer;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -379,11 +420,12 @@ img
 {
     min-width: 40px;
     padding-top: 4px;
-    color: white;
+    color: #0D0D0D;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    font-weight: 500;
 }
 
 .contactInfoBx .box .text
@@ -391,7 +433,7 @@ img
     display: flex;
     margin-left: 20px;
     font-size: 16px;
-    color: white;
+    color: #0D0D0D;
     flex-direction: column;
     font-weight: 300;
 }
@@ -399,7 +441,7 @@ img
 .contactInfoBx .box .text h3
 {
     font-weight: 500;
-    color: #2196f3;
+    color: #0D0D0D;
     margin-bottom: 0;
 
 }
@@ -566,12 +608,13 @@ img
 }
 
 .footer-text {
-    color:white;
+    color:#0D0D0D;
     background-color:transparent;
     position: fixed;
     right: 50px;
     bottom: 2%;
     opacity: 0.2;
+    font-weight: 900;
   
   }
   
@@ -580,7 +623,7 @@ img
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: center;
-    background-color: #161716;
+    background-color: #0D0D0D;
   
   }
   .social a{
@@ -594,11 +637,12 @@ img
     line-height: 40px;
     text-align: center;
     font-size: 18px;
+    font-weight: 500;
     border-radius: 1px;
     transition: 0.3s;
   }
   .social a span:hover{
-    background-color: #2f302f;
+    background-color: #1f1f1f;
     transition: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
   
@@ -619,8 +663,8 @@ img
   }
 
 #preloader{
-    background: #222 url(Photos/loader.gif) no-repeat center center;
-    background-size:20%;
+    background: #222 url(Photos/dark-loader.gif) no-repeat center center;
+    background-size:5%;
     height: 100vh;
     width: 100%;
     position: fixed;
@@ -629,24 +673,29 @@ img
 
 button{
     position: relative;
-    background:#2196f3;
+    /* background:#0D0D0D; */
     display: inline-block;
-    color: white;
+    color: #0D0D0D;
+    font-weight: 600;
     margin-top: 20px;
     padding: 10px 30px;
     font-size: 18px;
+    font-weight: 600;
     text-transform: uppercase;
     text-decoration: none;
     letter-spacing: 2px;
-    font-weight: 500;
-    border-radius: 8px;
-    border-color: #0c0c0c;
+    border-radius: 3px;
+    border-width: 3px;
+    border-color: #0D0D0D;
+    transition-duration: 0.4s;
   }
   
   button:hover{
-    color: white;
-    background:#29cdff;
-    transition: 0.4s ease background-color;
+    /* color: white;
+    background:#212121; */
+    background-color: #0D0D0D;
+    color: rgb(255, 255, 255);
+    transition: 0.3s ease background-color;
   }
 
   /*#topButton{
@@ -680,12 +729,12 @@ button{
   }
 
   #status.success{
-      background-color: rgb(30, 182, 0);
+      background-color: rgb(167, 251, 151);
       animation: status 5s ease forwards;
   }
 
   #status.error{
-      background-color: rgb(238, 63, 63);
+      background-color: rgb(255, 67, 67);
       animation: status 5s ease forwards;
   }
 
