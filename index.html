@@ -1,248 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="keywords" content="">
-	<meta name="description" content="">
+  <title>Hey, I'm Shishir - UX/UI Designer</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-	<!-- Site title
-   ================================================== -->
-	<title>Personal Portfolio</title>
-    <link rel="shortcut icon" type="image" href="images/icon2.png">
+  <!-- Favicons -->
+  <link href="assets/img/favicon-32x32.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-	<!-- Bootstrap CSS
-   ================================================== -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Inconsolata:400,500,600,700|Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-	<!-- Animate CSS
-   ================================================== -->
-	<link rel="stylesheet" href="css/animate.min.css">
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-	<!-- Font Icons CSS
-   ================================================== -->
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/ionicons.min.css">
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
 
-	<!-- Main CSS
-   ================================================== -->
-	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Google web font 
-   ================================================== -->	
-  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,300' rel='stylesheet' type='text/css'>
-	
+  <!-- =======================================================
+  * Template Name: MyPortfolio
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/myportfolio-bootstrap-portfolio-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
 </head>
+
 <body>
 
+  <!-- ======= Navbar ======= -->
+  <div class="collapse navbar-collapse custom-navmenu" id="main-navbar">
+    <div class="container py-2 py-md-5">
+      <div class="row ">
+        <div class="col-md-12">
+          <ul class="custom-menu text-center">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <!-- <li><a href="services.html">Services</a></li> -->
+            <!-- <li><a href="works.html">Works</a></li> -->
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
 
-<!-- Preloader section
-================================================== -->
-<div class="preloader">
+    </div>
+  </div>
+  <!-- ======= End Navbar ======= -->
 
-	<div class="sk-spinner sk-spinner-pulse"></div>
+  <nav class="navbar navbar-light custom-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">MyPortfolio.</a>
+      <a href="#" class="burger" data-bs-toggle="collapse" data-bs-target="#main-navbar">
+        <span></span>
+      </a>
+    </div>
+  </nav>
 
-</div>
+  <main id="main">
 
-
-<!-- Navigation section
-================================================== -->
-<div class="nav-container">
-   <nav class="nav-inner transparent">
-
-      <div class="navbar">
-         <div class="container">
-            <div class="row">
-
-              <div class="brand">
-                <a href="index.html">S.A</a>
+    <!-- ======= Works Section ======= -->
+    <section class="section site-portfolio">
+      <div class="container">
+        <div class="row mb-5 align-items-center">
+          <div class="col-md-12 col-lg-6 mb-4 mb-lg-0" data-aos="fade-up">
+            <h2>Hey, I'm Shishir Acharya</h2>
+            <p class="mb-0">User Experience Designer 🚀</p>
+          </div>
+          <div class="col-md-12 col-lg-6 text-start text-lg-end" data-aos="fade-up" data-aos-delay="100">
+            <!-- <div id="filters" class="filters">
+              <a href="#" data-filter="*" class="active">All</a>
+              <a href="#" data-filter=".web">Web</a>
+              <a href="#" data-filter=".design">Design</a>
+              <a href="#" data-filter=".branding">Branding</a>
+              <a href="#" data-filter=".mockup">Mockup</a>
+            </div> -->
+          </div>
+        </div>
+        <div id="portfolio-grid" class="row no-gutter" data-aos="fade-up" data-aos-delay="200">
+          <div class="item web col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="work-single-val.html" class="item-wrap fancybox">
+              <div class="work-info">
+                <h3>Dashboard (Valorant)</h3>
+                <span>Mobile App UI Design</span>
               </div>
+              <img class="img-fluid" src="assets/img/Val.jpg">
+            </a>
+          </div>
+          <div class="item mockup col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="work-single-porsche.html" class="item-wrap fancybox">
+              <div class="work-info">
+                <h3>Models (Porsche)</h3>
+                <span>Web UI Design</span>
+              </div>
+              <img class="img-fluid" src="assets/img/porsche.jpg">
+            </a>
+          </div>
+          <div class="item branding col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="work-single-beer.html" class="item-wrap fancybox">
+              <div class="work-info">
+                <h3>Hero Section (Barahsinghe Beer)</h3>
+                <span>App/Web UI Design</span>
+              </div>
+              <img class="img-fluid" src="assets/img/beer.jpg">
+            </a>
+          </div>
+          <div class="item design col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="work-single-logo.html" class="item-wrap fancybox">
+              <div class="work-info">
+                <h3>Logo Design</h3>
+                <span>Branding</span>
+              </div>
+              <img class="img-fluid" src="assets/img/logo.jpg">
+            </a>
+          </div>
+          <div class="item mockup col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="work-single-alert.html" class="item-wrap fancybox">
+              <div class="work-info">
+                <h3>Health Reminder (Valorant)</h3>
+                <span>Game UI Design</span>
+              </div>
+              <img class="img-fluid" src="assets/img/alert.jpg">
+            </a>
+          </div>
+          <div class="item branding col-sm-6 col-md-4 col-lg-4 mb-4">
+            <a href="work-single-meat.html" class="item-wrap fancybox">
+              <div class="work-info">
+                <h3>Chi-Chi (Meat Delivery)</h3>
+                <span>App/Web UI Design</span>
+              </div>
+              <img class="img-fluid" src="assets/img/meat.jpg">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section><!-- End  Works Section -->
 
-              <div class="navicon">
-                <div class="menu-container">
+    <!-- ======= Clients Section ======= -->
+    <section class="section">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-4">
+          <div class="col-5">
+            <h3 class="h3 heading">I've worked for</h3>
+            <!-- <p>multiple brands and companies</p> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 col-sm-4 col-md-2">
+            <a href="https://play.google.com/store/apps/details?id=com.geargo.gps" target="_blank" class="client-logo"><img src="assets/img/logo-geargo.png" alt="Image" class="img-fluid"></a>
+          </div>
+          <div class="col-4 col-sm-4 col-md-2">
+            <a href="https://skybase.com.np/" target="_blank" class="client-logo"><img src="assets/img/logo-skybase.png" alt="Image" class="img-fluid"></a>
+          </div>
+          <div class="col-4 col-sm-4 col-md-2">
+            <a href="https://live.saralconnect.com/" target="_blank" class="client-logo"><img src="assets/img/logo-saralconnect.png" alt="Image" class="img-fluid"></a>
+          </div>
+          <div class="col-4 col-sm-4 col-md-2">
+            <a class="client-logo"><img src="assets/img/logo-chichi.png" alt="Image" class="img-fluid"></a>
+          </div>
+          <div class="col-4 col-sm-4 col-md-2">
+            <a href="https://play.google.com/store/apps/details?id=com.bhoklayo.android" target="_blank" class="client-logo"><img src="assets/img/logo-bhoklayo.png" alt="Image" class="img-fluid"></a>
+          </div>
+          <div class="col-4 col-sm-4 col-md-2">
+            <a class="client-logo"><img src="assets/img/logo-aayo.png" alt="Image" class="img-fluid"></a>
+          </div>
 
-                  <div class="circle dark inline">
-                    <i class="icon ion-navicon"></i>
-                  </div>
+        </div>
+      </div>
+    </section><!-- End Clients Section -->
 
-                  <div class="list-menu">
-                    <i class="icon ion-close-round close-iframe"></i>
-                    <div class="intro-inner">
-                      <ul id="nav-menu">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <!-- <li><a href="blog.html">Blog</a></li> -->
-                        <li><a href="contact.html">Contact</a></li>
-                      </ul>
-                    </div>
-                  </div>
+    <!-- ======= Services Section ======= -->
+    <section class="section services">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-4">
+          <div class="col-5">
+            <h3 class="h3 heading">My Design Process</h3><br><br>
+            <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit explicabo inventore.</p> -->
+          </div>
+        </div>
+        <div class="row">
 
+          <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+            <!-- <i class="bi bi-card-checklist"></i> -->
+            <h6 class="h6 mb-2" style="font-weight:800;">1. Brief</h4><br>
+            <This style="color:rgb(162, 162, 162); font-size:14px;">We spend some time getting to know you and your needs during the brief. This will enable me to develop a product that benefits you, your company, and your target market.</p><br>
+            <!-- <ul class="list-unstyled list-line">
+              <li>Lorem ipsum dolor sit amet consectetur adipisicing</li>
+              <li>Non pariatur nisi</li>
+              <li>Magnam soluta quod</li>
+              <li>Lorem ipsum dolor</li>
+              <li>Cumque quae aliquam</li>
+            </ul> -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+            <!-- <i class="bi bi-binoculars"></i> -->
+            <h6 class="h6 mb-2" style="font-weight:800;">2. Research</h4><br>
+            <p style="color:rgb(162, 162, 162); font-size:14px;">In this phase, I'll get to know your target market, your users, the contexts in which they'll use your product, and the needs they'll be trying to satisfy.</p><br>
+            <!-- <ul class="list-unstyled list-line">
+              <li>Lorem ipsum dolor sit amet consectetur adipisicing</li>
+              <li>Non pariatur nisi</li>
+              <li>Magnam soluta quod</li>
+              <li>Lorem ipsum dolor</li>
+              <li>Cumque quae aliquam</li>
+            </ul> -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+            <!-- <i class="bi bi-brightness-high"></i> -->
+            <h6 class="h6 mb-2" style="font-weight:800;">3. Design</h4><br>
+            <p style="color:rgb(162, 162, 162); font-size:14px;">I begin formulating ideas using what I've learned about you and your audience. The user flows and sitemap for the product come first, then wireframing. I'll get feedback as we develop our concepts so that we can make adjustments as we go.</p><br>
+            <!-- <ul class="list-unstyled list-line">
+              <li>Lorem ipsum dolor sit amet consectetur adipisicing</li>
+              <li>Non pariatur nisi</li>
+              <li>Magnam soluta quod</li>
+              <li>Lorem ipsum dolor</li>
+              <li>Cumque quae aliquam</li>
+            </ul> -->
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+            <!-- <i class="bi bi-calendar4-week"></i> -->
+            <h6 class="h6 mb-2" style="font-weight:800;">4. Test and Iterate</h6><br>
+            <p style="color:rgb(162, 162, 162); font-size:14px;">I make sure the prototype satisfies user expectations and the product achieves initial business objectives through numerous testing and iteration rounds.</p><br>
+            <!-- <ul class="list-unstyled list-line">
+              <li>Lorem ipsum dolor sit amet consectetur adipisicing</li>
+              <li>Non pariatur nisi</li>
+              <li>Magnam soluta quod</li>
+              <li>Lorem ipsum dolor</li>
+              <li>Cumque quae aliquam</li>
+            </ul> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Testimonials Section ======= -->
+    <section class="section pt-0">
+      <div class="container">
+
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial">
+                  <img src="assets/img/person_1.jpg" alt="Image" class="img-fluid">
+                  <blockquote>
+                    <p style="font-size:medium">Shishir has been an invaluable asset, providing insights and expertise that have significantly enhanced my project's user experience. I am incredibly grateful for his guidance and support.</p>
+                  </blockquote>
+                  <p style="font-size: medium">&mdash; Ritesh Ghimire | Entrepreneur</p>
                 </div>
               </div>
-
             </div>
-         </div>
+
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial">
+                  <img src="assets/img/person_2.jpg" alt="Image" class="img-fluid">
+                  <blockquote>
+                    <p style="font-size:medium">With Shishir on board, our projects became a playground of branding brilliance and creative innovation. He has a gift for turning ideas into design magic.</p>
+                  </blockquote>
+                  <p style="font-size: medium">&mdash; Er.Sonaam Hitang (CEO - Skybase Innovations)</p>
+                </div>
+              </div>
+            </div>
+
       </div>
+    </section>
 
-   </nav>
-</div>
+  </main><!-- End #main -->
 
-
-<!-- Header section
-================================================== -->
-<section id="header" class="header-one">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8">
-          <div class="header-thumb">
-              <h1 class="wow fadeIn" data-wow-delay="0.6s">SHISHIR ACHARYA</h1>
-              <h3 class="wow fadeInUp" data-wow-delay="1.0s">UX/UI Designer</h3>
-          </div>
-			</div>
-
-		</div>
-	</div>		
-</section>
-
-
-<!-- Portfolio section
-================================================== -->
-<section id="portfolio">
-   <div class="container">
+  <!-- ======= Footer ======= -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
       <div class="row">
-
-         <div class="col-md-12 col-sm-12">
-            
-               <!-- iso section -->
-               <div class="iso-section wow fadeInUp" data-wow-delay="1.2s">
-
-                  <ul class="filter-wrapper clearfix">
-                           <li><a href="#" data-filter="*" class="selected opc-main-bg">All</a></li>
-                           <li><a href="#" class="opc-main-bg" data-filter=".graphic">UI/UX</a></li>
-                           <!-- <li><a href="#" class="opc-main-bg" data-filter=".template">APP</a></li> -->
-                           <!-- <li><a href="#" class="opc-main-bg" data-filter=".photoshop">Logo</a></li> -->
-                        <li><a href="#" class="opc-main-bg" data-filter=".branding">Illustration</a></li>
-                        </ul>
-
-                        <!-- iso box section -->
-                        <div class="iso-box-section wow fadeInUp" data-wow-delay="1.5s">
-                           <div class="iso-box-wrapper col4-iso-box">
-
-                              <div class="iso-box photoshop branding col-md-4 col-sm-6">
-                                 <div class="portfolio-thumb">
-                                    <img src="images/portfolio-img1.jpg" class="img-responsive" alt="Portfolio">
-                                       <div class="portfolio-overlay">
-                                          <div class="portfolio-item">
-                                                <a href="single-project.html"><i class="fa fa-link"></i></a>
-                                                <h2>Discord Server Logo</h2>
-                                             </div>
-                                       </div>
-                                 </div>
-                              </div>
-
-                              <div class="iso-box graphic template col-md-4 col-sm-6">
-                                 <div class="portfolio-thumb">
-                                    <img src="images/portfolio-img2.jpg" class="img-responsive" alt="Portfolio">
-                                       <div class="portfolio-overlay">
-                                          <div class="portfolio-item">
-                                                <a href="fifa-project.html"><i class="fa fa-link"></i></a>
-                                                <h2>FIFA 23 Cover</h2>
-                                             </div>
-                                       </div>
-                                 </div>
-                              </div>
-
-                              <div class="iso-box template graphic col-md-4 col-sm-6">
-                                 <div class="portfolio-thumb">
-                                    <img src="images/portfolio-img3.jpg" class="img-responsive" alt="Portfolio">
-                                       <div class="portfolio-overlay">
-                                          <div class="portfolio-item">
-                                                <a href="valorant-project.html"><i class="fa fa-link"></i></a>
-                                                <h2>Valorant UI</h2>
-                                             </div>
-                                       </div>
-                                 </div>
-                              </div>
-
-                              <div class="iso-box graphic template col-md-4 col-sm-6">
-                                 <div class="portfolio-thumb">
-                                    <img src="images/portfolio-img4.jpg" class="img-responsive" alt="Portfolio">
-                                       <div class="portfolio-overlay">
-                                          <div class="portfolio-item">
-                                                <a href="miti-project.html"><i class="fa fa-link"></i></a>
-                                                <h2>'Miti' App UI</h2>
-                                             </div>
-                                       </div>
-                                 </div>
-                              </div>
-
-                              <!-- <div class="iso-box photoshop branding col-md-4 col-sm-6">
-                                 <div class="portfolio-thumb">
-                                    <img src="images/portfolio-img5.jpg" class="img-responsive" alt="Portfolio">
-                                       <div class="portfolio-overlay">
-                                          <div class="portfolio-item">
-                                                <a href="single-project.html"><i class="fa fa-link"></i></a>
-                                                <h2>Project Five</h2>
-                                             </div>
-                                       </div>
-                                 </div>
-                              </div>
-
-                              <div class="iso-box graphic branding col-md-4 col-sm-6">
-                                 <div class="portfolio-thumb">
-                                    <img src="images/portfolio-img6.jpg" class="img-responsive" alt="Portfolio">
-                                       <div class="portfolio-overlay">
-                                          <div class="portfolio-item">
-                                                <a href="single-project.html"><i class="fa fa-link"></i></a>
-                                                <h2>Project Six</h2>
-                                             </div>
-                                       </div>
-                                 </div>
-                              </div> -->
-
-                            </div>
-                        </div>
-
-               </div>
-
-         </div>
-
+        <div class="col-sm-6">
+          <p class="mb-1">&copy; Shishir Acharya 2023</p>
+          <div class="credits">
+            <!--
+            All the links in the footer should remain intact.
+            You can delete the links only if you purchased the pro version.
+            Licensing information: https://bootstrapmade.com/license/
+            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=MyPortfolio
+          -->
+            <!-- Made with ☕</a> -->
+          </div>
+        </div>
+        <div class="col-sm-6 social text-md-end">
+          <a href="https://www.linkedin.com/in/shishir-acy/" target="_blank"><span class="bi bi-linkedin"></span></a>
+          <a href="https://www.behance.net/shishiracharya" target="_blank"><span class="bi bi-behance"></span></a>
+          <a href="https://dribbble.com/shishir-acy" target="_blank"><span class="bi bi-dribbble"></span></a>
+          <a href="https://www.instagram.com/shishir.ux/" target="_blank"><span class="bi bi-instagram"></span></a>
+          <a href="https://www.tiktok.com/@avo_cado_rable" target="_blank"><span class="bi bi-tiktok"></span></a>
+        </div>
       </div>
-   </div>
-</section>
+    </div>
+  </footer>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><p><center style="font-size:smaller">Scroll to top</center></p></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-<!-- Footer section
-================================================== -->
-<footer>
-	<div class="container">
-		<div class="row">
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
 
-			<div class="col-md-12 col-sm-12">
-				<p class="wow fadeInUp"  data-wow-delay="0.1s">© Shishir 2023</p>
-				<ul class="social-icon wow fadeInUp"  data-wow-delay="0.3s">
-					<li><a href="https://www.facebook.com/cshir.yt" target="_blank" class="fa fa-facebook"></a></li>
-					<li><a href="https://www.instagram.com/shishir.ux/" target="_blank" class="fa fa-instagram"></a></li>
-					<li><a href="https://dribbble.com/shishir-acy" target="_blank" class="fa fa-dribbble"></a></li>
-					<li><a href="https://www.behance.net/shishiracharya" target="_blank" class="fa fa-behance"></a></li>
-					<li><a href="https://www.linkedin.com/in/shishir-acy/" target="_blank" class="fa fa-linkedin"></a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</footer>
-
-
-<!-- Javascript 
-================================================== -->
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/isotope.js"></script>
-<script src="js/imagesloaded.min.js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/custom.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>
