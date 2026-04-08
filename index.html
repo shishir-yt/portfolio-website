@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shishir Acharya — Product Designer & Visual Storyteller</title>
+    <meta name="description" content="Shishir Acharya — Product Designer, UAV Pilot & Visual Storyteller based in Nepal. Creating simple, intuitive, and helpful digital experiences.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-nav">Skip to content</a>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-follower" id="cursorFollower" aria-hidden="true"></div>
+
+    <!-- Film Grain Overlay -->
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav" aria-label="Main">
+        <div class="nav-left">
+            <a href="#" class="nav-logo" aria-label="Home">
+                <span class="logo-text">Shishir</span>
+                <span class="logo-dot">°</span>
+            </a>
+        </div>
+        <div class="nav-center">
+            <span class="nav-status">
+                <span class="status-dot" aria-hidden="true"></span>
+                Available for work
+            </span>
+        </div>
+        <div class="nav-right">
+            <a href="#work" class="nav-link" data-cursor="link">Work</a>
+            <a href="#about" class="nav-link" data-cursor="link">About</a>
+            <a href="#journal" class="nav-link" data-cursor="link">Journal</a>
+            <a href="#contact" class="nav-link" data-cursor="link">Contact</a>
+            <button class="theme-btn" id="themeToggle" aria-label="Toggle light mode" data-cursor="link">
+                <span class="theme-icon">◐</span>
+            </button>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mm-links">
+            <a href="#work" data-index="01">Work</a>
+            <a href="#about" data-index="02">About</a>
+            <a href="#films" data-index="03">Films</a>
+            <a href="#journal" data-index="04">Journal</a>
+            <a href="#contact" data-index="05">Contact</a>
+        </div>
+        <div class="mm-footer">
+            <div class="mm-socials">
+                <a href="https://www.linkedin.com/in/shishir-acy/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer">Behance</a>
+                <a href="https://dribbble.com/shishir-acy" target="_blank" rel="noopener noreferrer">Dribbble</a>
+                <a href="https://medium.com/@shishir.ux" target="_blank" rel="noopener noreferrer">Medium</a>
+            </div>
+        </div>
+    </div>
+
+    <main id="main">
+        <!-- ============ HERO ============ -->
+        <section class="hero" aria-label="Introduction">
+            <div class="hero-marquee" aria-hidden="true">
+                <div class="marquee-inner">
+                    <span>PRODUCT DESIGNER</span><span>·</span>
+                    <span>VISUAL STORYTELLER</span><span>·</span>
+                    <span>UAV PILOT</span><span>·</span>
+                    <span>FILMMAKER</span><span>·</span>
+                    <span>PRODUCT DESIGNER</span><span>·</span>
+                    <span>VISUAL STORYTELLER</span><span>·</span>
+                    <span>UAV PILOT</span><span>·</span>
+                    <span>FILMMAKER</span><span>·</span>
+                </div>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-name-row">
+                    <h1 class="hero-name">
+                        <span class="char-wrap"><span class="char">S</span></span><span class="char-wrap"><span class="char">H</span></span><span class="char-wrap"><span class="char">I</span></span><span class="char-wrap"><span class="char">S</span></span><span class="char-wrap"><span class="char">H</span></span><span class="char-wrap"><span class="char">I</span></span><span class="char-wrap"><span class="char">R</span></span>
+                    </h1>
+                </div>
+                <div class="hero-name-row row-2">
+                    <h1 class="hero-name hero-name-italic">
+                        <span class="char-wrap"><span class="char">A</span></span><span class="char-wrap"><span class="char">C</span></span><span class="char-wrap"><span class="char">H</span></span><span class="char-wrap"><span class="char">A</span></span><span class="char-wrap"><span class="char">R</span></span><span class="char-wrap"><span class="char">Y</span></span><span class="char-wrap"><span class="char">A</span></span>
+                    </h1>
+                </div>
+            </div>
+
+            <div class="hero-tagline">
+                <p>Designer · Traveller · Speaker · Filmmaker</p>
+            </div>
+
+            <div class="hero-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Location</span>
+                    <span class="meta-value">Kathmandu, Nepal</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Local Time</span>
+                    <span class="meta-value" id="clock">—</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Current Role</span>
+                    <span class="meta-value">Product Designer @ FoneNXT</span>
+                </div>
+            </div>
+
+            <div class="hero-scroll" aria-hidden="true">
+                <div class="scroll-line"></div>
+                <span>Scroll</span>
+            </div>
+        </section>
+
+        <!-- ============ ABOUT ============ -->
+        <section class="about" id="about" aria-label="About">
+            <div class="about-inner">
+                <span class="section-tag">( About )</span>
+                <p class="about-statement">
+                    I'm a product designer focused on creating <em>simple</em>, useful, and
+                    <strong>fun user-centered experiences</strong>. I believe thoughtful design
+                    starts with <em>listening and learning</em> — and I'm always exploring
+                    new ways to improve everyday interactions.
+                </p>
+                <p class="about-sub">
+                    When I'm not designing, I'm either flying my drone, spotting aircraft,
+                    filming cinematic stories, or volunteering with <strong>Friends of Fauna</strong> in Kathmandu.
+                    "Everything is design. Everything!"
+                </p>
+
+                <div class="about-cols">
+                    <div class="about-col">
+                        <span class="col-label">Design Practice</span>
+                        <ul class="col-list">
+                            <li>Product Design</li>
+                            <li>Visual Design</li>
+                            <li>User Research</li>
+                            <li>Design Systems</li>
+                            <li>Interaction Design</li>
+                            <li>Wireframing & Prototyping</li>
+                        </ul>
+                    </div>
+                    <div class="about-col">
+                        <span class="col-label">Beyond Design</span>
+                        <ul class="col-list">
+                            <li>Filmmaking & Cinematography</li>
+                            <li>UAV / Drone Piloting</li>
+                            <li>Aviation Enthusiasm</li>
+                            <li>Motion Design</li>
+                            <li>Illustration</li>
+                            <li>Photography</li>
+                        </ul>
+                    </div>
+                    <div class="about-col">
+                        <span class="col-label">Tools</span>
+                        <ul class="col-list">
+                            <li>Figma</li>
+                            <li>Adobe Photoshop</li>
+                            <li>DaVinci Resolve</li>
+                            <li>Framer</li>
+                            <li>Adobe After Effects</li>
+                            <li>Blender</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ EXPERIENCE ============ -->
+        <section class="experience" id="experience" aria-label="Experience">
+            <div class="exp-inner">
+                <span class="section-tag">( Experience )</span>
+                <div class="exp-list">
+                    <article class="exp-item">
+                        <div class="exp-meta">
+                            <span class="exp-date">2024 — Present</span>
+                            <span class="exp-type">Full-time</span>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="exp-role">Product Designer</h3>
+                            <span class="exp-company">FoneNXT Pvt. Ltd</span>
+                            <p class="exp-desc">Building and maintaining the design system, adding playful micro-interactions, and leading international user testing workflows. Designed a Budget Analysis AI concept (POC).</p>
+                        </div>
+                    </article>
+                    <article class="exp-item">
+                        <div class="exp-meta">
+                            <span class="exp-date">2022 — 2024</span>
+                            <span class="exp-type">Full-time</span>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="exp-role">UX/UI Designer</h3>
+                            <span class="exp-company">Skybase Innovations Pvt. Ltd</span>
+                            <p class="exp-desc">Designed websites and systems for schools, restaurants, and consultancy firms. Built a POS system and created a style guide and design system.</p>
+                        </div>
+                    </article>
+                    <article class="exp-item">
+                        <div class="exp-meta">
+                            <span class="exp-date">2020 — Present</span>
+                            <span class="exp-type">Freelance</span>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="exp-role">Freelance Designer</h3>
+                            <span class="exp-company">Self-employed</span>
+                            <p class="exp-desc">Mobile and web applications for international clients. Every project — a learning experience working with diverse teams and creative approaches.</p>
+                        </div>
+                    </article>
+                    <article class="exp-item">
+                        <div class="exp-meta">
+                            <span class="exp-date">2023 — Present</span>
+                            <span class="exp-type">Volunteer</span>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="exp-role">Media Lead</h3>
+                            <span class="exp-company">Friends of Fauna, Kathmandu</span>
+                            <p class="exp-desc">Leading media initiatives for wildlife conservation efforts in Nepal.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ SELECTED WORK ============ -->
+        <section class="work" id="work" aria-label="Selected work">
+            <div class="work-header">
+                <span class="section-tag">( Selected Work )</span>
+                <h2 class="work-title">Projects</h2>
+            </div>
+
+            <div class="projects">
+                <article class="project" data-cursor="project">
+                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Boarding Pass redesign on Behance">
+                        <div class="proj-img">
+                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #1a3a5c, #0d1f33, #2a5f8f);"></div>
+                        </div>
+                        <div class="proj-info">
+                            <span class="proj-num">01</span>
+                            <h3 class="proj-name">Boarding Pass <em>Buddha Air</em></h3>
+                            <span class="proj-cat">Aviation · UX Redesign</span>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="project" data-cursor="project">
+                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Duolingo concept on Behance">
+                        <div class="proj-img">
+                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #4caf50, #2e7d32, #81c784);"></div>
+                        </div>
+                        <div class="proj-info">
+                            <span class="proj-num">02</span>
+                            <h3 class="proj-name">Learn GenZ Language <em>Duolingo</em></h3>
+                            <span class="proj-cat">Concept · UX Design</span>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="project" data-cursor="project">
+                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Expense Tracker on Behance">
+                        <div class="proj-img">
+                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);"></div>
+                        </div>
+                        <div class="proj-info">
+                            <span class="proj-num">03</span>
+                            <h3 class="proj-name">Personal <em>Expense Tracker</em></h3>
+                            <span class="proj-cat">App UI Design</span>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="project" data-cursor="project">
+                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Book Cover Design on Behance">
+                        <div class="proj-img">
+                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #8b1a1a, #4a0e0e, #c62828);"></div>
+                        </div>
+                        <div class="proj-info">
+                            <span class="proj-num">04</span>
+                            <h3 class="proj-name">Book Cover Design <em>F1 Soft Group</em></h3>
+                            <span class="proj-cat">Editorial · Branding</span>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="project" data-cursor="project">
+                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Oppenheimer poster on Behance">
+                        <div class="proj-img">
+                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #2c2c2c, #0a0a0a, #444);"></div>
+                        </div>
+                        <div class="proj-info">
+                            <span class="proj-num">05</span>
+                            <h3 class="proj-name">Oppenheimer <em>× Gotham</em></h3>
+                            <span class="proj-cat">Movie Poster · Visual Design</span>
+                        </div>
+                    </a>
+                </article>
+            </div>
+
+            <div class="work-cta">
+                <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="cta-link" data-cursor="link">
+                    View all on Behance
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- ============ FILMS / VISUAL STORYTELLING ============ -->
+        <section class="films" id="films" aria-label="Visual Storytelling">
+            <div class="films-inner">
+                <span class="section-tag">( Visual Storytelling )</span>
+                <h2 class="films-title">Filming my 20s.</h2>
+                <p class="films-desc">
+                    Cinematic stories from Nepal and beyond — landscapes, sunsets,
+                    mountains, and life through the lens. Follow the journey on
+                    <a href="https://www.instagram.com/shishir.viz/" target="_blank" rel="noopener noreferrer" data-cursor="link">@shishir.viz</a>.
+                </p>
+
+                <div class="films-grid">
+                    <div class="film-card" aria-label="Airplane tail over Himalayas">
+                        <div class="film-visual" style="background: linear-gradient(160deg, #ff6b35, #c94b1a, #1a1a2e 70%);"></div>
+                        <span class="film-label">✈ Somewhere above the Himalayas</span>
+                    </div>
+                    <div class="film-card" aria-label="Sunset in Chitwan">
+                        <div class="film-visual" style="background: linear-gradient(160deg, #ff9a56, #e87042, #2d1b3d 70%);"></div>
+                        <span class="film-label">Just another scenic sunset in Chitwan 🇳🇵</span>
+                    </div>
+                    <div class="film-card" aria-label="Nature loves you back">
+                        <div class="film-visual" style="background: linear-gradient(160deg, #4caf50, #2e7d32, #1a3a1a 70%);"></div>
+                        <span class="film-label">"This is on your feed because nature loves you back."</span>
+                    </div>
+                    <div class="film-card" aria-label="Mountain roads">
+                        <div class="film-visual" style="background: linear-gradient(160deg, #607d8b, #37474f, #1a1a2e 70%);"></div>
+                        <span class="film-label">Roads less travelled</span>
+                    </div>
+                </div>
+
+                <a href="https://www.instagram.com/shishir.viz/" target="_blank" rel="noopener noreferrer" class="films-cta" data-cursor="link">
+                    <span class="films-cta-icon" aria-hidden="true">▶</span>
+                    Watch on Instagram — 279 posts & counting
+                </a>
+            </div>
+        </section>
+
+        <!-- ============ JOURNAL / WRITING ============ -->
+        <section class="journal" id="journal" aria-label="Journal">
+            <div class="journal-inner">
+                <span class="section-tag">( Journal )</span>
+                <h2 class="journal-title">Writing & Thinking</h2>
+
+                <div class="journal-list">
+                    <a href="https://medium.com/@shishir.ux" target="_blank" rel="noopener noreferrer" class="journal-item" data-cursor="link">
+                        <span class="journal-date">Dec 2025</span>
+                        <h3 class="journal-name">What if Flight Delays Felt Less Stressful?</h3>
+                        <p class="journal-preview">A service design exploration inspired by Changi Airport — rethinking airport UX to reduce passenger anxiety during delays.</p>
+                        <span class="journal-read">Read on Medium ↗</span>
+                    </a>
+                    <a href="https://medium.com/@shishir.ux" target="_blank" rel="noopener noreferrer" class="journal-item" data-cursor="link">
+                        <span class="journal-date">2025</span>
+                        <h3 class="journal-name">Agentic UX: 7 Principles for Designing Systems with Agents</h3>
+                        <p class="journal-preview">Exploring the intersection of AI agents and user experience — designing systems where humans and agents collaborate.</p>
+                        <span class="journal-read">Read on Medium ↗</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ TRAVEL ============ -->
+        <section class="travel" aria-label="Travel">
+            <div class="travel-inner">
+                <span class="section-tag">( Passport Stamps )</span>
+                <div class="travel-codes">
+                    <span class="travel-code" title="Singapore">SIN</span>
+                    <span class="travel-code" title="Manila, Philippines">MNL</span>
+                    <span class="travel-code" title="Bangalore, India">BLR</span>
+                    <span class="travel-code" title="Thailand">THL</span>
+                    <span class="travel-code" title="Kathmandu, Nepal">KEP</span>
+                    <span class="travel-code" title="Pokhara, Nepal">PKR</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ TESTIMONIALS ============ -->
+        <section class="testimonials" aria-label="Testimonials">
+            <span class="section-tag">( Kind Words )</span>
+            <div class="test-list">
+                <blockquote class="test-item">
+                    <p>"Shishir has been an invaluable asset, providing insights and expertise that have significantly enhanced my project's user experience."</p>
+                    <footer>
+                        <cite><strong>Ritesh Ghimire</strong> — Entrepreneur</cite>
+                    </footer>
+                </blockquote>
+                <blockquote class="test-item">
+                    <p>"With Shishir on board, our projects became a playground of branding brilliance and creative innovation. He has a gift for turning ideas into design magic."</p>
+                    <footer>
+                        <cite><strong>Er. Sonaam Hitang</strong> — CEO, Skybase Innovations</cite>
+                    </footer>
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- ============ CONTACT ============ -->
+        <section class="contact" id="contact" aria-label="Get in touch">
+            <div class="contact-inner">
+                <span class="section-tag">( Contact )</span>
+                <h2 class="contact-heading">
+                    <span class="ch-line">Let's build</span>
+                    <span class="ch-line"><em>something</em></span>
+                    <span class="ch-line">together.</span>
+                </h2>
+                <a href="mailto:shishiracharya35@gmail.com" class="contact-email" data-cursor="link">
+                    shishiracharya35@gmail.com
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                </a>
+                <div class="contact-socials">
+                    <a href="https://www.linkedin.com/in/shishir-acy/" target="_blank" rel="noopener noreferrer" data-cursor="link">LinkedIn ↗</a>
+                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" data-cursor="link">Behance ↗</a>
+                    <a href="https://dribbble.com/shishir-acy" target="_blank" rel="noopener noreferrer" data-cursor="link">Dribbble ↗</a>
+                    <a href="https://medium.com/@shishir.ux" target="_blank" rel="noopener noreferrer" data-cursor="link">Medium ↗</a>
+                    <a href="https://www.instagram.com/shishir.ux/" target="_blank" rel="noopener noreferrer" data-cursor="link">Instagram ↗</a>
+                    <a href="https://www.instagram.com/shishir.viz/" target="_blank" rel="noopener noreferrer" data-cursor="link">@shishir.viz ↗</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <span>© 2026 Shishir Acharya</span>
+        <span class="footer-tagline">Designed with intention from Nepal.</span>
+        <a href="#" id="toTop" aria-label="Back to top" data-cursor="link">↑ Top</a>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
