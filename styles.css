@@ -424,7 +424,7 @@ body.cursor-project .cursor-follower{opacity:0}
 .contact-socials a:hover{color:var(--accent)}
 
 /* ===== FOOTER ===== */
-.footer{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-top:1px solid var(--border);font-size:.7rem;color:var(--t3)}
+.footer{display:flex;justify-content:space-between;align-items:center;padding:24px 120px 24px 40px;border-top:1px solid var(--border);font-size:.7rem;color:var(--t3)}
 .footer-tagline{font-family:var(--serif);font-style:italic}
 .footer a{transition:color .25s}
 .footer a:hover{color:var(--accent)}
@@ -482,7 +482,7 @@ body.cursor-project .cursor-follower{opacity:0}
     .testimonials{padding:80px 20px}
     .contact{padding:80px 20px}
     .contact-socials{gap:16px}
-    .footer{padding:16px 20px;flex-wrap:wrap;gap:8px}
+    .footer{padding:16px 20px 80px 20px;flex-wrap:wrap;gap:12px}
     .mm-footer{bottom:24px;left:20px;right:20px}
     
     .av-card {aspect-ratio:auto;height:auto;min-height:350px;}
@@ -500,6 +500,8 @@ body.cursor-project .cursor-follower{opacity:0}
 
 /* Momo Easter Egg */
 #momoEasterEgg {
+    position: relative;
+    z-index: 10;
     transition: color 0.3s var(--ease);
 }
 #momoEasterEgg:hover {
