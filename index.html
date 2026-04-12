@@ -13,6 +13,18 @@
 <body>
     <a href="#main" class="skip-nav">Skip to content</a>
 
+    <!-- Preloader -->
+    <div class="preloader" id="preloader" aria-hidden="true">
+        <div class="preloader-panel preloader-top"></div>
+        <div class="preloader-panel preloader-bottom"></div>
+        <div class="preloader-content">
+            <div class="preloader-counter-wrap">
+                <span class="preloader-counter" id="preloaderCounter">00</span><span class="preloader-percent">%</span>
+            </div>
+            <span class="preloader-label">Shishir Acharya</span>
+        </div>
+    </div>
+
     <!-- Custom Cursor -->
     <div class="cursor" id="cursor" aria-hidden="true"></div>
     <div class="cursor-follower" id="cursorFollower" aria-hidden="true"></div>
@@ -23,25 +35,20 @@
     <!-- Navigation -->
     <nav class="nav" id="nav" aria-label="Main">
         <div class="nav-left">
-            <a href="#" class="nav-logo" aria-label="Home">
-                <span class="logo-text">Shishir</span>
-                <span class="logo-dot">°</span>
+            <a href="#main" class="nav-brand" data-cursor="link" aria-label="Go to top">
+                <span class="brand-text">Shishir</span><span class="brand-dot">.</span><span class="brand-text outline">A</span>
             </a>
         </div>
-        <div class="nav-center">
-            <span class="nav-status">
-                <span class="status-dot" aria-hidden="true"></span>
-                Available for work
-            </span>
-        </div>
-        <div class="nav-right">
-            <a href="#work" class="nav-link" data-cursor="link">Work</a>
-            <a href="#about" class="nav-link" data-cursor="link">About</a>
-            <a href="#journal" class="nav-link" data-cursor="link">Journal</a>
-            <a href="#contact" class="nav-link" data-cursor="link">Contact</a>
-            <button class="theme-btn" id="themeToggle" aria-label="Toggle light mode" data-cursor="link">
-                <span class="theme-icon">◐</span>
-            </button>
+        <div class="nav-right-wrap">
+            <div class="nav-right">
+                <a href="#work" class="nav-link" data-cursor="link">Work</a>
+                <a href="#about" class="nav-link" data-cursor="link">About</a>
+                <a href="#journal" class="nav-link" data-cursor="link">Journal</a>
+                <a href="#contact" class="nav-link" data-cursor="link">Contact</a>
+                <button class="theme-btn" id="themeToggle" aria-label="Toggle light mode" data-cursor="link">
+                    <span class="theme-icon">◐</span>
+                </button>
+            </div>
         </div>
         <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
             <span></span><span></span><span></span>
@@ -70,18 +77,6 @@
     <main id="main">
         <!-- ============ HERO ============ -->
         <section class="hero" aria-label="Introduction">
-            <div class="hero-marquee" aria-hidden="true">
-                <div class="marquee-inner">
-                    <span>PRODUCT DESIGNER</span><span>·</span>
-                    <span>VISUAL STORYTELLER</span><span>·</span>
-                    <span>UAV PILOT</span><span>·</span>
-                    <span>FILMMAKER</span><span>·</span>
-                    <span>PRODUCT DESIGNER</span><span>·</span>
-                    <span>VISUAL STORYTELLER</span><span>·</span>
-                    <span>UAV PILOT</span><span>·</span>
-                    <span>FILMMAKER</span><span>·</span>
-                </div>
-            </div>
 
             <div class="hero-content">
                 <div class="hero-name-row">
@@ -97,13 +92,13 @@
             </div>
 
             <div class="hero-tagline">
-                <p>Designer · Traveller · Speaker · Filmmaker</p>
+                <p>Son · Student · Designer · Filmmaker</p>
             </div>
 
             <div class="hero-meta">
                 <div class="meta-item">
                     <span class="meta-label">Location</span>
-                    <span class="meta-value">Kathmandu, Nepal</span>
+                    <span class="meta-value glitch-text" id="locationText" data-text="Kathmandu, Nepal">Kathmandu, Nepal</span>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Local Time</span>
@@ -121,6 +116,17 @@
             </div>
         </section>
 
+        <!-- ============ QUOTE ============ -->
+        <section class="quote-section" aria-label="Inspiration">
+            <div class="quote-inner">
+                <blockquote class="steve-quote">
+                    "Design is not just what it looks like and feels like. <br class="desktop-only text-break">
+                    Design is <em>how it works</em>."
+                </blockquote>
+                <cite class="quote-author">— Steve Jobs</cite>
+            </div>
+        </section>
+
         <!-- ============ ABOUT ============ -->
         <section class="about" id="about" aria-label="About">
             <div class="about-inner">
@@ -133,7 +139,7 @@
                 </p>
                 <p class="about-sub">
                     When I'm not designing, I'm either flying my drone, spotting aircraft,
-                    filming cinematic stories, or volunteering with <strong>Friends of Fauna</strong> in Kathmandu.
+                    filming cinematic stories, or volunteering with <strong>Friends of Figma</strong> in Kathmandu.
                     "Everything is design. Everything!"
                 </p>
 
@@ -152,23 +158,10 @@
                     <div class="about-col">
                         <span class="col-label">Beyond Design</span>
                         <ul class="col-list">
-                            <li>Filmmaking & Cinematography</li>
+                            <li>Filmmaking</li>
                             <li>UAV / Drone Piloting</li>
                             <li>Aviation Enthusiasm</li>
-                            <li>Motion Design</li>
-                            <li>Illustration</li>
                             <li>Photography</li>
-                        </ul>
-                    </div>
-                    <div class="about-col">
-                        <span class="col-label">Tools</span>
-                        <ul class="col-list">
-                            <li>Figma</li>
-                            <li>Adobe Photoshop</li>
-                            <li>DaVinci Resolve</li>
-                            <li>Framer</li>
-                            <li>Adobe After Effects</li>
-                            <li>Blender</li>
                         </ul>
                     </div>
                 </div>
@@ -182,48 +175,91 @@
                 <div class="exp-list">
                     <article class="exp-item">
                         <div class="exp-meta">
-                            <span class="exp-date">2024 — Present</span>
+                            <span class="exp-date">Sep 2023 — Present</span>
                             <span class="exp-type">Full-time</span>
                         </div>
                         <div class="exp-content">
                             <h3 class="exp-role">Product Designer</h3>
-                            <span class="exp-company">FoneNXT Pvt. Ltd</span>
-                            <p class="exp-desc">Building and maintaining the design system, adding playful micro-interactions, and leading international user testing workflows. Designed a Budget Analysis AI concept (POC).</p>
+                            <a href="https://f1soft.com/business/fonenxt" target="_blank" class="exp-company-link">FoneNXT ↗</a>
                         </div>
                     </article>
                     <article class="exp-item">
                         <div class="exp-meta">
-                            <span class="exp-date">2022 — 2024</span>
-                            <span class="exp-type">Full-time</span>
-                        </div>
-                        <div class="exp-content">
-                            <h3 class="exp-role">UX/UI Designer</h3>
-                            <span class="exp-company">Skybase Innovations Pvt. Ltd</span>
-                            <p class="exp-desc">Designed websites and systems for schools, restaurants, and consultancy firms. Built a POS system and created a style guide and design system.</p>
-                        </div>
-                    </article>
-                    <article class="exp-item">
-                        <div class="exp-meta">
-                            <span class="exp-date">2020 — Present</span>
+                            <span class="exp-date">Feb 2020 — Present</span>
                             <span class="exp-type">Freelance</span>
                         </div>
                         <div class="exp-content">
                             <h3 class="exp-role">Freelance Designer</h3>
-                            <span class="exp-company">Self-employed</span>
-                            <p class="exp-desc">Mobile and web applications for international clients. Every project — a learning experience working with diverse teams and creative approaches.</p>
+                            <span class="exp-company">6 years 3 months (Self-employed)</span>
                         </div>
                     </article>
                     <article class="exp-item">
                         <div class="exp-meta">
-                            <span class="exp-date">2023 — Present</span>
+                            <span class="exp-date">Sep 2015 — Present</span>
+                            <span class="exp-type">Self-employed</span>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="exp-role">Content Creator</h3>
+                            <span class="exp-company">10 years 8 months</span>
+                        </div>
+                    </article>
+                    <article class="exp-item">
+                        <div class="exp-meta">
+                            <span class="exp-date">Nov 2022 — Jun 2023</span>
+                            <span class="exp-type">8 months</span>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="exp-role">UI/UX Designer</h3>
+                            <a href="https://skybase.com.np/" target="_blank" class="exp-company-link">Skybase Innovations (Full time) ↗</a>
+                        </div>
+                    </article>
+                    <article class="exp-item">
+                        <div class="exp-meta">
+                            <span class="exp-date">Sep 2022 — Nov 2023</span>
+                            <span class="exp-type">3 months</span>
+                        </div>
+                        <div class="exp-content">
+                            <h3 class="exp-role">UI/UX Designer</h3>
+                            <a href="https://skybase.com.np/" target="_blank" class="exp-company-link">Skybase Innovations (Internship) ↗</a>
+                        </div>
+                    </article>
+                    <article class="exp-item">
+                        <div class="exp-meta">
+                            <span class="exp-date">Jun 2025 — Present</span>
                             <span class="exp-type">Volunteer</span>
                         </div>
                         <div class="exp-content">
                             <h3 class="exp-role">Media Lead</h3>
-                            <span class="exp-company">Friends of Fauna, Kathmandu</span>
-                            <p class="exp-desc">Leading media initiatives for wildlife conservation efforts in Nepal.</p>
+                            <a href="https://friends.figma.com/kathmandu/" target="_blank" class="exp-company-link">Friends of Figma, Kathmandu ↗</a>
                         </div>
                     </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ EDUCATION ============ -->
+        <section class="education" id="education" aria-label="Education">
+            <div class="edu-inner">
+                <span class="section-tag">( Education )</span>
+                <div class="edu-list">
+                    <div class="edu-item">
+                        <div class="edu-meta">
+                            <span class="edu-date">2018 — 2020</span>
+                        </div>
+                        <div class="edu-content">
+                            <h3 class="edu-name">Motherland Secondary School</h3>
+                            <span class="edu-degree">+2 Management</span>
+                        </div>
+                    </div>
+                    <div class="edu-item">
+                        <div class="edu-meta">
+                            <span class="edu-date">Jan 2021 — Dec 2023</span>
+                        </div>
+                        <div class="edu-content">
+                            <h3 class="edu-name">Informatics College Pokhara</h3>
+                            <span class="edu-degree">Bachelors Degree. BSC (Hons) Computing (London Metropolitan University Partner)</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -231,13 +267,13 @@
         <!-- ============ SELECTED WORK ============ -->
         <section class="work" id="work" aria-label="Selected work">
             <div class="work-header">
-                <span class="section-tag">( Selected Work )</span>
-                <h2 class="work-title">Projects</h2>
+                <span class="section-tag">( Visual Ideas )</span>
+                <h2 class="work-title">Creative Works</h2>
             </div>
 
             <div class="projects">
                 <article class="project" data-cursor="project">
-                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Boarding Pass redesign on Behance">
+                    <a href="#" class="proj-link" data-carousel="boarding-pass" data-cursor="view" aria-label="Open Boarding Pass Case Study">
                         <div class="proj-img">
                             <div class="proj-img-inner" style="background: linear-gradient(135deg, #1a3a5c, #0d1f33, #2a5f8f);"></div>
                         </div>
@@ -250,7 +286,7 @@
                 </article>
 
                 <article class="project" data-cursor="project">
-                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Duolingo concept on Behance">
+                    <a href="#" class="proj-link" data-carousel="genz-duo" data-cursor="view" aria-label="Open Duolingo Concept">
                         <div class="proj-img">
                             <div class="proj-img-inner" style="background: linear-gradient(135deg, #4caf50, #2e7d32, #81c784);"></div>
                         </div>
@@ -258,45 +294,6 @@
                             <span class="proj-num">02</span>
                             <h3 class="proj-name">Learn GenZ Language <em>Duolingo</em></h3>
                             <span class="proj-cat">Concept · UX Design</span>
-                        </div>
-                    </a>
-                </article>
-
-                <article class="project" data-cursor="project">
-                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Expense Tracker on Behance">
-                        <div class="proj-img">
-                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);"></div>
-                        </div>
-                        <div class="proj-info">
-                            <span class="proj-num">03</span>
-                            <h3 class="proj-name">Personal <em>Expense Tracker</em></h3>
-                            <span class="proj-cat">App UI Design</span>
-                        </div>
-                    </a>
-                </article>
-
-                <article class="project" data-cursor="project">
-                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Book Cover Design on Behance">
-                        <div class="proj-img">
-                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #8b1a1a, #4a0e0e, #c62828);"></div>
-                        </div>
-                        <div class="proj-info">
-                            <span class="proj-num">04</span>
-                            <h3 class="proj-name">Book Cover Design <em>F1 Soft Group</em></h3>
-                            <span class="proj-cat">Editorial · Branding</span>
-                        </div>
-                    </a>
-                </article>
-
-                <article class="project" data-cursor="project">
-                    <a href="https://www.behance.net/shishir-ux" target="_blank" rel="noopener noreferrer" class="proj-link" aria-label="View Oppenheimer poster on Behance">
-                        <div class="proj-img">
-                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #2c2c2c, #0a0a0a, #444);"></div>
-                        </div>
-                        <div class="proj-info">
-                            <span class="proj-num">05</span>
-                            <h3 class="proj-name">Oppenheimer <em>× Gotham</em></h3>
-                            <span class="proj-cat">Movie Poster · Visual Design</span>
                         </div>
                     </a>
                 </article>
@@ -309,78 +306,223 @@
                 </a>
             </div>
         </section>
-
-        <!-- ============ FILMS / VISUAL STORYTELLING ============ -->
-        <section class="films" id="films" aria-label="Visual Storytelling">
-            <div class="films-inner">
-                <span class="section-tag">( Visual Storytelling )</span>
-                <h2 class="films-title">Filming my 20s.</h2>
-                <p class="films-desc">
-                    Cinematic stories from Nepal and beyond — landscapes, sunsets,
-                    mountains, and life through the lens. Follow the journey on
-                    <a href="https://www.instagram.com/shishir.viz/" target="_blank" rel="noopener noreferrer" data-cursor="link">@shishir.viz</a>.
-                </p>
-
-                <div class="films-grid">
-                    <div class="film-card" aria-label="Airplane tail over Himalayas">
-                        <div class="film-visual" style="background: linear-gradient(160deg, #ff6b35, #c94b1a, #1a1a2e 70%);"></div>
-                        <span class="film-label">✈ Somewhere above the Himalayas</span>
+    <!-- ============ UX BITES ============ -->
+    <section class="bites" id="bites" aria-label="Micro Case Studies">
+        <div class="bites-inner">
+            <div class="bites-header">
+                <span class="section-tag">( Ideas & Vision )</span>
+                <h2 class="bites-title">Bite-Sized Case Studies</h2>
+                <p class="films-desc" style="max-width: 600px; margin-bottom: 0;">Independent research and UX concepts packaged into easy-to-swipe carousels to share my vision.</p>
+            </div>
+            <div class="bites-grid">
+                <div class="bite-card" role="button" tabindex="0" aria-label="Accessible Theater Carousel" data-carousel="accessible-theater" data-cursor="view">
+                    <div class="bite-img">
+                        <div class="bite-img-inner" style="background: url('assets/Accessible Theater/1.jpg') center/cover;"></div>
+                        <div class="bite-icon">
+                            <svg class="carousel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5H4C3.17157 2.5 2.5 3.17157 2.5 4V16C2.5 16.8284 3.17157 17.5 4 17.5H16C16.8284 17.5 17.5 16.8284 17.5 16V4C17.5 3.17157 16.8284 2.5 16 2.5ZM4 1H16C17.6569 1 19 2.34315 19 4V16C19 17.6569 17.6569 19 16 19H4C2.34315 19 1 17.6569 1 16V4C1 2.34315 2.34315 1 4 1Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 6C22 5.44772 21.5523 5 21 5H20V6.5H20.5V21.5H7.5V21.1H6V22C6 22.5523 6.44772 23 7 23H21.5C21.7761 23 22 22.7761 22 22.5V6Z" fill="currentColor"/></svg>
+                        </div>
                     </div>
-                    <div class="film-card" aria-label="Sunset in Chitwan">
-                        <div class="film-visual" style="background: linear-gradient(160deg, #ff9a56, #e87042, #2d1b3d 70%);"></div>
-                        <span class="film-label">Just another scenic sunset in Chitwan 🇳🇵</span>
-                    </div>
-                    <div class="film-card" aria-label="Nature loves you back">
-                        <div class="film-visual" style="background: linear-gradient(160deg, #4caf50, #2e7d32, #1a3a1a 70%);"></div>
-                        <span class="film-label">"This is on your feed because nature loves you back."</span>
-                    </div>
-                    <div class="film-card" aria-label="Mountain roads">
-                        <div class="film-visual" style="background: linear-gradient(160deg, #607d8b, #37474f, #1a1a2e 70%);"></div>
-                        <span class="film-label">Roads less travelled</span>
+                    <div class="bite-info">
+                        <h3 class="bite-name">Accessible Theater</h3>
+                        <span class="bite-desc">10 slides</span>
                     </div>
                 </div>
+                <div class="bite-card" role="button" tabindex="0" aria-label="AI & Autopilot Carousel" data-carousel="ai-and-autopilot" data-cursor="view">
+                    <div class="bite-img">
+                        <div class="bite-img-inner" style="background: url('assets/AI and Autopilot/1.jpg') center/cover;"></div>
+                        <div class="bite-icon">
+                            <svg class="carousel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5H4C3.17157 2.5 2.5 3.17157 2.5 4V16C2.5 16.8284 3.17157 17.5 4 17.5H16C16.8284 17.5 17.5 16.8284 17.5 16V4C17.5 3.17157 16.8284 2.5 16 2.5ZM4 1H16C17.6569 1 19 2.34315 19 4V16C19 17.6569 17.6569 19 16 19H4C2.34315 19 1 17.6569 1 16V4C1 2.34315 2.34315 1 4 1Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 6C22 5.44772 21.5523 5 21 5H20V6.5H20.5V21.5H7.5V21.1H6V22C6 22.5523 6.44772 23 7 23H21.5C21.7761 23 22 22.7761 22 22.5V6Z" fill="currentColor"/></svg>
+                        </div>
+                    </div>
+                    <div class="bite-info">
+                        <h3 class="bite-name">AI & Autopilot</h3>
+                        <span class="bite-desc">12 slides</span>
+                    </div>
+                </div>
+                <div class="bite-card" role="button" tabindex="0" aria-label="Airport UX Carousel" data-carousel="airport-ux" data-cursor="view">
+                    <div class="bite-img">
+                        <div class="bite-img-inner" style="background: url('assets/Airport UX/1.jpg') center/cover;"></div>
+                        <div class="bite-icon">
+                            <svg class="carousel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5H4C3.17157 2.5 2.5 3.17157 2.5 4V16C2.5 16.8284 3.17157 17.5 4 17.5H16C16.8284 17.5 17.5 16.8284 17.5 16V4C17.5 3.17157 16.8284 2.5 16 2.5ZM4 1H16C17.6569 1 19 2.34315 19 4V16C19 17.6569 17.6569 19 16 19H4C2.34315 19 1 17.6569 1 16V4C1 2.34315 2.34315 1 4 1Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 6C22 5.44772 21.5523 5 21 5H20V6.5H20.5V21.5H7.5V21.1H6V22C6 22.5523 6.44772 23 7 23H21.5C21.7761 23 22 22.7761 22 22.5V6Z" fill="currentColor"/></svg>
+                        </div>
+                    </div>
+                    <div class="bite-info">
+                        <h3 class="bite-name">Airport UX</h3>
+                        <span class="bite-desc">14 slides</span>
+                    </div>
+                </div>
+                <div class="bite-card" role="button" tabindex="0" aria-label="Bilingual Signages Carousel" data-carousel="bilingual-signages" data-cursor="view">
+                    <div class="bite-img">
+                        <div class="bite-img-inner" style="background: url('assets/Bilingual Signages/1.jpg') center/cover;"></div>
+                        <div class="bite-icon">
+                            <svg class="carousel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5H4C3.17157 2.5 2.5 3.17157 2.5 4V16C2.5 16.8284 3.17157 17.5 4 17.5H16C16.8284 17.5 17.5 16.8284 17.5 16V4C17.5 3.17157 16.8284 2.5 16 2.5ZM4 1H16C17.6569 1 19 2.34315 19 4V16C19 17.6569 17.6569 19 16 19H4C2.34315 19 1 17.6569 1 16V4C1 2.34315 2.34315 1 4 1Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 6C22 5.44772 21.5523 5 21 5H20V6.5H20.5V21.5H7.5V21.1H6V22C6 22.5523 6.44772 23 7 23H21.5C21.7761 23 22 22.7761 22 22.5V6Z" fill="currentColor"/></svg>
+                        </div>
+                    </div>
+                    <div class="bite-info">
+                        <h3 class="bite-name">Bilingual Signages</h3>
+                        <span class="bite-desc">10 slides</span>
+                    </div>
+                </div>
+                <div class="bite-card" role="button" tabindex="0" aria-label="Helmet Law Carousel" data-carousel="helmet-law" data-cursor="view">
+                    <div class="bite-img">
+                        <div class="bite-img-inner" style="background: url('assets/Helmet Law/NEW/1.jpg') center/cover;"></div>
+                        <div class="bite-icon">
+                            <svg class="carousel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5H4C3.17157 2.5 2.5 3.17157 2.5 4V16C2.5 16.8284 3.17157 17.5 4 17.5H16C16.8284 17.5 17.5 16.8284 17.5 16V4C17.5 3.17157 16.8284 2.5 16 2.5ZM4 1H16C17.6569 1 19 2.34315 19 4V16C19 17.6569 17.6569 19 16 19H4C2.34315 19 1 17.6569 1 16V4C1 2.34315 2.34315 1 4 1Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 6C22 5.44772 21.5523 5 21 5H20V6.5H20.5V21.5H7.5V21.1H6V22C6 22.5523 6.44772 23 7 23H21.5C21.7761 23 22 22.7761 22 22.5V6Z" fill="currentColor"/></svg>
+                        </div>
+                    </div>
+                    <div class="bite-info">
+                        <h3 class="bite-name">Helmet Law</h3>
+                        <span class="bite-desc">11 slides</span>
+                    </div>
+                </div>
+                <div class="bite-card" role="button" tabindex="0" aria-label="People & Culture Carousel" data-carousel="people-and-culture" data-cursor="view">
+                    <div class="bite-img">
+                        <div class="bite-img-inner" style="background: url('assets/People and Culture/1.jpg') center/cover;"></div>
+                        <div class="bite-icon">
+                            <svg class="carousel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.5H4C3.17157 2.5 2.5 3.17157 2.5 4V16C2.5 16.8284 3.17157 17.5 4 17.5H16C16.8284 17.5 17.5 16.8284 17.5 16V4C17.5 3.17157 16.8284 2.5 16 2.5ZM4 1H16C17.6569 1 19 2.34315 19 4V16C19 17.6569 17.6569 19 16 19H4C2.34315 19 1 17.6569 1 16V4C1 2.34315 2.34315 1 4 1Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="M22 6C22 5.44772 21.5523 5 21 5H20V6.5H20.5V21.5H7.5V21.1H6V22C6 22.5523 6.44772 23 7 23H21.5C21.7761 23 22 22.7761 22 22.5V6Z" fill="currentColor"/></svg>
+                        </div>
+                    </div>
+                    <div class="bite-info">
+                        <h3 class="bite-name">People & Culture</h3>
+                        <span class="bite-desc">2 slides</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <a href="https://www.instagram.com/shishir.viz/" target="_blank" rel="noopener noreferrer" class="films-cta" data-cursor="link">
-                    <span class="films-cta-icon" aria-hidden="true">▶</span>
-                    Watch on Instagram — 279 posts & counting
-                </a>
+        <!-- ============ AVIATION / TRAVEL ============ -->
+        <section class="aviation" id="aviation" aria-label="Aviation Passport">
+            <div class="aviation-inner">
+                <div class="aviation-header">
+                    <span class="section-tag">( Logbook )</span>
+                    <h2 class="aviation-title">Airborne.</h2>
+                    <p class="aviation-desc">A visual record of my enthusiasm for aviation. Mapping my journey, the clouds I've crossed, and the diverse aircraft that have carried me.</p>
+                </div>
+                
+                <div class="aviation-grid">
+                    <!-- Map Card -->
+                    <div class="av-card av-map-card aviation-blueprint">
+                        <div class="av-map-area">
+                            <img src="assets/blueprint-map.svg" alt="Global Aerospace Node Blueprint" class="av-bg-img" style="opacity:0.35; mix-blend-mode: screen;">
+                            
+                            <!-- Modular node wrapper for coordinate binding -->
+                            <div class="av-blueprint-nodes">
+                                <div class="av-node" style="left: 68.5%; top: 43%;" aria-label="Nepal Map Node" tabindex="0"><span class="av-node-label" style="top:auto;bottom:15px;left:50%;transform:translateX(-50%)">Nepal</span></div>
+                                <div class="av-node" style="left: 65.5%; top: 47%;" aria-label="India Map Node" tabindex="0"><span class="av-node-label" style="top:auto;bottom:-25px;left:50%;transform:translateX(-50%)">India</span></div>
+                                <div class="av-node" style="left: 77%; top: 60%;" aria-label="Singapore Map Node" tabindex="0"><span class="av-node-label">Singapore</span></div>
+                                <div class="av-node" style="left: 83%; top: 54%;" aria-label="Philippines Map Node" tabindex="0"><span class="av-node-label">Philippines</span></div>
+                            </div>
+                        </div>
+
+                        <div class="av-map-overlay">
+                            <div class="av-stat-row">
+                                <div class="av-stat">
+                                    <span class="av-val">41</span>
+                                    <span class="av-lbl">Flights</span>
+                                </div>
+                                <div class="av-stat stat-dist" tabindex="0" role="button" aria-label="Convert Miles into Kilometers" title="15,506 Miles = 24,954 Kilometers">
+                                    <div class="dist-front">
+                                        <span class="av-val">15,506</span>
+                                        <span class="av-lbl">Miles</span>
+                                    </div>
+                                    <div class="dist-back">
+                                        <span class="av-val" style="color:var(--accent);">24,954</span>
+                                        <span class="av-lbl">Km</span>
+                                    </div>
+                                </div>
+                                <div class="av-stat">
+                                    <span class="av-val">2d 22h</span>
+                                    <span class="av-lbl">Air Time</span>
+                                </div>
+                                <div class="av-stat">
+                                    <span class="av-val">10</span>
+                                    <span class="av-lbl">Airports</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fleet-wrap">
+                    <div class="fleet-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="1.5"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                        <span>Aircraft Fleet Log:</span>
+                    </div>
+                    <div class="aviation-codes">
+                        <span class="fleet-item" data-type="ATR 72" data-info="Twin-engine turboprop short-haul regional airliner built by French-Italian manufacturer ATR.">ATR 72</span>
+                        <span class="fleet-item" data-type="ATR 42" data-info="Regional airliner with a shorter fuselage compared to the ATR 72, seating up to 50 passengers.">ATR 42</span>
+                        <span class="fleet-item" data-type="A320neo" data-info="A320neo family features newer engines and sharklets for better fuel efficiency.">A320neo</span>
+                        <span class="fleet-item" data-type="A320" data-info="Short-to-medium range, narrow-body, commercial passenger jet airliner.">A320</span>
+                        <span class="fleet-item" data-type="Boeing 737-800" data-info="One of the most widely used narrow-body aircraft in the world.">Boeing 737-800</span>
+                        <span class="fleet-item" data-type="A321neo" data-info="The largest member of Airbus' A320neo Family with extended range.">A321neo</span>
+                        <span class="fleet-item" data-type="A321" data-info="Narrow-body aircraft with a stretched fuselage for higher capacity.">A321</span>
+                        <span class="fleet-item" data-type="A350-900" data-info="Ultra-long-range, wide-body aircraft with fuel-efficient carbon fiber design.">A350-900</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- ============ JOURNAL / WRITING ============ -->
+        <!-- ============ FILMING MY 20's (REELS) ============ -->
+        <section class="reels-section" id="films" aria-label="Instagram Reels">
+            <div class="reels-inner">
+                <span class="section-tag">( Filming my 20's )</span>
+                <div class="reels-grid">
+                    <a href="https://www.instagram.com/reel/C-pCH6HSw0c/" target="_blank" rel="noopener noreferrer" class="reel-card" data-cursor="link">
+                        <img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=1548&auto=format&fit=crop" alt="Nostalgia" class="reel-img" loading="lazy">
+                        <span class="reel-label">Nostalgia</span>
+                    </a>
+                    <a href="https://www.instagram.com/reel/C8qA0QUS8k-/" target="_blank" rel="noopener noreferrer" class="reel-card" data-cursor="link">
+                        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=1587&auto=format&fit=crop" alt="Cinema" class="reel-img" loading="lazy">
+                        <span class="reel-label">Cinema</span>
+                    </a>
+                    <a href="https://www.instagram.com/reel/C9FmX0mSRi5/" target="_blank" rel="noopener noreferrer" class="reel-card" data-cursor="link">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1746&auto=format&fit=crop" alt="Travel" class="reel-img" loading="lazy">
+                        <span class="reel-label">Travel</span>
+                    </a>
+                    <a href="https://www.instagram.com/reel/C_T0K9rSR4g/" target="_blank" rel="noopener noreferrer" class="reel-card" data-cursor="link">
+                        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1742&auto=format&fit=crop" alt="Life" class="reel-img" loading="lazy">
+                        <span class="reel-label">Life</span>
+                    </a>
+                </div>
+                <div class="reels-cta">
+                    <a href="https://www.instagram.com/shishir.viz/" target="_blank" class="cta-btn secondary">View all reels @shishir.viz</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ JOURNAL SECTION ============ -->
         <section class="journal" id="journal" aria-label="Journal">
             <div class="journal-inner">
                 <span class="section-tag">( Journal )</span>
-                <h2 class="journal-title">Writing & Thinking</h2>
-
+                <h2 class="journal-title">Writing & Thoughts</h2>
                 <div class="journal-list">
-                    <a href="https://medium.com/@shishir.ux" target="_blank" rel="noopener noreferrer" class="journal-item" data-cursor="link">
-                        <span class="journal-date">Dec 2025</span>
-                        <h3 class="journal-name">What if Flight Delays Felt Less Stressful?</h3>
-                        <p class="journal-preview">A service design exploration inspired by Changi Airport — rethinking airport UX to reduce passenger anxiety during delays.</p>
-                        <span class="journal-read">Read on Medium ↗</span>
-                    </a>
-                    <a href="https://medium.com/@shishir.ux" target="_blank" rel="noopener noreferrer" class="journal-item" data-cursor="link">
-                        <span class="journal-date">2025</span>
-                        <h3 class="journal-name">Agentic UX: 7 Principles for Designing Systems with Agents</h3>
-                        <p class="journal-preview">Exploring the intersection of AI agents and user experience — designing systems where humans and agents collaborate.</p>
-                        <span class="journal-read">Read on Medium ↗</span>
+                    <a href="https://medium.com/design-bootcamp/what-if-flight-delays-felt-less-stressful-08dd5dec7c0a" target="_blank" rel="noopener noreferrer" class="journal-item" data-cursor="link">
+                        <span class="journal-date">Published on Medium</span>
+                        <h3 class="journal-name">What if flight delays felt less stressful?</h3>
+                        <p class="journal-preview">Exploring UX solutions to alleviate anxiety during flight disruptions, transforming waiting time into an informative and relaxed experience.</p>
+                        <span class="journal-read">Read Article ↗</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- ============ TRAVEL ============ -->
-        <section class="travel" aria-label="Travel">
-            <div class="travel-inner">
-                <span class="section-tag">( Passport Stamps )</span>
-                <div class="travel-codes">
-                    <span class="travel-code" title="Singapore">SIN</span>
-                    <span class="travel-code" title="Manila, Philippines">MNL</span>
-                    <span class="travel-code" title="Bangalore, India">BLR</span>
-                    <span class="travel-code" title="Thailand">THL</span>
-                    <span class="travel-code" title="Kathmandu, Nepal">KEP</span>
-                    <span class="travel-code" title="Pokhara, Nepal">PKR</span>
+        <!-- ============ CV SECTION ============ -->
+        <section class="cv-section" id="cv" aria-label="Curriculum Vitae">
+            <div class="cv-inner">
+                <span class="section-tag">( CV )</span>
+                <div class="cv-content">
+                    <div class="cv-text">
+                        <h2 class="cv-title">Curriculum Vitae</h2>
+                        <p class="cv-desc">A comprehensive look at my professional journey, skills, and experiences. Available for viewing and download.</p>
+                        <div class="cv-actions">
+                            <button id="viewCvBtn" class="cta-btn primary">View Full CV</button>
+                            <a href="assets/Shishir_Acharya_CV.pdf" download id="downloadCvBtn" class="cta-btn secondary">Download PDF</a>
+                        </div>
+                    </div>
+                    <div class="cv-preview-card" id="openCvPreview" data-cursor="view">
+                        <img src="assets/CV_Preview.jpg" alt="CV Preview" class="cv-img-preview" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586281380349-632224c7ac3a?q=80&w=1470&auto=format&fit=crop';">
+                    </div>
                 </div>
             </div>
         </section>
@@ -409,12 +551,12 @@
             <div class="contact-inner">
                 <span class="section-tag">( Contact )</span>
                 <h2 class="contact-heading">
-                    <span class="ch-line">Let's build</span>
-                    <span class="ch-line"><em>something</em></span>
-                    <span class="ch-line">together.</span>
+                    <span class="ch-line">Have an</span>
+                    <span class="ch-line"><em>idea</em>?</span>
+                    <span class="ch-line">Reach out.</span>
                 </h2>
                 <a href="mailto:shishiracharya35@gmail.com" class="contact-email" data-cursor="link">
-                    shishiracharya35@gmail.com
+                    Say Hello
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
                 </a>
                 <div class="contact-socials">
@@ -432,8 +574,45 @@
     <footer class="footer" role="contentinfo">
         <span>© 2026 Shishir Acharya</span>
         <span class="footer-tagline">Designed with intention from Nepal.</span>
-        <a href="#" id="toTop" aria-label="Back to top" data-cursor="link">↑ Top</a>
     </footer>
+
+    <div class="scroll-top-indicator" id="scrollTopBtn" data-cursor="link" title="Back to top">
+        <svg viewBox="0 0 100 100" class="svg-progress">
+            <circle cx="50" cy="50" r="45" class="bg"></circle>
+            <circle cx="50" cy="50" r="45" class="bar" id="progressCircle"></circle>
+        </svg>
+        <span class="arrow">↑</span>
+    </div>
+
+    <!-- Lightbox Carousel -->
+    <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close carousel">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        <div class="lightbox-track" id="lightboxTrack"></div>
+        <div class="lightbox-indicators-wrapper">
+            <div class="lightbox-indicators" id="lightboxIndicators"></div>
+        </div>
+    </div>
+
+    <!-- CV Modal -->
+    <div class="lightbox lightbox-cv" id="cvModal" aria-hidden="true">
+        <button class="lightbox-close" id="cvClose">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <div class="cv-viewer-container">
+            <iframe id="cvIframe" src="" frameborder="0"></iframe>
+            <div class="cv-fallback">
+                <p>Unable to load CV directly. Please <a href="assets/Shishir_Acharya_CV.pdf" download>download it here</a>.</p>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
