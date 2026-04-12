@@ -102,7 +102,7 @@
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Local Time</span>
-                    <span class="meta-value" id="clock">—</span>
+                    <span class="meta-value"><span id="clock">—</span><span style="font-size: 1.1em; margin-left: 4px;" title="Nepal">🇳🇵</span></span>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">Current Role</span>
@@ -275,7 +275,7 @@
                 <article class="project" data-cursor="project">
                     <a href="#" class="proj-link" data-carousel="boarding-pass" data-cursor="view" aria-label="Open Boarding Pass Case Study">
                         <div class="proj-img">
-                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #1a3a5c, #0d1f33, #2a5f8f);"></div>
+                            <div class="proj-img-inner" style="background: url('assets/Boarding Pass/1.jpg') center/cover;"></div>
                         </div>
                         <div class="proj-info">
                             <span class="proj-num">01</span>
@@ -288,7 +288,7 @@
                 <article class="project" data-cursor="project">
                     <a href="#" class="proj-link" data-carousel="genz-duo" data-cursor="view" aria-label="Open Duolingo Concept">
                         <div class="proj-img">
-                            <div class="proj-img-inner" style="background: linear-gradient(135deg, #4caf50, #2e7d32, #81c784);"></div>
+                            <div class="proj-img-inner" style="background: url('assets/GenZ Duo/1.jpg') center/cover;"></div>
                         </div>
                         <div class="proj-info">
                             <span class="proj-num">02</span>
@@ -394,7 +394,7 @@
         <!-- ============ AVIATION / TRAVEL ============ -->
         <section class="aviation" id="aviation" aria-label="Aviation Passport">
             <div class="aviation-inner">
-                <div class="aviation-header">
+                <div class="aviation-header" style="margin-bottom: 40px;">
                     <span class="section-tag">( Logbook )</span>
                     <h2 class="aviation-title">Airborne.</h2>
                     <p class="aviation-desc">A visual record of my enthusiasm for aviation. Mapping my journey, the clouds I've crossed, and the diverse aircraft that have carried me.</p>
@@ -413,15 +413,9 @@
                                     <span class="av-val">41</span>
                                     <span class="av-lbl">Flights</span>
                                 </div>
-                                <div class="av-stat stat-dist" tabindex="0" role="button" aria-label="Convert Miles into Kilometers" title="15,506 Miles = 24,954 Kilometers">
-                                    <div class="dist-front">
-                                        <span class="av-val glitch-text" data-text="15,506">15,506</span>
-                                        <span class="av-lbl">Miles</span>
-                                    </div>
-                                    <div class="dist-back">
-                                        <span class="av-val glitch-text" style="color:var(--accent);" data-text="24,954">24,954</span>
-                                        <span class="av-lbl">Km</span>
-                                    </div>
+                                <div class="av-stat" style="min-width: 100px;">
+                                    <span class="av-val glitch-text" id="distanceVal" data-text="15,506">15,506</span>
+                                    <span class="av-lbl" id="distanceLbl">Miles</span>
                                 </div>
                                 <div class="av-stat">
                                     <span class="av-val">2d 22h</span>

@@ -125,6 +125,33 @@ if (locationText) {
     }, 5000);
 }
 
+// ===== DISTANCE GLITCH =====
+const distanceVal = document.getElementById('distanceVal');
+const distanceLbl = document.getElementById('distanceLbl');
+if (distanceVal && distanceLbl) {
+    const distData = [
+        { val: "15,506", lbl: "Miles", color: "" },
+        { val: "24,954", lbl: "Km", color: "var(--accent)" }
+    ];
+    let distIndex = 0;
+    
+    setTimeout(() => {
+        setInterval(() => {
+            distanceVal.classList.add('glitch-active');
+            setTimeout(() => {
+                distIndex = (distIndex + 1) % distData.length;
+                distanceVal.textContent = distData[distIndex].val;
+                distanceVal.setAttribute('data-text', distData[distIndex].val);
+                distanceVal.style.color = distData[distIndex].color || '';
+                distanceLbl.textContent = distData[distIndex].lbl;
+                setTimeout(() => {
+                    distanceVal.classList.remove('glitch-active');
+                }, 300);
+            }, 400);
+        }, 5500);
+    }, 2000);
+}
+
 // ===== MOBILE MENU =====
 const menuBtn = document.getElementById('menuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
