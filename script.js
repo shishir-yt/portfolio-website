@@ -426,3 +426,18 @@ document.querySelectorAll('[data-carousel]').forEach(el => {
         openLightbox(el.dataset.carousel);
     });
 });
+
+// ===== MOMO EASTER EGG =====
+const momoBtn = document.getElementById('momoEasterEgg');
+const momoToast = document.getElementById('momoToast');
+let momoTimeout;
+
+if (momoBtn && momoToast) {
+    momoBtn.addEventListener('click', () => {
+        clearTimeout(momoTimeout);
+        momoToast.classList.add('show');
+        momoTimeout = setTimeout(() => {
+            momoToast.classList.remove('show');
+        }, 3000);
+    });
+}

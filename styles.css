@@ -497,3 +497,66 @@ body.cursor-project .cursor-follower{opacity:0}
     .films-grid{grid-template-columns:1fr;gap:24px}
     .travel-codes{gap:16px}
 }
+
+/* Momo Easter Egg */
+#momoEasterEgg {
+    transition: color 0.3s var(--ease);
+}
+#momoEasterEgg:hover {
+    color: var(--accent);
+}
+.momo-toast {
+    position: fixed;
+    bottom: -100px;
+    right: 32px;
+    background: var(--surface);
+    color: var(--t1);
+    padding: 16px 24px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 1000;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    pointer-events: none;
+}
+[data-theme="light"] .momo-toast {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.momo-toast.show {
+    bottom: 32px;
+    opacity: 1;
+    pointer-events: auto;
+}
+.momo-emoji {
+    font-size: 2.2rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+.momo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.momo-text strong {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+.momo-text span {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--accent);
+}
+@media (max-width: 600px) {
+    .momo-toast {
+        right: 16px;
+        left: 16px;
+        bottom: -100px;
+    }
+    .momo-toast.show {
+        bottom: 16px;
+    }
+}
