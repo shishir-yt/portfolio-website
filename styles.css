@@ -364,7 +364,7 @@ body.cursor-project .cursor-follower{opacity:0}
 
 .cv-preview-card{aspect-ratio:3/4;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px;cursor:pointer;transition:all 0.5s var(--ease);overflow:hidden}
 .cv-preview-card:hover{transform:rotate(-2deg) scale(1.02);border-color:var(--accent);box-shadow:0 15px 30px rgba(0,0,0,0.2)}
-.cv-img-preview{width:100%;height:100%;object-fit:cover;border-radius:6px;filter:brightness(0.95);transition:filter 0.5s}
+.cv-img-preview{width:100%;height:100%;object-fit:cover;object-position:top;border-radius:6px;filter:brightness(0.95);transition:filter 0.5s}
 .cv-preview-card:hover .cv-img-preview{filter:brightness(1.05)}
 
 /* CV Modal specific */
