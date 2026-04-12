@@ -502,6 +502,7 @@ body.cursor-project .cursor-follower{opacity:0}
 #momoEasterEgg {
     position: relative;
     z-index: 10;
+    cursor: pointer;
     transition: color 0.3s var(--ease);
 }
 #momoEasterEgg:hover {
