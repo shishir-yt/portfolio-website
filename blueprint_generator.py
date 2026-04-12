@@ -59,5 +59,13 @@ for y in range(0, 500, 20):
     line.set('y2', str(y))
 root.insert(0, grid_g) # Insert grid behind the map
 
+# Fill visited countries
+visited = ['np', 'in', 'sg', 'ph']
+for path in root.findall('.//{http://www.w3.org/2000/svg}path'):
+    path_id = path.get('id')
+    if path_id in visited:
+        path.set('fill', '#cd4c1b')
+        path.set('fill-opacity', '1')
+
 tree.write('/Users/shishiracharya-fonenxt/.gemini/antigravity/scratch/portfolio/assets/blueprint-map.svg')
 print('Blueprint SVG Generated')
