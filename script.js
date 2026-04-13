@@ -370,6 +370,9 @@ function openLightbox(id) {
         lightboxIndicators.appendChild(dot);
     });
 
+    const counter = document.getElementById('lightboxCounter');
+    if (counter) counter.textContent = `1 / ${images.length}`;
+    
     currentSlideIndex = 0;
     lightboxTrack.scrollLeft = 0;
     lightboxIndicators.style.transform = 'translateX(0)';
@@ -393,21 +396,11 @@ function scrollToSlide(index) {
 
 lightboxTrack?.addEventListener('scroll', () => {
     const width = lightboxTrack.clientWidth;
+    const totalSlides = lightboxTrack.children.length;
     currentSlideIndex = Math.round(lightboxTrack.scrollLeft / width);
     
-    const dots = Array.from(lightboxIndicators.children);
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSlideIndex);
-    });
-    
-    const totalDots = dots.length;
-    if (totalDots > 4) {
-        const dotsTranslate = -(currentSlideIndex - 1) * 16;
-        const tx = Math.max(-(totalDots - 4) * 16, Math.min(0, dotsTranslate));
-        lightboxIndicators.style.transform = `translateX(${tx}px)`;
-    } else {
-        lightboxIndicators.style.transform = 'translateX(0)';
-    }
+    const counter = document.getElementById('lightboxCounter');
+    if (counter) counter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
 
     // Show indicators on scroll
     const indicatorsWrapper = document.querySelector('.lightbox-indicators-wrapper');
