@@ -512,8 +512,11 @@ if (momoBtn && momoToast) {
 
 // ===== NEPALI NEW YEAR FOOTER =====
 const footerCopy = document.getElementById('footerCopy');
-const footerWrap = document.querySelector('.footer-copy-wrap');
-if (footerCopy && footerWrap) {
+const newYearTrigger = document.getElementById('newYearTrigger');
+const newYearToast = document.getElementById('newYearToast');
+let newYearTimeout;
+
+if (footerCopy && newYearTrigger) {
     const copyData = [
         { en: "© 2026 Shishir Acharya", ne: "© २०८३ शिशिर आचार्य" }
     ];
@@ -533,42 +536,27 @@ if (footerCopy && footerWrap) {
         }, 400);
     }, 6000);
 
-    // Trigger confetti on hover if someone is "curious"
-    footerWrap.addEventListener('mouseenter', () => {
+    // Show Toast and Confetti on click/hover
+    newYearTrigger.addEventListener('click', () => {
+        clearTimeout(newYearTimeout);
+        newYearToast?.classList.add('show');
         if (typeof triggerConfetti === 'function') {
-            // Repurpose the momo confetti logic but slightly different colors for festive feel
             const rect = footerCopy.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top;
-            
-            for (let i = 0; i < 15; i++) {
-                const p = document.createElement('div');
-                const angle = (Math.random() * Math.PI) + Math.PI;
-                const speed = 1.5 + Math.random() * 3;
-                const vx = Math.cos(angle) * speed;
-                const vy = Math.sin(angle) * speed;
-                
-                Object.assign(p.style, {
-                    position: 'fixed',
-                    left: centerX + 'px',
-                    top: centerY + 'px',
-                    width: '5px',
-                    height: '5px',
-                    backgroundColor: ['#d4b578', '#ff7b4d', '#ffffff', '#e8d5b0'][Math.floor(Math.random() * 4)],
-                    borderRadius: '2px',
-                    pointerEvents: 'none',
-                    zIndex: '10000',
-                    transition: 'all 0.8s ease-out'
-                });
-                
-                document.body.appendChild(p);
-                requestAnimationFrame(() => {
-                    p.style.transform = `translate(${vx * 40}px, ${vy * 40}px) rotate(${Math.random() * 360}deg) scale(0)`;
-                    p.style.opacity = '0';
-                });
-                setTimeout(() => p.remove(), 800);
-            }
+            triggerConfetti(25);
+        }
+        newYearTimeout = setTimeout(() => {
+            newYearToast?.classList.remove('show');
+        }, 3000);
+    });
+
+    // Also trigger on first mouseenter for "curiosity"
+    let hasHovered = false;
+    newYearTrigger.addEventListener('mouseenter', () => {
+        if (!hasHovered) {
+            newYearTrigger.click();
+            hasHovered = true;
         }
     });
 }
+
 

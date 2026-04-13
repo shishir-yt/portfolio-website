@@ -442,45 +442,8 @@ body.cursor-project .cursor-follower{opacity:0}
     display: flex;
     flex-direction: column;
 }
-.new-year-msg {
-    position: absolute;
-    bottom: 120%;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    width: 200px;
-    padding: 12px;
-    background: var(--surface);
-    color: var(--t2);
-    font-family: var(--sans);
-    font-size: 0.75rem;
-    line-height: 1.4;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s var(--ease);
-    z-index: 10;
-    pointer-events: none;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    white-space: normal;
-}
-.new-year-msg::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 6px solid transparent;
-    border-top-color: var(--border);
-}
-.footer-copy-wrap:hover .new-year-msg {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
 .footer-tagline{font-family:var(--serif);font-style:italic}
+
 .footer a{transition:color .25s}
 .footer a:hover{color:var(--accent)}
 
