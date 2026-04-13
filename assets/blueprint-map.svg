@@ -1171,7 +1171,7 @@
       <ns1:continent>Oceania</ns1:continent>
     </ns1:desc>
     </path>
-    <path id="sg" d="M534.5,214.8 534.8,215 534.5,215.2 534.1,215.1 534.5,214.8Z" fill="#cd4c1b" fill-opacity="1" stroke="#ffffff" stroke-opacity="0.15" stroke-width="0.4">
+    <path id="sg" d="M534.5,212.8 537.5,215 534.5,217.2 531.5,215 534.5,212.8Z" fill="#cd4c1b" fill-opacity="1" stroke="#ffffff" stroke-opacity="0.15" stroke-width="0.4">
     <ns1:desc>
       <ns1:hc-group>admin0</ns1:hc-group>
       <ns1:hc-middle-x>0.5</ns1:hc-middle-x>

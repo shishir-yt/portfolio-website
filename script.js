@@ -54,7 +54,7 @@ const html = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = themeToggle.querySelector('.theme-icon');
 
-const getTheme = () => localStorage.getItem('theme') || 'dark';
+const getTheme = () => localStorage.getItem('theme') || 'light';
 const setTheme = t => {
     html.dataset.theme = t;
     localStorage.setItem('theme', t);
@@ -266,14 +266,7 @@ const lightboxNext = document.getElementById('lightboxNext');
 
 const carouselData = {
     "boarding-pass": [
-        "assets/Boarding Pass/1.jpg",
-        "assets/Boarding Pass/2.jpg",
-        "assets/Boarding Pass/3.jpg",
-        "assets/Boarding Pass/Boarding Pass RS.png",
-        "assets/Boarding Pass/Boarding Pass MU.png",
-        "assets/Boarding Pass/Boarding Pass.jpg",
-        "assets/Boarding Pass/Boarding Pass.png",
-        "assets/Boarding Pass/Boarding Pass LS.png"
+        "assets/Boarding Pass/1.jpg"
     ],
     "ai-and-autopilot": [
         "assets/AI and Autopilot/1.jpg",
@@ -347,13 +340,10 @@ const carouselData = {
         "assets/Accessible Theater/10.jpg"
     ],
     "genz-duo": [
-        "assets/GenZ Duo/DUOLINGO1.jpg",
-        "assets/GenZ Duo/Post1.jpg",
+        "assets/GenZ Duo/1.jpg",
         "assets/GenZ Duo/2.jpg",
-        "assets/GenZ Duo/Post2.jpg",
-        "assets/GenZ Duo/Post3.jpg",
         "assets/GenZ Duo/3.jpg",
-        "assets/GenZ Duo/Post4.jpg"
+        "assets/GenZ Duo/4.jpg"
     ]
 };
 
@@ -381,6 +371,7 @@ function openLightbox(id) {
     });
 
     currentSlideIndex = 0;
+    lightboxTrack.scrollLeft = 0;
     lightboxIndicators.style.transform = 'translateX(0)';
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -426,6 +417,18 @@ document.querySelectorAll('[data-carousel]').forEach(el => {
         openLightbox(el.dataset.carousel);
     });
 });
+
+// ===== WEATHER TOOLTIP MOBILE =====
+const weatherBadge = document.querySelector('.weather-badge');
+if (weatherBadge) {
+    weatherBadge.addEventListener('click', (e) => {
+        if (window.innerWidth <= 900) {
+            weatherBadge.classList.toggle('active');
+            e.stopPropagation();
+        }
+    });
+    document.addEventListener('click', () => weatherBadge.classList.remove('active'));
+}
 
 // ===== MOMO EASTER EGG =====
 const momoBtn = document.getElementById('momoEasterEgg');
