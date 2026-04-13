@@ -198,8 +198,10 @@ const revealObs = new IntersectionObserver(entries => {
 
 revealEls.forEach(el => revealObs.observe(el));
 
-// ===== CLOCK =====
+// ===== CLOCK & WEATHER =====
 const clockEl = document.getElementById('clock');
+const weatherInfo = document.getElementById('weatherInfo');
+
 const updateClock = () => {
     if (!clockEl) return;
     clockEl.textContent = new Intl.DateTimeFormat('en-US', {
@@ -208,8 +210,35 @@ const updateClock = () => {
         hour12: false
     }).format(new Date()) + ' NPT';
 };
+
+const getWeatherIcon = (code) => {
+    if (code === 0) return '☀️'; // Clear
+    if ([1, 2, 3].includes(code)) return '🌤️'; // Partly cloudy
+    if ([45, 48].includes(code)) return '🌫️'; // Fog
+    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return '🌧️'; // Rain/Drizzle
+    if ([71, 73, 75, 77, 85, 86].includes(code)) return '❄️'; // Snow
+    if ([95, 96, 99].includes(code)) return '⛈️'; // Thunderstorm
+    return '⛅';
+};
+
+const updateWeather = async () => {
+    if (!weatherInfo) return;
+    try {
+        const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=27.7172&longitude=85.3240&current=temperature_2m,weather_code');
+        const data = await response.json();
+        const temp = Math.round(data.current.temperature_2m);
+        const icon = getWeatherIcon(data.current.weather_code);
+        weatherInfo.textContent = `${icon} ${temp}°C`;
+    } catch (err) {
+        console.error('Weather fetch failed:', err);
+    }
+};
+
 updateClock();
 setInterval(updateClock, 1000);
+updateWeather();
+setInterval(updateWeather, 900000); // Update every 15 minutes
+
 
 // ===== SMOOTH SCROLL =====
 document.querySelectorAll('a[href^="#"]').forEach(a => {
