@@ -109,15 +109,19 @@ scrollTopBtn?.addEventListener('click', () => {
 // ===== LOCATION GLITCH =====
 const locationText = document.getElementById('locationText');
 if (locationText) {
-    const locations = ["Kathmandu, Nepal", "Pokhara, Nepal"];
+    const locations = [
+        { name: "Kathmandu, Nepal", type: "Work" },
+        { name: "Pokhara, Nepal", type: "Home" }
+    ];
     let locIndex = 0;
     
     setInterval(() => {
         locationText.classList.add('glitch-active');
         setTimeout(() => {
             locIndex = (locIndex + 1) % locations.length;
-            locationText.textContent = locations[locIndex];
-            locationText.setAttribute('data-text', locations[locIndex]);
+            const fullText = `${locations[locIndex].name} (${locations[locIndex].type})`;
+            locationText.textContent = fullText;
+            locationText.setAttribute('data-text', fullText);
             setTimeout(() => {
                 locationText.classList.remove('glitch-active');
             }, 300);
@@ -353,8 +357,6 @@ function openLightbox(id) {
     if (!carouselData[id] || !lightboxTrack) return;
     const images = carouselData[id];
     lightboxTrack.innerHTML = '';
-    lightboxIndicators.innerHTML = '';
-    
     images.forEach((src, index) => {
         const slide = document.createElement('div');
         slide.className = 'lightbox-slide';
@@ -363,11 +365,6 @@ function openLightbox(id) {
         img.alt = `Slide ${index + 1}`;
         slide.appendChild(img);
         lightboxTrack.appendChild(slide);
-
-        const dot = document.createElement('div');
-        dot.className = `lightbox-dot ${index === 0 ? 'active' : ''}`;
-        dot.addEventListener('click', () => scrollToSlide(index));
-        lightboxIndicators.appendChild(dot);
     });
 
     const counter = document.getElementById('lightboxCounter');
@@ -375,7 +372,6 @@ function openLightbox(id) {
     
     currentSlideIndex = 0;
     lightboxTrack.scrollLeft = 0;
-    lightboxIndicators.style.transform = 'translateX(0)';
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
     
