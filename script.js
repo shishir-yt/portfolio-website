@@ -290,7 +290,6 @@ const carouselData = {
         "assets/Bilingual Signages/1.jpg",
         "assets/Bilingual Signages/2.jpg",
         "assets/Bilingual Signages/3.jpg",
-        "assets/Bilingual Signages/4test.jpg",
         "assets/Bilingual Signages/4.jpg",
         "assets/Bilingual Signages/5.jpg",
         "assets/Bilingual Signages/6.jpg",
