@@ -375,6 +375,14 @@ function openLightbox(id) {
     lightboxIndicators.style.transform = 'translateX(0)';
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    // Show indicators momentarily
+    const indicatorsWrapper = document.querySelector('.lightbox-indicators-wrapper');
+    if (indicatorsWrapper) {
+        indicatorsWrapper.classList.add('show');
+        clearTimeout(window.indicatorTimeout);
+        window.indicatorTimeout = setTimeout(() => indicatorsWrapper.classList.remove('show'), 2500);
+    }
 }
 
 function scrollToSlide(index) {
@@ -394,12 +402,19 @@ lightboxTrack?.addEventListener('scroll', () => {
     
     const totalDots = dots.length;
     if (totalDots > 4) {
-        const maxTranslate = -(totalDots - 4) * 16;
-        const desiredTranslate = -(currentSlideIndex - 1) * 16;
-        const tx = Math.max(maxTranslate, Math.min(0, desiredTranslate));
+        const dotsTranslate = -(currentSlideIndex - 1) * 16;
+        const tx = Math.max(-(totalDots - 4) * 16, Math.min(0, dotsTranslate));
         lightboxIndicators.style.transform = `translateX(${tx}px)`;
     } else {
         lightboxIndicators.style.transform = 'translateX(0)';
+    }
+
+    // Show indicators on scroll
+    const indicatorsWrapper = document.querySelector('.lightbox-indicators-wrapper');
+    if (indicatorsWrapper) {
+        indicatorsWrapper.classList.add('show');
+        clearTimeout(window.indicatorTimeout);
+        window.indicatorTimeout = setTimeout(() => indicatorsWrapper.classList.remove('show'), 2000);
     }
 });
 
@@ -430,17 +445,79 @@ if (weatherBadge) {
     document.addEventListener('click', () => weatherBadge.classList.remove('active'));
 }
 
-// ===== MOMO EASTER EGG =====
+// ===== GAMIFIED MOMO EASTER EGG =====
 const momoBtn = document.getElementById('momoEasterEgg');
 const momoToast = document.getElementById('momoToast');
 let momoTimeout;
+let momoClicks = parseInt(localStorage.getItem('momo_happiness') || '0');
+let momoLastClick = 0;
+
+function triggerConfetti(amount = 20) {
+    const btnRect = momoBtn.getBoundingClientRect();
+    const centerX = btnRect.left + btnRect.width / 2;
+    const centerY = btnRect.top;
+
+    for (let i = 0; i < amount; i++) {
+        const p = document.createElement('div');
+        p.className = 'momo-particle';
+        const angle = (Math.random() * Math.PI) + Math.PI;
+        const speed = 2 + Math.random() * 4;
+        const vx = Math.cos(angle) * speed;
+        const vy = Math.sin(angle) * speed;
+        
+        Object.assign(p.style, {
+            position: 'fixed',
+            left: centerX + 'px',
+            top: centerY + 'px',
+            width: '6px',
+            height: '6px',
+            backgroundColor: ['#d4b578', '#fff', '#c45c4a', '#7a5a0d'][Math.floor(Math.random() * 4)],
+            borderRadius: '50%',
+            pointerEvents: 'none',
+            zIndex: '10000',
+            transition: 'all 1s ease-out'
+        });
+        
+        document.body.appendChild(p);
+        
+        requestAnimationFrame(() => {
+            p.style.transform = `translate(${vx * 50}px, ${vy * 50}px) scale(0)`;
+            p.style.opacity = '0';
+        });
+        
+        setTimeout(() => p.remove(), 1000);
+    }
+}
 
 if (momoBtn && momoToast) {
+    const states = [
+        { title: "You found the momo", sub: "+10 happiness", particles: 15 },
+        { title: "You really like momo huh", sub: "+20 happiness", particles: 25 },
+        { title: "Okay... now you're just farming happiness", sub: "+30 happiness", particles: 40 },
+        { title: "Alright, that's enough momo for now", sub: "Momo storage full", particles: 5 }
+    ];
+
     momoBtn.addEventListener('click', () => {
+        const now = Date.now();
+        if (now - momoLastClick < 400) return;
+        momoLastClick = now;
+
+        momoClicks++;
+        localStorage.setItem('momo_happiness', momoClicks % 4); // Keep in loop but reset sometimes
+
+        const stateIndex = Math.min(momoClicks - 1, states.length - 1);
+        const state = states[stateIndex];
+
         clearTimeout(momoTimeout);
+        momoToast.querySelector('strong').textContent = state.title;
+        momoToast.querySelector('span').textContent = state.sub;
         momoToast.classList.add('show');
+        
+        triggerConfetti(state.particles);
+
         momoTimeout = setTimeout(() => {
             momoToast.classList.remove('show');
-        }, 3000);
+            if (momoClicks >= 4) momoClicks = 0; // Reset for loop
+        }, 2500);
     });
 }
