@@ -510,3 +510,66 @@ if (momoBtn && momoToast) {
         }, 2500);
     });
 }
+
+// ===== NEPALI NEW YEAR FOOTER =====
+const footerCopy = document.getElementById('footerCopy');
+const footerWrap = document.querySelector('.footer-copy-wrap');
+if (footerCopy && footerWrap) {
+    const copyData = [
+        { en: "© 2026 Shishir Acharya", ne: "© २०८३ शिशिर आचार्य" }
+    ];
+    let isNepali = false;
+    
+    // Glitch loop every 6 seconds
+    setInterval(() => {
+        footerCopy.classList.add('glitch-active');
+        setTimeout(() => {
+            isNepali = !isNepali;
+            const newText = isNepali ? copyData[0].ne : copyData[0].en;
+            footerCopy.textContent = newText;
+            footerCopy.setAttribute('data-text', newText);
+            setTimeout(() => {
+                footerCopy.classList.remove('glitch-active');
+            }, 300);
+        }, 400);
+    }, 6000);
+
+    // Trigger confetti on hover if someone is "curious"
+    footerWrap.addEventListener('mouseenter', () => {
+        if (typeof triggerConfetti === 'function') {
+            // Repurpose the momo confetti logic but slightly different colors for festive feel
+            const rect = footerCopy.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top;
+            
+            for (let i = 0; i < 15; i++) {
+                const p = document.createElement('div');
+                const angle = (Math.random() * Math.PI) + Math.PI;
+                const speed = 1.5 + Math.random() * 3;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed;
+                
+                Object.assign(p.style, {
+                    position: 'fixed',
+                    left: centerX + 'px',
+                    top: centerY + 'px',
+                    width: '5px',
+                    height: '5px',
+                    backgroundColor: ['#d4b578', '#ff7b4d', '#ffffff', '#e8d5b0'][Math.floor(Math.random() * 4)],
+                    borderRadius: '2px',
+                    pointerEvents: 'none',
+                    zIndex: '10000',
+                    transition: 'all 0.8s ease-out'
+                });
+                
+                document.body.appendChild(p);
+                requestAnimationFrame(() => {
+                    p.style.transform = `translate(${vx * 40}px, ${vy * 40}px) rotate(${Math.random() * 360}deg) scale(0)`;
+                    p.style.opacity = '0';
+                });
+                setTimeout(() => p.remove(), 800);
+            }
+        }
+    });
+}
+
