@@ -165,8 +165,8 @@ body.cursor-project .cursor-follower{opacity:0}
 .weather-item{position:relative}
 .weather-badge{display:inline-flex;align-items:center;background:var(--bg2);padding:4px 10px;border-radius:20px;border:1px solid var(--border);font-size:0.75rem;color:var(--t2);cursor:help;transition:all 0.3s var(--ease)}
 .weather-badge:hover{background:var(--surface);border-color:var(--accent);color:var(--t1)}
-.weather-tooltip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(10px);width:220px;background:var(--surface);color:var(--t2);padding:12px;border-radius:10px;border:1px solid var(--border);font-size:0.75rem;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,0.2);opacity:0;visibility:hidden;transition:all 0.3s var(--ease);z-index:100;text-align:center;pointer-events:none}
-.weather-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--border)}
+.weather-tooltip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(10px);width:200px;padding:12px;background:var(--surface);color:var(--t2);font-family:var(--sans);font-size:0.75rem;line-height:1.4;border-radius:8px;border:1px solid var(--border);box-shadow:0 10px 30px rgba(0,0,0,0.4);opacity:0;visibility:hidden;transition:all 0.3s var(--ease);z-index:100;text-align:center;pointer-events:none}
+.weather-tooltip::after{display:none}
 .weather-badge:hover .weather-tooltip, 
 .weather-badge:active .weather-tooltip,
 .weather-badge.active .weather-tooltip {opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
