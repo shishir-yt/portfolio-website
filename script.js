@@ -54,17 +54,26 @@ const html = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
 const themeIcon = themeToggle.querySelector('.theme-icon');
 
-const getTheme = () => localStorage.getItem('theme') || 'light';
-const setTheme = t => {
+const getTheme = () => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+    // Auto-adapt to time if no preference saved
+    const hour = new Date().getHours();
+    return (hour < 7 || hour >= 19) ? 'dark' : 'light'; // Dark from 7 PM to 7 AM
+};
+
+const setTheme = (t, save = true) => {
     html.dataset.theme = t;
-    localStorage.setItem('theme', t);
+    if (save) localStorage.setItem('theme', t);
     themeIcon.textContent = t === 'dark' ? '◐' : '◑';
     themeToggle.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
 };
-setTheme(getTheme());
+
+setTheme(getTheme(), !!localStorage.getItem('theme'));
 
 themeToggle.addEventListener('click', () => {
-    setTheme(html.dataset.theme === 'dark' ? 'light' : 'dark');
+    const newTheme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
 });
 
 // ===== NAV SCROLL & SCROLL TOP =====
@@ -89,12 +98,26 @@ window.addEventListener('scroll', () => {
 
     if (!scrollTick) {
         requestAnimationFrame(() => {
-            // Apply blurred background if not at absolute top
             nav.classList.toggle('scrolled', currentY > 50);
-
-            // Re-evaluating navigation hide/show logic - user wants it fixed or top-left.
-            // Let's keep it fixed at top for usability but premium design.
             
+            // Highlight nav items on scroll
+            const sections = document.querySelectorAll('section[id], main[id]');
+            let currentSec = "";
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (currentY >= sectionTop - 100) {
+                    currentSec = section.getAttribute("id");
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSec}`) {
+                    link.classList.add('active');
+                }
+            });
+
             lastY = currentY;
             scrollTick = false;
         });
@@ -191,10 +214,32 @@ const revealObs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            // If contact heading, start text rotation
+            if (entry.target.classList.contains('contact-heading')) {
+                startContactRotation(entry.target);
+            }
             revealObs.unobserve(entry.target);
         }
     });
 }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+function startContactRotation(heading) {
+    const em = heading.querySelector('em');
+    if (!em) return;
+    const texts = ["idea", "project", "vision", "product", "story"];
+    let idx = 0;
+    
+    setInterval(() => {
+        em.style.opacity = '0';
+        em.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+            idx = (idx + 1) % texts.length;
+            em.textContent = texts[idx];
+            em.style.opacity = '1';
+            em.style.transform = 'translateY(0)';
+        }, 500);
+    }, 3000);
+}
 
 revealEls.forEach(el => revealObs.observe(el));
 
@@ -565,27 +610,9 @@ if (footerCopy && newYearTrigger) {
         }, 400);
     }, 6000);
 
-    // Show Toast and Confetti on click/hover
-    newYearTrigger.addEventListener('click', () => {
-        clearTimeout(newYearTimeout);
-        newYearToast?.classList.add('show');
-        if (typeof triggerConfetti === 'function') {
-            const rect = footerCopy.getBoundingClientRect();
-            triggerConfetti(25);
-        }
-        newYearTimeout = setTimeout(() => {
-            newYearToast?.classList.remove('show');
-        }, 3000);
-    });
-
-    // Also trigger on first mouseenter for "curiosity"
-    let hasHovered = false;
-    newYearTrigger.addEventListener('mouseenter', () => {
-        if (!hasHovered) {
-            newYearTrigger.click();
-            hasHovered = true;
-        }
-    });
+    // Show Toast and Confetti on first scroll to bottom? 
+    // No, user wants to remove HNY animation and interaction.
+    // Keeping only the date toggle logic below.
 }
 
 

@@ -99,7 +99,8 @@ body.cursor-project .cursor-follower{opacity:0}
 .nav-link{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--t2);transition:color .3s;position:relative}
 .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width .3s var(--ease)}
 .nav-link:hover::after{width:100%}
-.nav-link:hover{color:var(--t1)}
+.nav-link:hover, .nav-link.active{color:var(--t1)}
+.nav-link.active::after{width:100%}
 
 .scroll-top-indicator{position:fixed;bottom:32px;right:40px;width:40px;height:40px;display:flex;justify-content:center;align-items:center;cursor:pointer;opacity:0;visibility:hidden;transition:all 0.4s var(--ease);transform:translateY(10px);z-index:99}
 .scroll-top-indicator.visible{opacity:1;visibility:visible;transform:translateY(0)}
@@ -423,7 +424,7 @@ body.cursor-project .cursor-follower{opacity:0}
 
 .contact-inner{max-width:1100px;margin:0 auto;text-align:center}
 .contact-heading{font-family:var(--serif);font-size:clamp(3rem,9vw,7.5rem);font-weight:400;line-height:1;margin:16px 0 48px;letter-spacing:-0.02em}
-.contact-heading em{font-style:italic;color:var(--accent);border-bottom:3px solid rgba(212,181,120,0.2)}
+.contact-heading em{font-style:italic;color:var(--accent);border-bottom:none;transition:opacity 0.5s ease, transform 0.5s ease;display:inline-block}
 .ch-line{display:block}
 .ch-line em{font-style:italic;color:var(--accent)}
 .contact-email{display:inline-flex;align-items:center;gap:12px;font-size:clamp(.9rem,1.5vw,1.2rem);font-weight:500;color:var(--accent);border:1px solid var(--border);padding:16px 32px;border-radius:980px;transition:all .4s var(--ease)}
