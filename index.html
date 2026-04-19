@@ -37,6 +37,14 @@
     <!-- Film Grain Overlay -->
     <div class="grain" aria-hidden="true"></div>
 
+    <!-- Aurora & Stars Background (Dark Mode only) -->
+    <div class="aurora-bg" aria-hidden="true">
+        <div class="aurora aurora-1"></div>
+        <div class="aurora aurora-2"></div>
+        <div class="aurora aurora-3"></div>
+        <div class="stars-container" id="starsContainer"></div>
+    </div>
+
     <!-- Navigation -->
     <nav class="nav" id="nav" aria-label="Main">
         <div class="nav-left">
@@ -47,8 +55,8 @@
         </div>
         <div class="nav-right-wrap">
             <div class="nav-right">
-                <a href="#work" class="nav-link" data-cursor="link">Work</a>
                 <a href="#about" class="nav-link" data-cursor="link">About</a>
+                <a href="#work" class="nav-link" data-cursor="link">Work</a>
                 <a href="#films" class="nav-link" data-cursor="link">Films</a>
                 <a href="#journal" class="nav-link" data-cursor="link">Journal</a>
                 <a href="#contact" class="nav-link" data-cursor="link">Contact</a>
@@ -670,8 +678,8 @@
         <section class="contact" id="contact" aria-label="Get in touch">
             <div class="contact-inner">
                 <span class="section-tag">( Contact )</span>
-                <h2 class="contact-heading">
-                    Have an <em>idea</em>?<br>Reach out.
+                <h2 class="contact-heading" id="contactHeading">
+                    <span class="ch-text">Have an <em>idea</em>?</span><br>Reach out.
                 </h2>
                 <a href="mailto:shishiracharya35@gmail.com" class="contact-email" data-cursor="link">
                     Say Hello

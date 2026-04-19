@@ -71,6 +71,33 @@ const setTheme = (t, save = true) => {
 
 setTheme(getTheme(), !!localStorage.getItem('theme'));
 
+// Shooting Stars logic
+const starsContainer = document.getElementById('starsContainer');
+function createShootingStar() {
+    if (html.dataset.theme !== 'dark') return;
+    
+    const star = document.createElement('div');
+    star.className = 'star';
+    const trail = document.createElement('div');
+    trail.className = 'star-trail';
+    star.appendChild(trail);
+    
+    const x = Math.random() * window.innerWidth;
+    const y = Math.random() * (window.innerHeight * 0.5);
+    
+    star.style.left = x + 'px';
+    star.style.top = y + 'px';
+    star.style.animation = `shooting-star ${1.5 + Math.random()}s linear forwards`;
+    
+    starsContainer.appendChild(star);
+    setTimeout(() => star.remove(), 3000);
+}
+
+// Rarely trigger shooting stars
+setInterval(() => {
+    if (Math.random() > 0.7) createShootingStar();
+}, 8000);
+
 themeToggle.addEventListener('click', () => {
     const newTheme = html.dataset.theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
@@ -224,21 +251,28 @@ const revealObs = new IntersectionObserver(entries => {
 }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
 function startContactRotation(heading) {
-    const em = heading.querySelector('em');
-    if (!em) return;
-    const texts = ["idea", "project", "vision", "product", "story"];
+    const textSpan = heading.querySelector('.ch-text');
+    if (!textSpan) return;
+    
+    const phrases = [
+        "Have an <em>idea</em>?",
+        "Share a <em>vision</em>?",
+        "Need a <em>design</em>?",
+        "Build a <em>product</em>?",
+        "Start a <em>project</em>?"
+    ];
     let idx = 0;
     
     setInterval(() => {
-        em.style.opacity = '0';
-        em.style.transform = 'translateY(10px)';
+        textSpan.classList.add('glitch-active');
         setTimeout(() => {
-            idx = (idx + 1) % texts.length;
-            em.textContent = texts[idx];
-            em.style.opacity = '1';
-            em.style.transform = 'translateY(0)';
-        }, 500);
-    }, 3000);
+            idx = (idx + 1) % phrases.length;
+            textSpan.innerHTML = phrases[idx];
+            setTimeout(() => {
+                textSpan.classList.remove('glitch-active');
+            }, 300);
+        }, 400);
+    }, 4500);
 }
 
 revealEls.forEach(el => revealObs.observe(el));

@@ -80,6 +80,75 @@ body.cursor-project .cursor-follower{opacity:0}
 @keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-5%,-10%)}20%{transform:translate(-15%,5%)}30%{transform:translate(7%,-12%)}40%{transform:translate(-5%,14%)}50%{transform:translate(-15%,10%)}60%{transform:translate(15%,0%)}70%{transform:translate(0%,10%)}80%{transform:translate(3%,15%)}90%{transform:translate(-10%,10%)}}
 [data-theme="light"] .grain{opacity:.025}
 
+/* ===== AURORA BACKGROUND ===== */
+.aurora-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--bg);
+    opacity: 0;
+    transition: opacity 1.5s var(--ease);
+}
+[data-theme="dark"] .aurora-bg { opacity: 0.4; }
+
+.aurora {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: -25%;
+    left: -25%;
+    filter: blur(80px);
+    mix-blend-mode: screen;
+    animation: aurora-move 20s infinite alternate var(--ease);
+}
+
+.aurora-1 {
+    background: radial-gradient(circle at 20% 30%, rgba(20, 184, 166, 0.15), transparent 50%);
+    animation-duration: 25s;
+}
+.aurora-2 {
+    background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.1), transparent 50%);
+    animation-duration: 30s;
+    animation-delay: -5s;
+}
+.aurora-3 {
+    background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.08), transparent 60%);
+    animation-duration: 35s;
+    animation-delay: -10s;
+}
+
+@keyframes aurora-move {
+    0% { transform: scale(1) rotate(0deg) translate(0, 0); }
+    100% { transform: scale(1.1) rotate(3deg) translate(2%, 3%); }
+}
+
+/* Shooting Stars */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 1px #fff;
+    opacity: 0;
+    pointer-events: none;
+}
+.star-trail {
+    position: absolute;
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, #fff, transparent);
+    transform-origin: left center;
+}
+@keyframes shooting-star {
+    0% { transform: translate(0, 0) rotate(-35deg); opacity: 0; }
+    10% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { transform: translate(-300px, 210px) rotate(-35deg); opacity: 0; }
+}
+
 /* ===== NAVIGATION ===== */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:32px 40px;transition:all 0.4s var(--ease)}
 .nav.scrolled{background:rgba(10,10,10,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding:16px 40px;border-bottom:1px solid var(--border)}
