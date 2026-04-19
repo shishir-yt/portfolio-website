@@ -578,7 +578,8 @@ body.cursor-project .cursor-follower{opacity:0}
     .scroll-top-indicator{bottom:20px;right:20px}
 }
 @media(max-width:600px){
-    .hero-name{font-size:clamp(3rem,16vw,5rem)}
+    .hero-name{font-size:clamp(3.2rem, 16vw, 4.8rem);line-height:1.2;letter-spacing:0}
+    .char-wrap{padding:0.3em 0.2em 0.6em 0.2em;margin:-0.3em -0.2em -0.6em -0.2em}
     .contact-heading{font-size:clamp(2rem,10vw,4rem)}
     .about-statement{font-size:clamp(1.3rem,5vw,1.8rem)}
     .films-grid{grid-template-columns:1fr;gap:24px}
