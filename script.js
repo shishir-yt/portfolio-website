@@ -268,6 +268,8 @@ function startContactRotation(heading) {
         setTimeout(() => {
             idx = (idx + 1) % phrases.length;
             textSpan.innerHTML = phrases[idx];
+            // Ensure data-text is updated for the glitch effect to match
+            textSpan.setAttribute('data-text', textSpan.textContent);
             setTimeout(() => {
                 textSpan.classList.remove('glitch-active');
             }, 300);
