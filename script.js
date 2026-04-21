@@ -762,12 +762,20 @@ if (footerCopy && newYearTrigger) {
     function updateVolume(val) {
         audio.volume = val / 100;
         if (volFill) volFill.style.height = val + '%';
+        
+        const volOn = muteBtn?.querySelector('.vol-on');
+        const volOff = muteBtn?.querySelector('.vol-off');
+        
         if (val == 0) {
             state.isMuted = true;
             muteBtn?.classList.add('muted');
+            if (volOn) volOn.style.display = 'none';
+            if (volOff) volOff.style.display = 'block';
         } else {
             state.isMuted = false;
             muteBtn?.classList.remove('muted');
+            if (volOn) volOn.style.display = 'block';
+            if (volOff) volOff.style.display = 'none';
         }
     }
 
@@ -814,12 +822,22 @@ if (footerCopy && newYearTrigger) {
         state.isMuted = !state.isMuted;
         audio.muted = state.isMuted;
         muteBtn?.classList.toggle('muted', state.isMuted);
+        
+        const volOn = muteBtn.querySelector('.vol-on');
+        const volOff = muteBtn.querySelector('.vol-off');
+        
         if (state.isMuted) {
             updateVolume(0);
-            volSlider.value = 0;
+            if (volSlider) volSlider.value = 0;
+            if (volOn) volOn.style.display = 'none';
+            if (volOff) volOff.style.display = 'block';
         } else {
-            updateVolume(state.currentVolume);
-            volSlider.value = state.currentVolume;
+            // Restore to last volume or default to 100 if it was 0
+            const restoreVol = state.currentVolume > 0 ? state.currentVolume : 100;
+            updateVolume(restoreVol);
+            if (volSlider) volSlider.value = restoreVol;
+            if (volOn) volOn.style.display = 'block';
+            if (volOff) volOff.style.display = 'none';
         }
     });
 
