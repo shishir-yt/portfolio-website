@@ -710,9 +710,23 @@ if (footerCopy && newYearTrigger) {
         
         if (playing) {
             initWebAudio();
-            if (audioCtx?.state === 'suspended') audioCtx.resume();
             
-            audio.play().catch(e => console.log('Audio blocked', e));
+            const startPlay = () => {
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(e => {
+                        console.error('Audio playback failed/blocked:', e);
+                        setPlayState(false);
+                    });
+                }
+            };
+
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume().then(startPlay);
+            } else {
+                startPlay();
+            }
+
             if (playI)  playI.style.display = 'none';
             if (pauseI) pauseI.style.display = 'block';
             player?.classList.add('is-playing');
@@ -741,7 +755,11 @@ if (footerCopy && newYearTrigger) {
             return;
         }
 
+        // Reset progress
+        if (progressBar) progressBar.style.width = '0%';
+
         audio.src = src;
+        // load() is helpful when switching sources for MediaElementSource
         audio.load();
 
         if (trackImg)    trackImg.src = img;
@@ -749,9 +767,6 @@ if (footerCopy && newYearTrigger) {
         if (trackArtist) trackArtist.textContent = artist;
         if (heroTrack)   heroTrack.textContent = title;
         
-        if (progressBar) progressBar.style.width = '0%';
-        if (progressThumb) progressThumb.style.left = '0%';
-
         setPlayState(true);
         showPlayer();
 
@@ -778,12 +793,14 @@ if (footerCopy && newYearTrigger) {
 
     // --- Volume Logic ---
     function updateVolume(val) {
-        // Fallback for non-iOS
         const volVal = val / 100;
-        audio.volume = volVal;
-        // Solution for iOS / Touch
+        
         if (gainNode) {
+            // Solution for iOS / Touch and preventing double attenuation
             gainNode.gain.setTargetAtTime(volVal, audioCtx.currentTime, 0.02);
+            audio.volume = 1; 
+        } else {
+            audio.volume = volVal;
         }
 
         if (volFill) volFill.style.height = val + '%';
