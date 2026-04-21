@@ -277,7 +277,7 @@ body.cursor-hello .cursor{opacity:0}
 /* Refined Flyout (Above) */
 .spotify-flyout {
     position: absolute !important; bottom: calc(100% + 20px) !important; left: 0 !important;
-    width: 280px; background: rgba(15, 15, 15, 0.96); backdrop-filter: blur(32px);
+    width: 280px; max-width: calc(100vw - 40px); background: rgba(15, 15, 15, 0.96); backdrop-filter: blur(32px);
     border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px;
     box-shadow: 0 40px 100px rgba(0,0,0,0.8); padding: 20px;
     opacity: 0; visibility: hidden; transform: translateY(10px) scale(0.98);

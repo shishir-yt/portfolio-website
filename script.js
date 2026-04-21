@@ -779,10 +779,11 @@ if (footerCopy && newYearTrigger) {
     // --- Volume Logic ---
     function updateVolume(val) {
         // Fallback for non-iOS
-        audio.volume = val / 100;
+        const volVal = val / 100;
+        audio.volume = volVal;
         // Solution for iOS / Touch
         if (gainNode) {
-            gainNode.gain.setTargetAtTime(val / 100, audioCtx.currentTime, 0.02);
+            gainNode.gain.setTargetAtTime(volVal, audioCtx.currentTime, 0.02);
         }
 
         if (volFill) volFill.style.height = val + '%';
@@ -815,6 +816,17 @@ if (footerCopy && newYearTrigger) {
         track.addEventListener('click', (e) => {
             e.stopPropagation();
             playTrack(track);
+            
+            // On mobile, close flyout after selection
+            if (window.innerWidth <= 900) {
+                const flyout = $('spotifyFlyout');
+                if (flyout) {
+                    flyout.style.opacity = '0';
+                    flyout.style.visibility = 'hidden';
+                    flyout.style.pointerEvents = 'none';
+                    flyout.style.transform = 'translateY(10px) scale(0.98)';
+                }
+            }
         });
     });
 
@@ -825,27 +837,48 @@ if (footerCopy && newYearTrigger) {
             const isBadge = e.target.closest('.spotify-badge');
             if (isBadge) {
                 const flyout = $('spotifyFlyout');
-                const isVisible = flyout.style.opacity === '1';
-                flyout.style.opacity = isVisible ? '0' : '1';
-                flyout.style.visibility = isVisible ? 'hidden' : 'visible';
-                flyout.style.transform = isVisible ? 'translateY(10px) scale(0.98)' : 'translateY(0) scale(1)';
+                if (!flyout) return;
+                
+                // Use computed style or a class for more robust checking
+                const isVisible = flyout.classList.contains('js-visible');
+                
+                if (isVisible) {
+                    flyout.classList.remove('js-visible');
+                    flyout.style.opacity = '0';
+                    flyout.style.visibility = 'hidden';
+                    flyout.style.pointerEvents = 'none';
+                    flyout.style.transform = 'translateY(10px) scale(0.98)';
+                } else {
+                    flyout.classList.add('js-visible');
+                    flyout.style.opacity = '1';
+                    flyout.style.visibility = 'visible';
+                    flyout.style.pointerEvents = 'all';
+                    flyout.style.transform = 'translateY(0) scale(1)';
+                }
                 return;
             }
         }
 
-        if (audio.src && audio.src !== window.location.href) {
-            player?.classList.toggle('active');
+        // If clicking meta and music is loaded, show player
+        if (audio.src && !audio.src.endsWith(window.location.pathname) && audio.src !== window.location.href) {
+            showPlayer();
         }
     });
 
     // --- Controls ---
     const handlePlayPause = (e) => {
         if (e) e.preventDefault();
-        if (audio.src && audio.src !== window.location.href) setPlayState(!state.isPlaying);
+        // Check if a source is actually set
+        const hasSource = audio.src && !audio.src.endsWith(window.location.pathname) && audio.src !== window.location.href;
+        if (hasSource) {
+            setPlayState(!state.isPlaying);
+        }
     };
-    playPauseBtn?.addEventListener('pointerdown', handlePlayPause);
     
-    closeBtn?.addEventListener('pointerdown', (e) => {
+    // Use 'click' for better mobile audio unlocking
+    playPauseBtn?.addEventListener('click', handlePlayPause);
+    
+    closeBtn?.addEventListener('click', (e) => {
         e.preventDefault();
         closePlayer();
     });
@@ -864,7 +897,6 @@ if (footerCopy && newYearTrigger) {
             if (volOn) volOn.style.display = 'none';
             if (volOff) volOff.style.display = 'block';
         } else {
-            // Restore to last volume or default to 100 if it was 0
             const restoreVol = state.currentVolume > 0 ? state.currentVolume : 100;
             updateVolume(restoreVol);
             if (volSlider) volSlider.value = restoreVol;
@@ -890,17 +922,26 @@ if (footerCopy && newYearTrigger) {
     audio.addEventListener('pause', () => {
         cancelAnimationFrame(progressRaf);
     });
-    audio.addEventListener('ended', () => closePlayer());
+    audio.addEventListener('ended', () => {
+        // Option: Loop or play next? For now, just reset
+        setPlayState(false);
+        audio.currentTime = 0;
+    });
 
     // --- Seek ---
     let isDragging = false;
     const seek = (e) => {
         const rect = progressWrap.getBoundingClientRect();
-        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        if (clientX === undefined) return;
+        
+        const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
         if (progressBar) progressBar.style.width = (pct * 100) + '%';
-        if (!isDragging) audio.currentTime = pct * audio.duration;
+        if (!isDragging && audio.duration) audio.currentTime = pct * audio.duration;
     };
+    
     progressWrap?.addEventListener('pointerdown', (e) => { 
+        if (!audio.src || !audio.duration) return;
         isDragging = true; 
         progressWrap.setPointerCapture(e.pointerId);
         seek(e); 
