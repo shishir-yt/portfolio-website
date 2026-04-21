@@ -652,3 +652,202 @@ if (footerCopy && newYearTrigger) {
 }
 
 
+// ===== ENHANCED MUSIC EXPERIENCE =====
+(function() {
+    'use strict';
+
+    // --- DOM Refs ---
+    const $ = id => document.getElementById(id);
+    const audio        = $('siteAudio');
+    const player       = $('floatingPlayer');
+    const playPauseBtn = $('playerPlayPause');
+    const closeBtn     = $('playerClose');
+    const muteBtn      = $('playerMute');
+    const progressBar  = $('playerProgressBar');
+    const progressThumb= $('playerProgressThumb');
+    const progressWrap = $('pillProgressContainer');
+    const trackImg     = $('playerTrackImg');
+    const trackTitle   = $('playerTrackTitle');
+    const trackArtist  = $('playerTrackArtist');
+    const pillImgWrap  = $('pillImgWrap');
+    const pillTooltip  = $('pillTooltip');
+    const heroMeta     = $('spotifyMeta');
+    const heroLabel    = $('spotifyMetaLabel');
+    const heroTrack    = $('spotifyTrackName');
+    const volSlider    = $('volumeSlider');
+    const volFill      = document.querySelector('.volume-level-fill');
+
+    const state = {
+        isPlaying: false,
+        isMuted: false,
+        duration: 30,
+        currentVolume: 100
+    };
+
+    // Initialize Volume Fill
+    if (volFill) volFill.style.height = '100%';
+
+    // --- Core Audio Logic ---
+    function setPlayState(playing) {
+        state.isPlaying = playing;
+        const playI  = playPauseBtn?.querySelector('.play-icon');
+        const pauseI = playPauseBtn?.querySelector('.pause-icon');
+        
+        if (playing) {
+            audio.play().catch(e => console.log('Audio blocked', e));
+            if (playI)  playI.style.display = 'none';
+            if (pauseI) pauseI.style.display = 'block';
+            player?.classList.add('is-playing');
+            heroMeta?.classList.add('playing');
+            if (heroLabel) heroLabel.textContent = 'Designing with 🎵';
+        } else {
+            audio.pause();
+            if (playI)  playI.style.display = 'block';
+            if (pauseI) pauseI.style.display = 'none';
+            player?.classList.remove('is-playing');
+            heroMeta?.classList.remove('playing');
+            if (heroLabel) heroLabel.textContent = 'Listening to right now...';
+        }
+    }
+
+    function playTrack(data) {
+        const src = data.audioSrc || data.dataset?.audioSrc;
+        if (!src) return;
+
+        const title = data.title || data.dataset?.title;
+        const artist = data.artist || data.dataset?.artist;
+        const img = data.img || data.dataset?.img;
+
+        if (audio.src === src) {
+            setPlayState(!state.isPlaying);
+            return;
+        }
+
+        audio.src = src;
+        audio.load();
+
+        if (trackImg)    trackImg.src = img;
+        if (trackTitle)  trackTitle.textContent = title;
+        if (trackArtist) trackArtist.textContent = artist;
+        if (heroTrack)   heroTrack.textContent = title;
+        
+        if (progressBar) progressBar.style.width = '0%';
+        if (progressThumb) progressThumb.style.left = '0%';
+
+        setPlayState(true);
+        showPlayer();
+
+        // Update active highlight in flyout
+        document.querySelectorAll('.flyout-track').forEach(t => {
+            t.classList.toggle('active', t.dataset.audioSrc === src);
+        });
+    }
+
+    function showPlayer() {
+        player?.classList.add('active');
+        player?.setAttribute('aria-hidden', 'false');
+    }
+
+    function closePlayer() {
+        player?.classList.remove('active');
+        player?.setAttribute('aria-hidden', 'true');
+        setPlayState(false);
+        audio.src = '';
+        if (heroLabel) heroLabel.textContent = 'Listening to right now...';
+        if (heroTrack) heroTrack.textContent = 'My Top 3 Tracks';
+        document.querySelectorAll('.flyout-track').forEach(t => t.classList.remove('active'));
+    }
+
+    // --- Volume Logic ---
+    function updateVolume(val) {
+        audio.volume = val / 100;
+        if (volFill) volFill.style.height = val + '%';
+        if (val == 0) {
+            state.isMuted = true;
+            muteBtn?.classList.add('muted');
+        } else {
+            state.isMuted = false;
+            muteBtn?.classList.remove('muted');
+        }
+    }
+
+    volSlider?.addEventListener('input', (e) => {
+        state.currentVolume = e.target.value;
+        updateVolume(state.currentVolume);
+    });
+
+    // --- Flyout Listeners ---
+    document.querySelectorAll('.flyout-track').forEach(track => {
+        track.addEventListener('click', (e) => {
+            e.stopPropagation();
+            playTrack(track);
+        });
+    });
+
+    // --- Hero Click (Toggle Player / Flyout on Mobile) ---
+    heroMeta?.addEventListener('click', (e) => {
+        if (window.innerWidth <= 900) {
+            // On mobile, toggle flyout visibility if clicking the badge
+            const isBadge = e.target.closest('.spotify-badge');
+            if (isBadge) {
+                const flyout = $('spotifyFlyout');
+                const isVisible = flyout.style.opacity === '1';
+                flyout.style.opacity = isVisible ? '0' : '1';
+                flyout.style.visibility = isVisible ? 'hidden' : 'visible';
+                flyout.style.transform = isVisible ? 'translateY(10px) scale(0.98)' : 'translateY(0) scale(1)';
+                return;
+            }
+        }
+
+        if (audio.src && audio.src !== window.location.href) {
+            player?.classList.toggle('active');
+        }
+    });
+
+    // --- Controls ---
+    playPauseBtn?.addEventListener('click', () => {
+        if (audio.src && audio.src !== window.location.href) setPlayState(!state.isPlaying);
+    });
+    closeBtn?.addEventListener('click', closePlayer);
+    
+    muteBtn?.addEventListener('click', () => {
+        state.isMuted = !state.isMuted;
+        audio.muted = state.isMuted;
+        muteBtn?.classList.toggle('muted', state.isMuted);
+        if (state.isMuted) {
+            updateVolume(0);
+            volSlider.value = 0;
+        } else {
+            updateVolume(state.currentVolume);
+            volSlider.value = state.currentVolume;
+        }
+    });
+
+    // --- Progress Update ---
+    audio.addEventListener('timeupdate', () => {
+        if (!audio.duration || isDragging) return;
+        state.duration = audio.duration;
+        const pct = (audio.currentTime / state.duration) * 100;
+        if (progressBar) progressBar.style.width = pct + '%';
+    });
+    audio.addEventListener('ended', () => closePlayer());
+
+    // --- Seek ---
+    let isDragging = false;
+    const seek = (e) => {
+        const rect = progressWrap.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        if (progressBar) progressBar.style.width = (pct * 100) + '%';
+        if (!isDragging) audio.currentTime = pct * audio.duration;
+    };
+    progressWrap?.addEventListener('mousedown', (e) => { isDragging = true; seek(e); });
+    document.addEventListener('mousemove', (e) => { if (isDragging) seek(e); });
+    document.addEventListener('mouseup', (e) => { if (isDragging) { isDragging = false; seek(e); } });
+
+    // Tooltip trigger
+    pillImgWrap?.addEventListener('click', () => {
+        pillTooltip?.classList.add('show');
+        setTimeout(() => pillTooltip?.classList.remove('show'), 2000);
+    });
+
+})();

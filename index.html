@@ -137,6 +137,47 @@
                         <span class="weather-tooltip">This is my weather. I use it to decide serious things. Like momo or jhol momo.</span>
                     </span>
                 </div>
+                <div class="meta-item spotify-meta" id="spotifyMeta" data-cursor="hover">
+                    <span class="meta-label" id="spotifyMetaLabel">Listening to right now...</span>
+                    <div class="spotify-badge">
+                        <div class="spotify-icon-wrap">
+                            <div class="equalizer-icon" id="equalizer">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <img class="spotify-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify">
+                        </div>
+                        <div class="spotify-text-wrap">
+                            <span class="spotify-text" id="spotifyTrackName">My Top 3 Tracks</span>
+                        </div>
+                    </div>
+
+                    <!-- 3-Track Selector Flyout -->
+                    <div class="spotify-flyout" id="spotifyFlyout">
+                        <div class="flyout-tracks">
+                            <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/73/32/0e/73320ed3-e5e9-a3b8-97dd-50a5c51d6bb5/mzaf_618715842837216635.plus.aac.p.m4a" data-title="Jaiye Sajana" data-artist="Shashwat Sachdev" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/89/74/08/897408d1-39d9-5d32-06a8-256ea77e4158/8902894362900_cover.jpg/100x100bb.jpg">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/89/74/08/897408d1-39d9-5d32-06a8-256ea77e4158/8902894362900_cover.jpg/100x100bb.jpg" alt="Jaiye Sajana">
+                                <div class="f-info">
+                                    <span class="f-title">Jaiye Sajana</span>
+                                    <span class="f-artist">Shashwat Sachdev</span>
+                                </div>
+                            </div>
+                            <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/73/d6/ff/73d6ff5d-39c0-ac4d-bced-4e1e2413c9c3/mzaf_3824269854179741904.plus.aac.p.m4a" data-title="Herai Basai" data-artist="Yabesh Thapa" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f4/8c/bb/f48cbbd2-3427-1d81-d6b2-48dfac4b2aed/artwork.jpg/100x100bb.jpg">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f4/8c/bb/f48cbbd2-3427-1d81-d6b2-48dfac4b2aed/artwork.jpg/100x100bb.jpg" alt="Herai Basai">
+                                <div class="f-info">
+                                    <span class="f-title">Herai Basai</span>
+                                    <span class="f-artist">Yabesh Thapa</span>
+                                </div>
+                            </div>
+                            <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/54/0b/c3/540bc36b-e5f5-9339-94d8-fd5dfa915374/mzaf_6868998735573585663.plus.aac.p.m4a" data-title="Kya Karoon?" data-artist="Shankar Ehsaan Loy" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/5c/c8/f8/5cc8f804-a9d6-7a11-57f6-840e1e2c9419/884977322910.jpg/100x100bb.jpg">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/5c/c8/f8/5cc8f804-a9d6-7a11-57f6-840e1e2c9419/884977322910.jpg/100x100bb.jpg" alt="Kya Karoon?">
+                                <div class="f-info">
+                                    <span class="f-title">Kya Karoon?</span>
+                                    <span class="f-artist">Wake Up Sid</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="hero-scroll" aria-hidden="true">
@@ -612,6 +653,8 @@
             </div>
         </section>
 
+
+
         <!-- ============ JOURNAL SECTION ============ -->
         <section class="journal" id="journal" aria-label="Journal">
             <div class="journal-inner">
@@ -708,6 +751,7 @@
         <div class="footer-copy-wrap" id="newYearTrigger" data-cursor="link">
             <span id="footerCopy" class="glitch-text" data-text="© 2026 Shishir Acharya">© 2026 Shishir Acharya</span>
         </div>
+        <span class="footer-credit">Human × Antigravity</span>
         <span class="footer-tagline" id="momoEasterEgg" data-cursor="link" tabindex="0" role="button">Everything is design. Even momo. 🥟</span>
     </footer>
 
@@ -770,6 +814,57 @@
         <div class="momo-text">
             <strong>You made it this far</strong>
             <span>You deserve this!</span>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="siteAudio" preload="none"></audio>
+
+    <!-- Premium Floating Music Player (Pill) -->
+    <div class="pill-player" id="floatingPlayer" aria-hidden="true">
+        <div class="pill-inner">
+            <div class="pill-track">
+                <div class="pill-img-wrap" id="pillImgWrap" data-cursor="hover">
+                    <img src="" id="playerTrackImg" alt="Album Art">
+                    <div class="pill-tooltip" id="pillTooltip">Good taste detected 👀</div>
+                    <div class="pill-eq" id="pillEq" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="pill-info">
+                    <span class="p-title" id="playerTrackTitle">Select a track</span>
+                    <span class="p-artist" id="playerTrackArtist">to set the vibe</span>
+                </div>
+            </div>
+            
+                <div class="pill-controls">
+                    <div class="pill-volume-control">
+                        <button class="pill-btn pill-mute" id="playerMute" aria-label="Mute">
+                            <svg class="vol-on" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+                            <svg class="vol-off" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                        </button>
+                        <div class="volume-popover">
+                            <div class="volume-slider-track">
+                                <input type="range" id="volumeSlider" min="0" max="100" value="100" class="vertical-volume">
+                                <div class="volume-level-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pill-divider"></div>
+                    <button class="pill-btn pill-play" id="playerPlayPause" aria-label="Play/Pause">
+                        <svg class="play-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        <svg class="pause-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                    </button>
+                    <button class="pill-btn pill-close" id="playerClose" aria-label="Close Player">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Progress integrated inside -->
+            <div class="pill-progress-container" id="pillProgressContainer">
+                <div class="pill-progress-bar" id="playerProgressBar"></div>
+            </div>
         </div>
     </div>
 
