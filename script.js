@@ -815,10 +815,16 @@ if (footerCopy && newYearTrigger) {
     });
 
     // --- Controls ---
-    playPauseBtn?.addEventListener('click', () => {
+    const handlePlayPause = (e) => {
+        if (e) e.preventDefault();
         if (audio.src && audio.src !== window.location.href) setPlayState(!state.isPlaying);
+    };
+    playPauseBtn?.addEventListener('pointerdown', handlePlayPause);
+    
+    closeBtn?.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        closePlayer();
     });
-    closeBtn?.addEventListener('click', closePlayer);
     
     muteBtn?.addEventListener('click', () => {
         state.isMuted = !state.isMuted;
@@ -844,11 +850,21 @@ if (footerCopy && newYearTrigger) {
     });
 
     // --- Progress Update ---
-    audio.addEventListener('timeupdate', () => {
-        if (!audio.duration || isDragging) return;
-        state.duration = audio.duration;
-        const pct = (audio.currentTime / state.duration) * 100;
+    let progressRaf;
+    function updateProgress() {
+        if (!audio.duration || isDragging) {
+            progressRaf = requestAnimationFrame(updateProgress);
+            return;
+        }
+        const pct = (audio.currentTime / audio.duration) * 100;
         if (progressBar) progressBar.style.width = pct + '%';
+        progressRaf = requestAnimationFrame(updateProgress);
+    }
+    audio.addEventListener('play', () => {
+        progressRaf = requestAnimationFrame(updateProgress);
+    });
+    audio.addEventListener('pause', () => {
+        cancelAnimationFrame(progressRaf);
     });
     audio.addEventListener('ended', () => closePlayer());
 
@@ -860,9 +876,19 @@ if (footerCopy && newYearTrigger) {
         if (progressBar) progressBar.style.width = (pct * 100) + '%';
         if (!isDragging) audio.currentTime = pct * audio.duration;
     };
-    progressWrap?.addEventListener('mousedown', (e) => { isDragging = true; seek(e); });
-    document.addEventListener('mousemove', (e) => { if (isDragging) seek(e); });
-    document.addEventListener('mouseup', (e) => { if (isDragging) { isDragging = false; seek(e); } });
+    progressWrap?.addEventListener('pointerdown', (e) => { 
+        isDragging = true; 
+        progressWrap.setPointerCapture(e.pointerId);
+        seek(e); 
+    });
+    progressWrap?.addEventListener('pointermove', (e) => { if (isDragging) seek(e); });
+    progressWrap?.addEventListener('pointerup', (e) => { 
+        if (isDragging) { 
+            isDragging = false; 
+            seek(e); 
+            progressWrap.releasePointerCapture(e.pointerId);
+        } 
+    });
 
     // Tooltip trigger
     pillImgWrap?.addEventListener('click', () => {
