@@ -768,11 +768,13 @@ if (footerCopy && newYearTrigger) {
         
         if (val == 0) {
             state.isMuted = true;
+            audio.muted = true;
             muteBtn?.classList.add('muted');
             if (volOn) volOn.style.display = 'none';
             if (volOff) volOff.style.display = 'block';
         } else {
             state.isMuted = false;
+            audio.muted = false;
             muteBtn?.classList.remove('muted');
             if (volOn) volOn.style.display = 'block';
             if (volOff) volOff.style.display = 'none';
