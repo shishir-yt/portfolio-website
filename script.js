@@ -684,6 +684,21 @@ if (footerCopy && newYearTrigger) {
         currentVolume: 100
     };
 
+    // --- Web Audio API for iOS Volume Support ---
+    let audioCtx, gainNode, source;
+    function initWebAudio() {
+        if (audioCtx) return;
+        try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            gainNode = audioCtx.createGain();
+            source = audioCtx.createMediaElementSource(audio);
+            source.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            // Sync initial volume
+            gainNode.gain.value = state.currentVolume / 100;
+        } catch(e) { console.warn('Web Audio API not supported', e); }
+    }
+
     // Initialize Volume Fill
     if (volFill) volFill.style.height = '100%';
 
@@ -694,6 +709,9 @@ if (footerCopy && newYearTrigger) {
         const pauseI = playPauseBtn?.querySelector('.pause-icon');
         
         if (playing) {
+            initWebAudio();
+            if (audioCtx?.state === 'suspended') audioCtx.resume();
+            
             audio.play().catch(e => console.log('Audio blocked', e));
             if (playI)  playI.style.display = 'none';
             if (pauseI) pauseI.style.display = 'block';
@@ -760,7 +778,13 @@ if (footerCopy && newYearTrigger) {
 
     // --- Volume Logic ---
     function updateVolume(val) {
+        // Fallback for non-iOS
         audio.volume = val / 100;
+        // Solution for iOS / Touch
+        if (gainNode) {
+            gainNode.gain.setTargetAtTime(val / 100, audioCtx.currentTime, 0.02);
+        }
+
         if (volFill) volFill.style.height = val + '%';
         
         const volOn = muteBtn?.querySelector('.vol-on');
