@@ -781,7 +781,6 @@ body.cursor-hello .cursor{opacity:0}
     .pill-btn { width: 40px; height: 40px; }
     .footer { flex-direction: column; gap: 16px; padding: 40px 20px 100px; text-align: center; }
     .footer-copy-wrap, .footer-credit, .footer-tagline { flex: none; text-align: center; width: 100%; }
-}
     .hero-name{font-size:clamp(3.2rem, 16vw, 4.8rem);line-height:1.2;letter-spacing:0}
     .char-wrap{padding:0.3em 0.2em 0.6em 0.2em;margin:-0.3em -0.2em -0.6em -0.2em}
     .contact-heading{font-size:clamp(2rem,10vw,4rem)}
