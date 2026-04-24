@@ -24,6 +24,119 @@ function updateLoader() {
     }
 }
 updateLoader();
+ 
+// ===== 3D ID CARD — PENDULUM PHYSICS =====
+const idCardSystem = document.getElementById('idCardSystem');
+const idCard = document.getElementById('idCard');
+const idCardWrapper = document.querySelector('.id-card-wrapper');
+const lanyard = document.querySelector('.lanyard-string');
+
+if (idCard && idCardWrapper) {
+    // Physics state
+    let angle = 0;
+    let angularVel = 0;
+    const GRAVITY = 0.15;
+    const DAMPING = 0.97;
+    const MAX_ANGLE = 8;
+    const IDLE_AMP = 0.3;
+    const IDLE_SPEED = 0.0008;
+
+    let targetTiltX = 0, targetTiltY = 0;
+    let currentTiltX = 0, currentTiltY = 0;
+    let isHovering = false;
+    let flipCount = 0;
+
+    function getIdleSway() {
+        return Math.sin(Date.now() * IDLE_SPEED) * IDLE_AMP;
+    }
+
+    // Physics loop
+    function physicsLoop() {
+        const restoring = -GRAVITY * Math.sin(angle * Math.PI / 180);
+        angularVel += restoring;
+        angularVel *= DAMPING;
+        angle += angularVel;
+        angle = Math.max(-MAX_ANGLE, Math.min(MAX_ANGLE, angle));
+
+        const idleSway = Math.abs(angularVel) < 0.01 ? getIdleSway() : 0;
+        const finalAngle = angle + idleSway;
+
+        idCardWrapper.style.transform = `rotate(${finalAngle}deg)`;
+
+        if (lanyard) {
+            lanyard.style.transform = `skewX(${finalAngle * 0.3}deg)`;
+        }
+
+        currentTiltX += (targetTiltX - currentTiltX) * 0.08;
+        currentTiltY += (targetTiltY - currentTiltY) * 0.08;
+        idCard.style.transform = `rotateX(${currentTiltX}deg) rotateY(${currentTiltY}deg)`;
+
+        requestAnimationFrame(physicsLoop);
+    }
+    physicsLoop();
+
+    // Apply force based on pointer position
+    function applyForce(clientX, clientY) {
+        const rect = idCardSystem.getBoundingClientRect();
+        const cardCenterX = rect.left + rect.width / 2;
+        const cardCenterY = rect.top + rect.height;
+        const dx = clientX - cardCenterX;
+        const dy = clientY - cardCenterY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 400) {
+            const influence = 1 - (dist / 400);
+            angularVel += (dx * 0.0003) * influence;
+
+            if (isHovering) {
+                const cardRect = idCard.getBoundingClientRect();
+                const cx = cardRect.left + cardRect.width / 2;
+                const cy = cardRect.top + cardRect.height / 2;
+                targetTiltX = Math.max(-12, Math.min(12, (cy - clientY) / 15));
+                targetTiltY = Math.max(-12, Math.min(12, (clientX - cx) / 15));
+            }
+        }
+    }
+
+    // Mouse
+    document.addEventListener('mousemove', (e) => applyForce(e.clientX, e.clientY));
+
+    // Touch — apply pendulum force on drag near card
+    document.addEventListener('touchmove', (e) => {
+        const t = e.touches[0];
+        if (t) applyForce(t.clientX, t.clientY);
+    }, { passive: true });
+
+    // Hover (desktop only)
+    idCard.addEventListener('mouseenter', () => { isHovering = true; });
+    idCard.addEventListener('mouseleave', () => {
+        isHovering = false;
+        targetTiltX = 0;
+        targetTiltY = 0;
+    });
+
+    // Flip on click / tap
+    idCard.addEventListener('click', () => {
+        idCard.classList.toggle('is-flipped');
+        angularVel += (Math.random() - 0.5) * 2;
+        flipCount++;
+    });
+
+    // Scroll trigger: Drop the card when entering About section
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                idCardSystem.classList.add('is-active');
+            } else {
+                // Remove when scrolling away for a "retracting" effect
+                idCardSystem.classList.remove('is-active');
+            }
+        });
+    }, { threshold: 0.3 });
+
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) observer.observe(aboutSection);
+}
 
 // ===== CUSTOM CURSOR =====
 const cursor = document.getElementById('cursor');
@@ -650,6 +763,7 @@ if (footerCopy && newYearTrigger) {
     // No, user wants to remove HNY animation and interaction.
     // Keeping only the date toggle logic below.
 }
+
 
 
 // ===== ENHANCED MUSIC EXPERIENCE =====

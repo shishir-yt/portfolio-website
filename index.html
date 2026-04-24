@@ -47,27 +47,29 @@
 
     <!-- Navigation -->
     <nav class="nav" id="nav" aria-label="Main">
-        <div class="nav-left">
-            <a href="#main" class="nav-brand" data-cursor="link" aria-label="Go to top">
-                <span class="brand-text">Shishir</span><span class="brand-dot">.</span><span
-                    class="brand-text outline">A</span>
-            </a>
-        </div>
-        <div class="nav-right-wrap">
-            <div class="nav-right">
-                <a href="#about" class="nav-link" data-cursor="link">About</a>
-                <a href="#work" class="nav-link" data-cursor="link">Work</a>
-                <a href="#films" class="nav-link" data-cursor="link">Films</a>
-                <a href="#journal" class="nav-link" data-cursor="link">Journal</a>
-                <a href="#contact" class="nav-link" data-cursor="link">Contact</a>
-                <button class="theme-btn" id="themeToggle" aria-label="Toggle light mode" data-cursor="link">
-                    <span class="theme-icon">◐</span>
-                </button>
+        <div class="nav-inner">
+            <div class="nav-left">
+                <a href="#main" class="nav-brand" data-cursor="link" aria-label="Go to top">
+                    <span class="brand-text">Shishir</span><span class="brand-dot">.</span><span
+                        class="brand-text outline">A</span>
+                </a>
             </div>
+            <div class="nav-right-wrap">
+                <div class="nav-right">
+                    <a href="#about" class="nav-link" data-cursor="link">About</a>
+                    <a href="#work" class="nav-link" data-cursor="link">Work</a>
+                    <a href="#films" class="nav-link" data-cursor="link">Films</a>
+                    <a href="#journal" class="nav-link" data-cursor="link">Journal</a>
+                    <a href="#contact" class="nav-link" data-cursor="link">Contact</a>
+                    <button class="theme-btn" id="themeToggle" aria-label="Toggle light mode" data-cursor="link">
+                        <span class="theme-icon">◐</span>
+                    </button>
+                </div>
+            </div>
+            <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
-        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
     </nav>
 
     <!-- Mobile Menu -->
@@ -92,97 +94,98 @@
     <main id="main">
         <!-- ============ HERO ============ -->
         <section class="hero" aria-label="Introduction">
-
-            <div class="hero-content">
-                <div class="hero-name-row">
-                    <h1 class="hero-name">
-                        <span class="char-wrap"><span class="char">S</span></span><span class="char-wrap"><span
-                                class="char">H</span></span><span class="char-wrap"><span
-                                class="char">I</span></span><span class="char-wrap"><span
-                                class="char">S</span></span><span class="char-wrap"><span
-                                class="char">H</span></span><span class="char-wrap"><span
-                                class="char">I</span></span><span class="char-wrap"><span class="char">R</span></span>
-                    </h1>
-                </div>
-                <div class="hero-name-row row-2">
-                    <h1 class="hero-name hero-name-italic">
-                        <span class="char-wrap"><span class="char">A</span></span><span class="char-wrap"><span
-                                class="char">C</span></span><span class="char-wrap"><span
-                                class="char">H</span></span><span class="char-wrap"><span
-                                class="char">A</span></span><span class="char-wrap"><span
-                                class="char">R</span></span><span class="char-wrap"><span
-                                class="char">Y</span></span><span class="char-wrap"><span class="char">A</span></span>
-                    </h1>
-                </div>
-            </div>
-
-            <div class="hero-tagline">
-                <p>Son · Student · Designer · Filmmaker</p>
-            </div>
-
-            <div class="hero-meta">
-                <div class="meta-item">
-                    <span class="meta-label">Location</span>
-                    <span class="meta-value glitch-text" id="locationText" data-text="Kathmandu, Nepal">Kathmandu,
-                        Nepal</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-label">Current Role</span>
-                    <span class="meta-value">Product Designer @ FoneNXT</span>
-                </div>
-                <div class="meta-item weather-item" data-cursor="hover">
-                    <span class="meta-label">Local Time & Weather</span>
-                    <span class="meta-value weather-badge">
-                        <span id="clock">—</span> · <span id="weatherInfo">🌤️ 24°C</span>
-                        <span class="weather-tooltip">This is my weather. I use it to decide serious things. Like momo or jhol momo.</span>
-                    </span>
-                </div>
-                <div class="meta-item spotify-meta" id="spotifyMeta" data-cursor="hover">
-                    <span class="meta-label" id="spotifyMetaLabel">Listening to right now...</span>
-                    <div class="spotify-badge">
-                        <div class="spotify-icon-wrap">
-                            <div class="equalizer-icon" id="equalizer">
-                                <span></span><span></span><span></span>
-                            </div>
-                            <img class="spotify-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify">
-                        </div>
-                        <div class="spotify-text-wrap">
-                            <span class="spotify-text" id="spotifyTrackName">My Top 3 Tracks</span>
-                        </div>
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <div class="hero-name-row">
+                        <h1 class="hero-name">
+                            <span class="char-wrap"><span class="char">S</span></span><span class="char-wrap"><span
+                                    class="char">H</span></span><span class="char-wrap"><span
+                                    class="char">I</span></span><span class="char-wrap"><span
+                                    class="char">S</span></span><span class="char-wrap"><span
+                                    class="char">H</span></span><span class="char-wrap"><span
+                                    class="char">I</span></span><span class="char-wrap"><span class="char">R</span></span>
+                        </h1>
                     </div>
-
-                    <!-- 3-Track Selector Flyout -->
-                    <div class="spotify-flyout" id="spotifyFlyout">
-                        <div class="flyout-tracks">
-                            <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/73/32/0e/73320ed3-e5e9-a3b8-97dd-50a5c51d6bb5/mzaf_618715842837216635.plus.aac.p.m4a" data-title="Jaiye Sajana" data-artist="Shashwat Sachdev" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/89/74/08/897408d1-39d9-5d32-06a8-256ea77e4158/8902894362900_cover.jpg/100x100bb.jpg">
-                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/89/74/08/897408d1-39d9-5d32-06a8-256ea77e4158/8902894362900_cover.jpg/100x100bb.jpg" alt="Jaiye Sajana">
-                                <div class="f-info">
-                                    <span class="f-title">Jaiye Sajana</span>
-                                    <span class="f-artist">Shashwat Sachdev</span>
-                                </div>
-                            </div>
-                            <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/73/d6/ff/73d6ff5d-39c0-ac4d-bced-4e1e2413c9c3/mzaf_3824269854179741904.plus.aac.p.m4a" data-title="Herai Basai" data-artist="Yabesh Thapa" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f4/8c/bb/f48cbbd2-3427-1d81-d6b2-48dfac4b2aed/artwork.jpg/100x100bb.jpg">
-                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f4/8c/bb/f48cbbd2-3427-1d81-d6b2-48dfac4b2aed/artwork.jpg/100x100bb.jpg" alt="Herai Basai">
-                                <div class="f-info">
-                                    <span class="f-title">Herai Basai</span>
-                                    <span class="f-artist">Yabesh Thapa</span>
-                                </div>
-                            </div>
-                            <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/54/0b/c3/540bc36b-e5f5-9339-94d8-fd5dfa915374/mzaf_6868998735573585663.plus.aac.p.m4a" data-title="Kya Karoon?" data-artist="Shankar Ehsaan Loy" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/5c/c8/f8/5cc8f804-a9d6-7a11-57f6-840e1e2c9419/884977322910.jpg/100x100bb.jpg">
-                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/5c/c8/f8/5cc8f804-a9d6-7a11-57f6-840e1e2c9419/884977322910.jpg/100x100bb.jpg" alt="Kya Karoon?">
-                                <div class="f-info">
-                                    <span class="f-title">Kya Karoon?</span>
-                                    <span class="f-artist">Wake Up Sid</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="hero-name-row row-2">
+                        <h1 class="hero-name hero-name-italic">
+                            <span class="char-wrap"><span class="char">A</span></span><span class="char-wrap"><span
+                                    class="char">C</span></span><span class="char-wrap"><span
+                                    class="char">H</span></span><span class="char-wrap"><span
+                                    class="char">A</span></span><span class="char-wrap"><span
+                                    class="char">R</span></span><span class="char-wrap"><span
+                                    class="char">Y</span></span><span class="char-wrap"><span class="char">A</span></span>
+                        </h1>
                     </div>
                 </div>
+
+                <div class="hero-tagline">
+                    <p>SON · STUDENT · DESIGNER · FILMMAKER</p>
+                </div>
+
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Location</span>
+                        <span class="meta-value glitch-text" id="locationText" data-text="Kathmandu, Nepal (Work)">Kathmandu, Nepal (Work)</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Current Role</span>
+                        <span class="meta-value">Product Designer @ FoneNXT</span>
+                    </div>
+                    <div class="meta-item weather-item" data-cursor="hover">
+                        <span class="meta-label">Local Time & Weather</span>
+                        <span class="meta-value weather-badge">
+                            <span id="clock">—</span> · <span id="weatherInfo">🌤️ 24°C</span>
+                            <span class="weather-tooltip">This is my weather. I use it to decide serious things. Like momo or jhol momo.</span>
+                        </span>
+                    </div>
+                    <div class="meta-item spotify-meta" id="spotifyMeta" data-cursor="hover">
+                        <span class="meta-label" id="spotifyMetaLabel">Listening to right now...</span>
+                        <div class="spotify-badge">
+                            <div class="spotify-icon-wrap">
+                                <div class="equalizer-icon" id="equalizer">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <img class="spotify-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify">
+                            </div>
+                            <div class="spotify-text-wrap">
+                                <span class="spotify-text" id="spotifyTrackName">My Top 3 Tracks</span>
+                            </div>
+                        </div>
+
+                        <!-- 3-Track Selector Flyout -->
+                        <div class="spotify-flyout" id="spotifyFlyout">
+                            <div class="flyout-tracks">
+                                <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/73/32/0e/73320ed3-e5e9-a3b8-97dd-50a5c51d6bb5/mzaf_618715842837216635.plus.aac.p.m4a" data-title="Jaiye Sajana" data-artist="Shashwat Sachdev" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/89/74/08/897408d1-39d9-5d32-06a8-256ea77e4158/8902894362900_cover.jpg/100x100bb.jpg">
+                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/89/74/08/897408d1-39d9-5d32-06a8-256ea77e4158/8902894362900_cover.jpg/100x100bb.jpg" alt="Jaiye Sajana">
+                                    <div class="f-info">
+                                        <span class="f-title">Jaiye Sajana</span>
+                                        <span class="f-artist">Shashwat Sachdev</span>
+                                    </div>
+                                </div>
+                                <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/73/d6/ff/73d6ff5d-39c0-ac4d-bced-4e1e2413c9c3/mzaf_3824269854179741904.plus.aac.p.m4a" data-title="Herai Basai" data-artist="Yabesh Thapa" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f4/8c/bb/f48cbbd2-3427-1d81-d6b2-48dfac4b2aed/artwork.jpg/100x100bb.jpg">
+                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f4/8c/bb/f48cbbd2-3427-1d81-d6b2-48dfac4b2aed/artwork.jpg/100x100bb.jpg" alt="Herai Basai">
+                                    <div class="f-info">
+                                        <span class="f-title">Herai Basai</span>
+                                        <span class="f-artist">Yabesh Thapa</span>
+                                    </div>
+                                </div>
+                                <div class="flyout-track" data-audio-src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/54/0b/c3/540bc36b-e5f5-9339-94d8-fd5dfa915374/mzaf_6868998735573585663.plus.aac.p.m4a" data-title="Kya Karoon?" data-artist="Shankar Ehsaan Loy" data-img="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/5c/c8/f8/5cc8f804-a9d6-7a11-57f6-840e1e2c9419/884977322910.jpg/100x100bb.jpg">
+                                    <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/5c/c8/f8/5cc8f804-a9d6-7a11-57f6-840e1e2c9419/884977322910.jpg/100x100bb.jpg" alt="Kya Karoon?">
+                                    <div class="f-info">
+                                        <span class="f-title">Kya Karoon?</span>
+                                        <span class="f-artist">Wake Up Sid</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="hero-scroll" aria-hidden="true">
-                <div class="scroll-line"></div>
-                <span>Scroll</span>
+                <div class="hero-scroll" aria-hidden="true">
+                    <div class="scroll-line"></div>
+                    <span>Scroll</span>
+                </div>
             </div>
         </section>
 
@@ -199,19 +202,53 @@
 
         <!-- ============ ABOUT ============ -->
         <section class="about" id="about" aria-label="About">
+            <!-- ID Card — appears when scrolling to About -->
+            <div class="id-card-system" id="idCardSystem">
+                <div class="lanyard-string"></div>
+                <div class="id-card-wrapper">
+                    <div class="id-card" id="idCard">
+                        <div class="id-card-inner">
+                            <div class="id-card-front">
+                                <div class="card-hole"></div>
+                                <div class="card-portrait">
+                                    <img src="assets/me.png" alt="Shishir Acharya">
+                                </div>
+                                <div class="card-info">
+                                    <h2 class="card-name">Shishir Acharya</h2>
+                                    <p class="card-role">Product Designer</p>
+                                    <p class="card-position">@ FoneNXT</p>
+                                </div>
+                            </div>
+                            <div class="id-card-back">
+                                <div class="card-hole"></div>
+                                <div class="back-content">
+                                    <div class="back-text-wrap">
+                                        <p class="back-message">"You’re probably a curious human. I like that."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="about-inner">
-                <span class="section-tag">( About )</span>
-                <p class="about-statement">
-                    I design products that make everyday experiences <em>clearer</em>, <em>simpler</em>, and more
-                    <strong>human</strong>. With a strong focus on user behavior and real-world context, I turn complex
-                    problems into intuitive solutions—balancing usability, business goals, and visual clarity.
-                </p>
+                <div class="about-header-area">
+                    <div class="about-text-content">
+                        <span class="section-tag">( About )</span>
+                        <p class="about-statement">
+                            I design products that make everyday experiences <em>clearer</em>, <em>simpler</em>, and more
+                            <strong>human</strong>. With a strong focus on user behavior and real-world context, I turn complex
+                            problems into intuitive solutions—balancing usability, business goals, and visual clarity.
+                        </p>
+                    </div>
+                </div>
+
                 <p class="about-sub">
                     Beyond design, I’m passionate about aviation, storytelling, and community.
                     Whether it’s flying drones, spotting aircraft, or working with <strong>Friends of Figma
                         Kathmandu</strong>, I’m always exploring how design connects with the world around us.
                 </p>
-
+ 
                 <div class="about-cols">
                     <div class="about-col">
                         <span class="col-label">Design Practice</span>
@@ -698,22 +735,24 @@
 
         <!-- ============ TESTIMONIALS ============ -->
         <section class="testimonials" aria-label="Testimonials">
-            <span class="section-tag">( Kind Words )</span>
-            <div class="test-list">
-                <blockquote class="test-item">
-                    <p>"Shishir has been an invaluable asset, providing insights and expertise that have significantly
-                        enhanced my project's user experience."</p>
-                    <footer>
-                        <cite><strong>Ritesh Ghimire</strong> — Entrepreneur</cite>
-                    </footer>
-                </blockquote>
-                <blockquote class="test-item">
-                    <p>"With Shishir on board, our projects became a playground of branding brilliance and creative
-                        innovation. He has a gift for turning ideas into design magic."</p>
-                    <footer>
-                        <cite><strong>Er. Sonaam Hitang</strong> — CEO, Skybase Innovations</cite>
-                    </footer>
-                </blockquote>
+            <div class="testimonials-inner">
+                <span class="section-tag">( Kind Words )</span>
+                <div class="test-list">
+                    <blockquote class="test-item">
+                        <p>"Shishir has been an invaluable asset, providing insights and expertise that have significantly
+                            enhanced my project's user experience."</p>
+                        <footer>
+                            <cite><strong>Ritesh Ghimire</strong> — Entrepreneur</cite>
+                        </footer>
+                    </blockquote>
+                    <blockquote class="test-item">
+                        <p>"With Shishir on board, our projects became a playground of branding brilliance and creative
+                            innovation. He has a gift for turning ideas into design magic."</p>
+                        <footer>
+                            <cite><strong>Er. Sonaam Hitang</strong> — CEO, Skybase Innovations</cite>
+                        </footer>
+                    </blockquote>
+                </div>
             </div>
         </section>
 
