@@ -1138,5 +1138,19 @@ if (footerCopy && newYearTrigger) {
         lastScroll = currentScroll;
     });
 
+    // --- Weather Tooltip Toggle (Mobile) ---
+    const weatherBadge = document.querySelector('.weather-badge');
+    const weatherTooltip = document.querySelector('.weather-tooltip');
+    
+    weatherBadge?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        weatherTooltip?.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', () => {
+        weatherTooltip?.classList.remove('active');
+    });
+
 })();
+
 
