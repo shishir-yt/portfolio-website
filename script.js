@@ -25,11 +25,13 @@ function updateLoader() {
 }
 updateLoader();
  
-// ===== 3D ID CARD — PENDULUM PHYSICS =====
+// --- DOM Refs ---
 const idCardSystem = document.getElementById('idCardSystem');
 const idCard = document.getElementById('idCard');
 const idCardWrapper = document.querySelector('.id-card-wrapper');
 const lanyard = document.querySelector('.lanyard-string');
+const glassToggle = document.getElementById('glassToggle');
+const stickToggle = document.getElementById('stickToggle');
 
 if (idCard && idCardWrapper) {
     // Physics state
@@ -44,7 +46,12 @@ if (idCard && idCardWrapper) {
     let targetTiltX = 0, targetTiltY = 0;
     let currentTiltX = 0, currentTiltY = 0;
     let isHovering = false;
-    let flipCount = 0;
+
+    // Glass Toggle
+    glassToggle?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        idCard.classList.toggle('is-glass');
+    });
 
     function getIdleSway() {
         return Math.sin(Date.now() * IDLE_SPEED) * IDLE_AMP;
@@ -101,13 +108,13 @@ if (idCard && idCardWrapper) {
     // Mouse
     document.addEventListener('mousemove', (e) => applyForce(e.clientX, e.clientY));
 
-    // Touch — apply pendulum force on drag near card
+    // Touch
     document.addEventListener('touchmove', (e) => {
         const t = e.touches[0];
         if (t) applyForce(t.clientX, t.clientY);
     }, { passive: true });
 
-    // Hover (desktop only)
+    // Hover
     idCard.addEventListener('mouseenter', () => { isHovering = true; });
     idCard.addEventListener('mouseleave', () => {
         isHovering = false;
@@ -115,20 +122,35 @@ if (idCard && idCardWrapper) {
         targetTiltY = 0;
     });
 
-    // Flip on click / tap
-    idCard.addEventListener('click', () => {
-        idCard.classList.toggle('is-flipped');
-        angularVel += (Math.random() - 0.5) * 2;
-        flipCount++;
+    // --- Stick Interaction ---
+    stickToggle?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isStuck = idCardSystem.classList.toggle('is-stuck');
+        const span = stickToggle.querySelector('span');
+        if (span) span.textContent = isStuck ? 'HANG' : 'STOW';
+        
+        // Reset physics to prevent "weird" sway while stuck
+        if (isStuck) {
+            angle = 0;
+            angularVel = 0;
+        }
     });
 
-    // Scroll trigger: Drop the card when entering About section
+    // Flip on click
+    idCard.addEventListener('click', (e) => {
+        // Don't flip if stuck
+        if (idCardSystem.classList.contains('is-stuck')) return;
+        
+        idCard.classList.toggle('is-flipped');
+        angularVel += (Math.random() - 0.5) * 3;
+    });
+
+    // Scroll trigger
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 idCardSystem.classList.add('is-active');
             } else {
-                // Remove when scrolling away for a "retracting" effect
                 idCardSystem.classList.remove('is-active');
             }
         });
@@ -684,6 +706,7 @@ function triggerConfetti(amount = 20) {
             height: '6px',
             backgroundColor: ['#d4b578', '#fff', '#c45c4a', '#7a5a0d'][Math.floor(Math.random() * 4)],
             borderRadius: '50%',
+            cursor: 'pointer',
             pointerEvents: 'none',
             zIndex: '10000',
             transition: 'all 1s ease-out'
@@ -1092,4 +1115,28 @@ if (footerCopy && newYearTrigger) {
         setTimeout(() => pillTooltip?.classList.remove('show'), 2000);
     });
 
+    // --- Navigation Hide on Scroll ---
+    const nav = document.querySelector('.nav');
+    let lastScroll = 0;
+    const scrollThreshold = 100;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll <= 0) {
+            nav.classList.remove('nav-hidden');
+            return;
+        }
+        
+        if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
+            // Scrolling down
+            nav.classList.add('nav-hidden');
+        } else if (currentScroll < lastScroll) {
+            // Scrolling up
+            nav.classList.remove('nav-hidden');
+        }
+        lastScroll = currentScroll;
+    });
+
 })();
+
