@@ -5,14 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shishir Acharya — Product Designer & Visual Storyteller</title>
+    <link rel="icon" type="image/png" href="assets/avatar.png">
+    <link rel="apple-touch-icon" href="assets/avatar.png">
     <meta name="description"
         content="Shishir Acharya — Product Designer, UAV Pilot & Visual Storyteller based in Nepal. Creating simple, intuitive, and helpful digital experiences.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://audio-ssl.itunes.apple.com">
+    <link rel="preconnect" href="https://is1-ssl.mzstatic.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' https://api.open-meteo.com; font-src 'self' https://fonts.gstatic.com; media-src 'self' https://audio-ssl.itunes.apple.com; frame-src 'self';">
 </head>
 
 <body>
@@ -51,7 +57,7 @@
             <div class="nav-left">
                 <a href="#main" class="nav-brand" data-cursor="link" aria-label="Go to top">
                     <div class="logo-avatar">
-                        <img src="assets/avatar.png" alt="Shishir Acharya">
+                        <img src="assets/avatar.png" alt="Shishir Acharya" width="32" height="32" decoding="async">
                     </div>
                 </a>
             </div>
@@ -61,7 +67,7 @@
                     <a href="#work" class="nav-link" data-cursor="link">Work</a>
                     <a href="#films" class="nav-link" data-cursor="link">Films</a>
                     <a href="#journal" class="nav-link" data-cursor="link">Journal</a>
-                    <a href="#contact" class="nav-link" data-cursor="link">Contact</a>
+                    <a href="mailto:shishiracharya35@gmail.com" class="cta-btn secondary nav-cta" data-cursor="hello" aria-label="Send an email to Shishir Acharya">Reach out</a>
                     <button class="theme-btn" id="themeToggle" aria-label="Toggle light mode" data-cursor="link">
                         <span class="theme-icon">◐</span>
                     </button>
@@ -80,7 +86,7 @@
             <a href="#about" data-index="02">About</a>
             <a href="#films" data-index="03">Films</a>
             <a href="#journal" data-index="04">Journal</a>
-            <a href="#contact" data-index="05">Contact</a>
+            <a href="mailto:shishiracharya35@gmail.com" class="mm-cta" data-index="05" aria-label="Send an email to Shishir Acharya">Reach out</a>
         </div>
         <div class="mm-footer">
             <div class="mm-socials">
@@ -139,6 +145,7 @@
                             <span class="weather-tooltip">This is my weather. I use it to decide serious things. Like momo or jhol momo.</span>
                         </span>
                     </div>
+
                     <div class="meta-item spotify-meta" id="spotifyMeta" data-cursor="hover">
                         <span class="meta-label" id="spotifyMetaLabel">Listening to right now...</span>
                         <div class="spotify-badge">
@@ -146,7 +153,7 @@
                                 <div class="equalizer-icon" id="equalizer">
                                     <span></span><span></span><span></span>
                                 </div>
-                                <img class="spotify-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify">
+                                <img class="spotify-icon" src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify" width="14" height="14" loading="lazy" decoding="async">
                             </div>
                             <div class="spotify-text-wrap">
                                 <span class="spotify-text" id="spotifyTrackName">My Top 3 Tracks</span>
@@ -212,7 +219,7 @@
                             <div class="id-card-front">
                                 <div class="card-hole"></div>
                                 <div class="card-portrait">
-                                    <img src="assets/me.png" alt="Shishir Acharya">
+                                    <img src="assets/me.png" alt="Shishir Acharya" width="140" height="140" loading="lazy" decoding="async">
                                 </div>
                                 <div class="card-info">
                                     <h2 class="card-name">Shishir Acharya</h2>
@@ -292,7 +299,7 @@
                         <div class="exp-content">
                             <h3 class="exp-role">Product Designer</h3>
                             <a href="https://f1soft.com/business/fonenxt" target="_blank"
-                                class="exp-company-link">FoneNXT ↗</a>
+                                rel="noopener noreferrer" class="exp-company-link">FoneNXT ↗</a>
                         </div>
                     </article>
                     <article class="exp-item">
@@ -322,7 +329,7 @@
                         </div>
                         <div class="exp-content">
                             <h3 class="exp-role">UI/UX Designer</h3>
-                            <a href="https://skybase.com.np/" target="_blank" class="exp-company-link">Skybase
+                            <a href="https://skybase.com.np/" target="_blank" rel="noopener noreferrer" class="exp-company-link">Skybase
                                 Innovations (Full time) ↗</a>
                         </div>
                     </article>
@@ -333,7 +340,7 @@
                         </div>
                         <div class="exp-content">
                             <h3 class="exp-role">UI/UX Designer</h3>
-                            <a href="https://skybase.com.np/" target="_blank" class="exp-company-link">Skybase
+                            <a href="https://skybase.com.np/" target="_blank" rel="noopener noreferrer" class="exp-company-link">Skybase
                                 Innovations (Internship) ↗</a>
                         </div>
                     </article>
@@ -345,7 +352,7 @@
                         <div class="exp-content">
                             <h3 class="exp-role">Media Lead</h3>
                             <a href="https://friends.figma.com/kathmandu/" target="_blank"
-                                class="exp-company-link">Friends of Figma, Kathmandu ↗</a>
+                                rel="noopener noreferrer" class="exp-company-link">Friends of Figma, Kathmandu ↗</a>
                         </div>
                     </article>
                 </div>
@@ -596,7 +603,7 @@
                     <div class="av-card av-map-card aviation-blueprint">
                         <div class="av-map-area">
                             <img src="assets/blueprint-map.svg" alt="Global Aerospace Node Blueprint" class="av-bg-img"
-                                style="opacity:0.35; mix-blend-mode: screen;">
+                                style="opacity:0.35; mix-blend-mode: screen;" loading="lazy" decoding="async">
                         </div>
 
                         <div class="av-map-overlay">
@@ -666,7 +673,7 @@
                     <a href="https://www.instagram.com/reel/DT9IW8GEk4t/?igsh=bHJ5bWk1b2Y2anJ0" target="_blank" rel="noopener noreferrer"
                         class="reel-card" data-cursor="link">
                         <img src="assets/reels/1.jpeg"
-                            alt="Nepal Exploration" class="reel-img" loading="lazy">
+                            alt="Nepal Exploration" class="reel-img" loading="lazy" decoding="async">
                         <span class="reel-label">NEPAL. #nature</span>
                     </a>
                     <a href="https://www.instagram.com/reel/DWbEzYxEhqa/?igsh=MXE0Y2oyM21tbWxoaA==" target="_blank" rel="noopener noreferrer"
@@ -689,7 +696,7 @@
                     </a>
                 </div>
                 <div class="reels-cta">
-                    <a href="https://www.instagram.com/shishir.viz/" target="_blank" class="cta-btn secondary">View all
+                    <a href="https://www.instagram.com/shishir.viz/" target="_blank" rel="noopener noreferrer" class="cta-btn secondary">View all
                         reels @shishir.viz</a>
                 </div>
             </div>
@@ -731,7 +738,7 @@
                         </div>
                     </div>
                     <div class="cv-preview-card" id="openCvPreview" data-cursor="view">
-                        <img src="assets/Shishir_Acharya_CV.png" alt="CV Preview" class="cv-img-preview"
+                        <img src="assets/Shishir_Acharya_CV.png" alt="CV Preview" class="cv-img-preview" loading="lazy" decoding="async"
                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1586281380349-632224c7ac3a?q=80&w=1470&auto=format&fit=crop';">
                     </div>
                 </div>
@@ -799,12 +806,13 @@
         <span class="footer-tagline" id="momoEasterEgg" data-cursor="link" tabindex="0" role="button">Everything is design. Even momo. 🥟</span>
     </footer>
 
-    <div class="scroll-top-indicator" id="scrollTopBtn" data-cursor="link" title="Back to top">
+    <div class="scroll-top-indicator" id="scrollTopBtn" data-cursor="link" role="button" aria-label="Back to top" tabindex="0">
         <svg viewBox="0 0 100 100" class="svg-progress">
             <circle cx="50" cy="50" r="45" class="bg"></circle>
             <circle cx="50" cy="50" r="45" class="bar" id="progressCircle"></circle>
         </svg>
         <span class="arrow">↑</span>
+        <span class="scroll-label">BACK TO TOP</span>
     </div>
 
     <!-- Lightbox Carousel -->

@@ -59,6 +59,11 @@ if (idCard && idCardWrapper) {
 
     // Physics loop
     function physicsLoop() {
+        if (!idCardSystem.classList.contains('is-active')) {
+            requestAnimationFrame(physicsLoop);
+            return;
+        }
+        
         const restoring = -GRAVITY * Math.sin(angle * Math.PI / 180);
         angularVel += restoring;
         angularVel *= DAMPING;
@@ -165,9 +170,16 @@ const cursor = document.getElementById('cursor');
 const follower = document.getElementById('cursorFollower');
 let mx = 0, my = 0, fx = 0, fy = 0;
 
+let cursorTick = false;
 document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+    if (!cursorTick) {
+        requestAnimationFrame(() => {
+            cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+            cursorTick = false;
+        });
+        cursorTick = true;
+    }
 });
 
 // Follower with lag
@@ -242,53 +254,68 @@ themeToggle.addEventListener('click', () => {
 const nav = document.getElementById('nav');
 const scrollTopBtn = document.getElementById('scrollTopBtn');
 const progressCircle = document.getElementById('progressCircle');
-let lastY = window.scrollY;
 let scrollTick = false;
 
 window.addEventListener('scroll', () => {
-    const currentY = window.scrollY;
-    
-    // Scroll progress circle
-    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (currentY / totalHeight) * 283; // 283 is circle circumference
-    if (progressCircle) progressCircle.style.strokeDashoffset = 283 - progress;
-    
-    // Visibility of scroll top button
-    if (scrollTopBtn) {
-        scrollTopBtn.classList.toggle('visible', currentY > 500);
-    }
-
     if (!scrollTick) {
         requestAnimationFrame(() => {
-            nav.classList.toggle('scrolled', currentY > 50);
+            const currentY = window.scrollY;
             
-            // Highlight nav items on scroll
+            // Scroll progress circle
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (currentY / totalHeight) * 283;
+            if (progressCircle) progressCircle.style.strokeDashoffset = 283 - progress;
+            
+            // Visibility of scroll top button
+            if (scrollTopBtn) {
+                scrollTopBtn.classList.toggle('visible', currentY > 500);
+            }
+
+            nav.classList.toggle('scrolled', currentY > 50);
+
+            // Highlight nav items on scroll (Throttled section check)
             const sections = document.querySelectorAll('section[id], main[id]');
             let currentSec = "";
             
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (currentY >= sectionTop - 100) {
+                if (currentY >= sectionTop - 150) {
                     currentSec = section.getAttribute("id");
                 }
             });
 
             document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSec}`) {
-                    link.classList.add('active');
-                }
+                link.classList.toggle('active', link.getAttribute('href') === `#${currentSec}`);
             });
 
-            lastY = currentY;
+            // Hero subtle parallax & opacity
+            if (currentY < window.innerHeight) {
+                const heroBrand = document.querySelector('.hero-brand');
+                const heroContent = document.querySelector('.hero-content');
+                const heroMeta = document.querySelector('.hero-meta');
+                const p = currentY * 0.3;
+                if (heroBrand) heroBrand.style.transform = `translateY(${currentY * 0.1}px)`;
+                if (heroContent) heroContent.style.transform = `translateY(${p}px)`;
+                if (heroMeta) heroMeta.style.opacity = 1 - (currentY / (window.innerHeight * 0.5));
+            }
+
             scrollTick = false;
         });
         scrollTick = true;
     }
-});
+}, { passive: true });
 
+// Scroll top action
 scrollTopBtn?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Keyboard accessibility for scroll top
+scrollTopBtn?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 });
 
 // ===== LOCATION GLITCH =====
@@ -402,9 +429,11 @@ function startContactRotation(heading) {
         textSpan.classList.add('glitch-active');
         setTimeout(() => {
             idx = (idx + 1) % phrases.length;
-            textSpan.innerHTML = phrases[idx];
-            // Ensure data-text is updated for the glitch effect to match
-            textSpan.setAttribute('data-text', textSpan.textContent);
+        textSpan.innerHTML = phrases[idx];
+            // Update data-text for glitch effect to match plain text
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = phrases[idx];
+            textSpan.setAttribute('data-text', tempDiv.textContent);
             setTimeout(() => {
                 textSpan.classList.remove('glitch-active');
             }, 300);
@@ -472,16 +501,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 });
 
-// ===== PARALLAX ON HERO (subtle) =====
-const heroContent = document.querySelector('.hero-content');
-const heroMeta = document.querySelector('.hero-meta');
-addEventListener('scroll', () => {
-    if (scrollY < window.innerHeight) {
-        const p = scrollY * 0.3;
-        if (heroContent) heroContent.style.transform = `translateY(${p}px)`;
-        if (heroMeta) heroMeta.style.opacity = 1 - (scrollY / (window.innerHeight * 0.5));
-    }
-});
+// Parallax handled in throttled scroll listener above
 
 // ===== CV MODAL & FALLBACK =====
 const cvModal = document.getElementById('cvModal');
