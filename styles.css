@@ -12,8 +12,8 @@
     --accent2: #e8d5b0;
     --red: #c45c4a;
 
-    --serif: 'Instrument Serif', Georgia, serif;
-    --sans: 'Bricolage Grotesque', -apple-system, sans-serif;
+    --serif: 'Bricolage Grotesque', sans-serif;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
     --mono: 'Space Mono', monospace;
 
     --ease: cubic-bezier(.16, 1, .3, 1);
