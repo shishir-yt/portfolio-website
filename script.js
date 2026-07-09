@@ -503,6 +503,91 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 // Parallax handled in throttled scroll listener above
 
+// ===== MODAL ACCESSIBILITY & FOCUS TRAP =====
+let lastFocusedElement = null;
+
+function setupFocusTrap(modal) {
+    if (!modal) return;
+    
+    const focusableSelector = 'button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])';
+    
+    // Remember triggering element
+    lastFocusedElement = document.activeElement;
+    
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    
+    // Focus close button
+    const closeBtn = modal.querySelector('.lightbox-close') || modal.querySelector(focusableSelector);
+    if (closeBtn) {
+        setTimeout(() => closeBtn.focus(), 80);
+    }
+    
+    const keydownHandler = (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+            return;
+        }
+        
+        // Lightbox specific arrow navigation
+        if (modal.id === 'lightbox') {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                scrollToSlide(currentSlideIndex - 1);
+                return;
+            }
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                scrollToSlide(currentSlideIndex + 1);
+                return;
+            }
+        }
+        
+        // Tab trap
+        if (e.key === 'Tab') {
+            const focusables = Array.from(modal.querySelectorAll(focusableSelector))
+                .filter(el => el.offsetWidth > 0 && el.offsetHeight > 0);
+            
+            if (focusables.length === 0) return;
+            
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    last.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    first.focus();
+                    e.preventDefault();
+                }
+            }
+        }
+    };
+    
+    window.addEventListener('keydown', keydownHandler);
+    
+    function closeModal() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', keydownHandler);
+        
+        if (modal.id === 'cvModal' && cvIframe) {
+            cvIframe.src = '';
+        }
+        
+        if (lastFocusedElement) {
+            setTimeout(() => lastFocusedElement.focus(), 50);
+        }
+    }
+    
+    modal._closeModal = closeModal;
+}
+
 // ===== CV MODAL & FALLBACK =====
 const cvModal = document.getElementById('cvModal');
 const viewCvBtn = document.getElementById('viewCvBtn');
@@ -511,18 +596,22 @@ const cvClose = document.getElementById('cvClose');
 const cvIframe = document.getElementById('cvIframe');
 
 function openCv() {
-    cvModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
     if (cvIframe) cvIframe.src = 'assets/Shishir_Acharya_CV.pdf';
+    setupFocusTrap(cvModal);
 }
 
 viewCvBtn?.addEventListener('click', openCv);
 openCvPreview?.addEventListener('click', openCv);
 
 cvClose?.addEventListener('click', () => {
-    cvModal.classList.remove('active');
-    document.body.style.overflow = '';
-    if (cvIframe) cvIframe.src = '';
+    if (cvModal._closeModal) cvModal._closeModal();
+});
+
+// Close modal on background click
+cvModal?.addEventListener('click', (e) => {
+    if (e.target === cvModal) {
+        if (cvModal._closeModal) cvModal._closeModal();
+    }
 });
 
 // ===== LIGHTBOX CAROUSEL =====
@@ -636,8 +725,8 @@ function openLightbox(id) {
     
     currentSlideIndex = 0;
     lightboxTrack.scrollLeft = 0;
-    lightbox.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    
+    setupFocusTrap(lightbox);
     
     // Show indicators momentarily
     const indicatorsWrapper = document.querySelector('.lightbox-indicators-wrapper');
@@ -675,14 +764,27 @@ lightboxPrev?.addEventListener('click', () => scrollToSlide(currentSlideIndex - 
 lightboxNext?.addEventListener('click', () => scrollToSlide(currentSlideIndex + 1));
 
 lightboxClose?.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-    document.body.style.overflow = '';
+    if (lightbox._closeModal) lightbox._closeModal();
+});
+
+// Close lightbox on background click
+lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+        if (lightbox._closeModal) lightbox._closeModal();
+    }
 });
 
 document.querySelectorAll('[data-carousel]').forEach(el => {
     el.addEventListener('click', e => {
         e.preventDefault();
         openLightbox(el.dataset.carousel);
+    });
+    // Keyboard accessibility: Enter/Space to open lightbox
+    el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openLightbox(el.dataset.carousel);
+        }
     });
 });
 
@@ -774,6 +876,14 @@ if (momoBtn && momoToast) {
             if (momoClicks >= 4) momoClicks = 0; // Reset for loop
         }, 2500);
     });
+
+    // Keyboard support for Enter/Space
+    momoBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            momoBtn.click();
+        }
+    });
 }
 
 // ===== NEPALI NEW YEAR FOOTER =====
@@ -809,331 +919,79 @@ if (footerCopy && newYearTrigger) {
 
 
 
-// ===== ENHANCED MUSIC EXPERIENCE =====
+// ===== ENHANCED EXPERIENCE =====
 (function() {
     'use strict';
 
     // --- DOM Refs ---
     const $ = id => document.getElementById(id);
-    const audio        = $('siteAudio');
-    const player       = $('floatingPlayer');
-    const playPauseBtn = $('playerPlayPause');
-    const closeBtn     = $('playerClose');
-    const muteBtn      = $('playerMute');
-    const progressBar  = $('playerProgressBar');
-    const progressThumb= $('playerProgressThumb');
-    const progressWrap = $('pillProgressContainer');
-    const trackImg     = $('playerTrackImg');
-    const trackTitle   = $('playerTrackTitle');
-    const trackArtist  = $('playerTrackArtist');
-    const pillImgWrap  = $('pillImgWrap');
-    const pillTooltip  = $('pillTooltip');
-    const heroMeta     = $('spotifyMeta');
-    const heroLabel    = $('spotifyMetaLabel');
-    const heroTrack    = $('spotifyTrackName');
-    const volSlider    = $('volumeSlider');
-    const volFill      = document.querySelector('.volume-level-fill');
 
-    const state = {
-        isPlaying: false,
-        isMuted: false,
-        duration: 30,
-        currentVolume: 100
-    };
+    // --- Scroll Text Reveal — Word-by-Word Stagger via IntersectionObserver ---
+    const initScrollReveal = () => {
+        const targets = document.querySelectorAll('.scroll-reveal-text');
+        if (!targets.length) return;
 
-    // --- Web Audio API for iOS Volume Support ---
-    let audioCtx, gainNode, source;
-    function initWebAudio() {
-        if (audioCtx) return;
-        try {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            gainNode = audioCtx.createGain();
-            source = audioCtx.createMediaElementSource(audio);
-            source.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            // Sync initial volume
-            gainNode.gain.value = state.currentVolume / 100;
-        } catch(e) { console.warn('Web Audio API not supported', e); }
-    }
-
-    // Initialize Volume Fill
-    if (volFill) volFill.style.height = '100%';
-
-    // --- Core Audio Logic ---
-    function setPlayState(playing) {
-        state.isPlaying = playing;
-        const playI  = playPauseBtn?.querySelector('.play-icon');
-        const pauseI = playPauseBtn?.querySelector('.pause-icon');
-        
-        if (playing) {
-            initWebAudio();
-            
-            const startPlay = () => {
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(e => {
-                        console.error('Audio playback failed/blocked:', e);
-                        setPlayState(false);
-                    });
-                }
-            };
-
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume().then(startPlay);
-            } else {
-                startPlay();
-            }
-
-            if (playI)  playI.style.display = 'none';
-            if (pauseI) pauseI.style.display = 'block';
-            player?.classList.add('is-playing');
-            heroMeta?.classList.add('playing');
-            if (heroLabel) heroLabel.textContent = 'Designing with 🎵';
-        } else {
-            audio.pause();
-            if (playI)  playI.style.display = 'block';
-            if (pauseI) pauseI.style.display = 'none';
-            player?.classList.remove('is-playing');
-            heroMeta?.classList.remove('playing');
-            if (heroLabel) heroLabel.textContent = 'Listening to right now...';
-        }
-    }
-
-    function playTrack(data) {
-        const src = data.audioSrc || data.dataset?.audioSrc;
-        if (!src) return;
-
-        const title = data.title || data.dataset?.title;
-        const artist = data.artist || data.dataset?.artist;
-        const img = data.img || data.dataset?.img;
-
-        if (audio.src === src) {
-            setPlayState(!state.isPlaying);
+        // Respect user motion preference — just show text, skip animation
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+            targets.forEach(el => el.classList.add('in-view'));
             return;
         }
 
-        // Reset progress
-        if (progressBar) progressBar.style.width = '0%';
-
-        audio.src = src;
-        // load() is helpful when switching sources for MediaElementSource
-        audio.load();
-
-        if (trackImg)    trackImg.src = img;
-        if (trackTitle)  trackTitle.textContent = title;
-        if (trackArtist) trackArtist.textContent = artist;
-        if (heroTrack)   heroTrack.textContent = title;
-        
-        setPlayState(true);
-        showPlayer();
-
-        // Update active highlight in flyout
-        document.querySelectorAll('.flyout-track').forEach(t => {
-            t.classList.toggle('active', t.dataset.audioSrc === src);
-        });
-    }
-
-    function showPlayer() {
-        player?.classList.add('active');
-        player?.setAttribute('aria-hidden', 'false');
-    }
-
-    function closePlayer() {
-        player?.classList.remove('active');
-        player?.setAttribute('aria-hidden', 'true');
-        setPlayState(false);
-        audio.src = '';
-        if (heroLabel) heroLabel.textContent = 'Listening to right now...';
-        if (heroTrack) heroTrack.textContent = 'My Top 3 Tracks';
-        document.querySelectorAll('.flyout-track').forEach(t => t.classList.remove('active'));
-    }
-
-    // --- Volume Logic ---
-    function updateVolume(val) {
-        const volVal = val / 100;
-        
-        if (gainNode) {
-            // Solution for iOS / Touch and preventing double attenuation
-            gainNode.gain.setTargetAtTime(volVal, audioCtx.currentTime, 0.02);
-            audio.volume = 1; 
-        } else {
-            audio.volume = volVal;
-        }
-
-        if (volFill) volFill.style.height = val + '%';
-        
-        const volOn = muteBtn?.querySelector('.vol-on');
-        const volOff = muteBtn?.querySelector('.vol-off');
-        
-        if (val == 0) {
-            state.isMuted = true;
-            audio.muted = true;
-            muteBtn?.classList.add('muted');
-            if (volOn) volOn.style.display = 'none';
-            if (volOff) volOff.style.display = 'block';
-        } else {
-            state.isMuted = false;
-            audio.muted = false;
-            muteBtn?.classList.remove('muted');
-            if (volOn) volOn.style.display = 'block';
-            if (volOff) volOff.style.display = 'none';
-        }
-    }
-
-    volSlider?.addEventListener('input', (e) => {
-        state.currentVolume = e.target.value;
-        updateVolume(state.currentVolume);
-    });
-
-    // --- Flyout Listeners ---
-    document.querySelectorAll('.flyout-track').forEach(track => {
-        track.addEventListener('click', (e) => {
-            e.stopPropagation();
-            playTrack(track);
-            
-            // On mobile, close flyout after selection
-            if (window.innerWidth <= 900) {
-                const flyout = $('spotifyFlyout');
-                if (flyout) {
-                    flyout.style.opacity = '0';
-                    flyout.style.visibility = 'hidden';
-                    flyout.style.pointerEvents = 'none';
-                    flyout.style.transform = 'translateY(10px) scale(0.98)';
-                }
+        // Split text nodes into .word spans, preserving child elements (em, strong)
+        const wrapWords = (node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const parts = node.textContent.split(/(\s+)/);
+                const frag = document.createDocumentFragment();
+                parts.forEach(part => {
+                    if (/^\s+$/.test(part)) {
+                        frag.appendChild(document.createTextNode(part));
+                    } else if (part.length > 0) {
+                        const span = document.createElement('span');
+                        span.className = 'word';
+                        span.textContent = part;
+                        frag.appendChild(span);
+                    }
+                });
+                return frag;
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                Array.from(node.childNodes).forEach(child => {
+                    const replacement = wrapWords(child);
+                    if (replacement) node.replaceChild(replacement, child);
+                });
             }
+            return null;
+        };
+
+        targets.forEach(target => {
+            // Split text into word spans
+            Array.from(target.childNodes).forEach(child => {
+                const replacement = wrapWords(child);
+                if (replacement) target.replaceChild(replacement, child);
+            });
+
+            // Assign --word-index to each span for CSS transition stagger
+            target.querySelectorAll('.word').forEach((word, i) => {
+                word.style.setProperty('--word-index', i);
+            });
         });
-    });
 
-    // --- Hero Click (Toggle Player / Flyout on Mobile) ---
-    heroMeta?.addEventListener('click', (e) => {
-        if (window.innerWidth <= 900) {
-            // On mobile, toggle flyout visibility if clicking the badge
-            const isBadge = e.target.closest('.spotify-badge');
-            if (isBadge) {
-                const flyout = $('spotifyFlyout');
-                if (!flyout) return;
-                
-                // Use computed style or a class for more robust checking
-                const isVisible = flyout.classList.contains('js-visible');
-                
-                if (isVisible) {
-                    flyout.classList.remove('js-visible');
-                    flyout.style.opacity = '0';
-                    flyout.style.visibility = 'hidden';
-                    flyout.style.pointerEvents = 'none';
-                    flyout.style.transform = 'translateY(10px) scale(0.98)';
-                } else {
-                    flyout.classList.add('js-visible');
-                    flyout.style.opacity = '1';
-                    flyout.style.visibility = 'visible';
-                    flyout.style.pointerEvents = 'all';
-                    flyout.style.transform = 'translateY(0) scale(1)';
+        // Use IntersectionObserver to trigger .in-view when paragraph enters viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target); // only trigger once
                 }
-                return;
-            }
-        }
+            });
+        }, {
+            threshold: 0.15, // trigger when 15% of the element is visible
+            rootMargin: '0px 0px -40px 0px' // slight bottom offset so it doesn't fire instantly
+        });
 
-        // If clicking meta and music is loaded, show player
-        if (audio.src && !audio.src.endsWith(window.location.pathname) && audio.src !== window.location.href) {
-            showPlayer();
-        }
-    });
-
-    // --- Controls ---
-    const handlePlayPause = (e) => {
-        if (e) e.preventDefault();
-        // Check if a source is actually set
-        const hasSource = audio.src && !audio.src.endsWith(window.location.pathname) && audio.src !== window.location.href;
-        if (hasSource) {
-            setPlayState(!state.isPlaying);
-        }
+        targets.forEach(target => observer.observe(target));
     };
-    
-    // Use 'click' for better mobile audio unlocking
-    playPauseBtn?.addEventListener('click', handlePlayPause);
-    
-    closeBtn?.addEventListener('click', (e) => {
-        e.preventDefault();
-        closePlayer();
-    });
-    
-    muteBtn?.addEventListener('click', () => {
-        state.isMuted = !state.isMuted;
-        audio.muted = state.isMuted;
-        muteBtn?.classList.toggle('muted', state.isMuted);
-        
-        const volOn = muteBtn.querySelector('.vol-on');
-        const volOff = muteBtn.querySelector('.vol-off');
-        
-        if (state.isMuted) {
-            updateVolume(0);
-            if (volSlider) volSlider.value = 0;
-            if (volOn) volOn.style.display = 'none';
-            if (volOff) volOff.style.display = 'block';
-        } else {
-            const restoreVol = state.currentVolume > 0 ? state.currentVolume : 100;
-            updateVolume(restoreVol);
-            if (volSlider) volSlider.value = restoreVol;
-            if (volOn) volOn.style.display = 'block';
-            if (volOff) volOff.style.display = 'none';
-        }
-    });
-
-    // --- Progress Update ---
-    let progressRaf;
-    function updateProgress() {
-        if (!audio.duration || isDragging) {
-            progressRaf = requestAnimationFrame(updateProgress);
-            return;
-        }
-        const pct = (audio.currentTime / audio.duration) * 100;
-        if (progressBar) progressBar.style.width = pct + '%';
-        progressRaf = requestAnimationFrame(updateProgress);
-    }
-    audio.addEventListener('play', () => {
-        progressRaf = requestAnimationFrame(updateProgress);
-    });
-    audio.addEventListener('pause', () => {
-        cancelAnimationFrame(progressRaf);
-    });
-    audio.addEventListener('ended', () => {
-        // Option: Loop or play next? For now, just reset
-        setPlayState(false);
-        audio.currentTime = 0;
-    });
-
-    // --- Seek ---
-    let isDragging = false;
-    const seek = (e) => {
-        const rect = progressWrap.getBoundingClientRect();
-        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-        if (clientX === undefined) return;
-        
-        const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-        if (progressBar) progressBar.style.width = (pct * 100) + '%';
-        if (!isDragging && audio.duration) audio.currentTime = pct * audio.duration;
-    };
-    
-    progressWrap?.addEventListener('pointerdown', (e) => { 
-        if (!audio.src || !audio.duration) return;
-        isDragging = true; 
-        progressWrap.setPointerCapture(e.pointerId);
-        seek(e); 
-    });
-    progressWrap?.addEventListener('pointermove', (e) => { if (isDragging) seek(e); });
-    progressWrap?.addEventListener('pointerup', (e) => { 
-        if (isDragging) { 
-            isDragging = false; 
-            seek(e); 
-            progressWrap.releasePointerCapture(e.pointerId);
-        } 
-    });
-
-    // Tooltip trigger
-    pillImgWrap?.addEventListener('click', () => {
-        pillTooltip?.classList.add('show');
-        setTimeout(() => pillTooltip?.classList.remove('show'), 2000);
-    });
+    initScrollReveal();
 
     // --- Navigation Hide on Scroll ---
     const nav = document.querySelector('.nav');
@@ -1170,6 +1028,44 @@ if (footerCopy && newYearTrigger) {
     document.addEventListener('click', () => {
         weatherTooltip?.classList.remove('active');
     });
+    
+    // --- Hero Multilingual Name Cycle ---
+    const initNameCycle = () => {
+        const words = document.querySelectorAll('#multilingualName .name-word');
+        if (words.length <= 1) return;
+        
+        let currentIndex = 0;
+        const cycleInterval = 4000; // time in ms for each word
+        
+        const startCycle = () => {
+            setInterval(() => {
+                const currentWord = words[currentIndex];
+                currentWord.classList.remove('active');
+                currentWord.classList.add('exit');
+                
+                setTimeout(() => {
+                    currentWord.classList.remove('exit');
+                }, 1200);
+                
+                currentIndex = (currentIndex + 1) % words.length;
+                const nextWord = words[currentIndex];
+                nextWord.classList.add('active');
+            }, cycleInterval);
+        };
+
+        if (document.body.classList.contains('loaded')) {
+            setTimeout(startCycle, 2000);
+        } else {
+            const observer = new MutationObserver(() => {
+                if (document.body.classList.contains('loaded')) {
+                    observer.disconnect();
+                    setTimeout(startCycle, 2000);
+                }
+            });
+            observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        }
+    };
+    initNameCycle();
 
 })();
 
