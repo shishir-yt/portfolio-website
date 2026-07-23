@@ -980,8 +980,13 @@ if (footerCopy && newYearTrigger) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target); // only trigger once
+                    // Exclude About paragraphs from the standard in-view intersection trigger on desktop
+                    const isAbout = entry.target.closest('#about');
+                    const isPinned = window.innerWidth > 900 && window.innerHeight > 650;
+                    if (!isAbout || !isPinned) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target); // only trigger once
+                    }
                 }
             });
         }, {
@@ -1066,6 +1071,248 @@ if (footerCopy && newYearTrigger) {
         }
     };
     initNameCycle();
+
+    // --- Scroll-based Karaoke Reveal ---
+    const aboutSpacer = document.querySelector('.about-pin-spacer');
+    const aboutSection = document.getElementById('about');
+    let aboutWords = null;
+
+    const updateKaraokeReveal = () => {
+        if (!aboutSpacer || !aboutSection) return;
+        if (!aboutWords) {
+            aboutWords = document.querySelectorAll('#about .scroll-reveal-text .word');
+        }
+        if (!aboutWords || aboutWords.length === 0) return;
+
+        const rect = aboutSpacer.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const isPinnedActive = window.innerWidth > 900 && viewportHeight > 650;
+
+        let progress = 0;
+        if (isPinnedActive) {
+            const scrollableDistance = rect.height - viewportHeight;
+            if (rect.top <= 0) {
+                progress = -rect.top / scrollableDistance;
+            }
+            progress = Math.max(0, Math.min(1, progress));
+        } else {
+            const innerRect = aboutSection.getBoundingClientRect();
+            const startY = viewportHeight * 0.75;
+            const endY = viewportHeight * 0.25;
+            const currentY = innerRect.top;
+            
+            progress = (startY - currentY) / (startY - endY);
+            progress = Math.max(0, Math.min(1, progress));
+        }
+
+        const highlightCount = Math.floor(progress * aboutWords.length);
+        aboutWords.forEach((word, idx) => {
+            if (idx < highlightCount) {
+                word.classList.add('highlighted');
+            } else {
+                word.classList.remove('highlighted');
+            }
+        });
+    };
+
+    let karaokeTick = false;
+    window.addEventListener('scroll', () => {
+        if (!karaokeTick) {
+            requestAnimationFrame(() => {
+                updateKaraokeReveal();
+                karaokeTick = false;
+            });
+            karaokeTick = true;
+        }
+    }, { passive: true });
+
+    // Initial run after page layout settles
+    setTimeout(updateKaraokeReveal, 150);
+
+    // --- Enhanced Music Experience (Restored) ---
+    const audio        = $('siteAudio');
+    const player       = $('floatingPlayer');
+    const playPauseBtn = $('playerPlayPause');
+    const closeBtn     = $('playerClose');
+    const muteBtn      = $('playerMute');
+    const progressBar  = $('playerProgressBar');
+    const progressThumb= $('playerProgressThumb');
+    const progressWrap = $('pillProgressContainer');
+    const trackImg     = $('playerTrackImg');
+    const trackTitle   = $('playerTrackTitle');
+    const trackArtist  = $('playerTrackArtist');
+    const pillImgWrap  = $('pillImgWrap');
+    const pillTooltip  = $('pillTooltip');
+    const heroMeta     = $('spotifyMeta');
+    const heroLabel    = $('spotifyMetaLabel');
+    const heroTrack    = $('spotifyTrackName');
+    const volSlider    = $('volumeSlider');
+    const volFill      = document.querySelector('.volume-level-fill');
+
+    const musicState = {
+        isPlaying: false,
+        isMuted: false,
+        duration: 30,
+        currentVolume: 100
+    };
+
+    // Initialize Volume Fill
+    if (volFill) volFill.style.height = '100%';
+
+    function setPlayState(playing) {
+        musicState.isPlaying = playing;
+        const playI  = playPauseBtn?.querySelector('.play-icon');
+        const pauseI = playPauseBtn?.querySelector('.pause-icon');
+        
+        if (playing) {
+            audio.play().catch(e => console.log('Audio blocked', e));
+            if (playI)  playI.style.display = 'none';
+            if (pauseI) pauseI.style.display = 'block';
+            player?.classList.add('is-playing');
+            heroMeta?.classList.add('playing');
+            if (heroLabel) heroLabel.textContent = 'Designing with 🎵';
+        } else {
+            audio.pause();
+            if (playI)  playI.style.display = 'block';
+            if (pauseI) pauseI.style.display = 'none';
+            player?.classList.remove('is-playing');
+            heroMeta?.classList.remove('playing');
+            if (heroLabel) heroLabel.textContent = 'Listening to right now...';
+        }
+    }
+
+    function playTrack(data) {
+        const src = data.audioSrc || data.dataset?.audioSrc;
+        if (!src) return;
+
+        const title = data.title || data.dataset?.title;
+        const artist = data.artist || data.dataset?.artist;
+        const img = data.img || data.dataset?.img;
+
+        if (audio.src === src) {
+            setPlayState(!musicState.isPlaying);
+            return;
+        }
+
+        audio.src = src;
+        audio.load();
+
+        if (trackImg)    trackImg.src = img;
+        if (trackTitle)  trackTitle.textContent = title;
+        if (trackArtist) trackArtist.textContent = artist;
+        if (heroTrack)   heroTrack.textContent = title;
+        
+        if (progressBar) progressBar.style.width = '0%';
+        if (progressThumb) progressThumb.style.left = '0%';
+
+        setPlayState(true);
+        showPlayer();
+
+        document.querySelectorAll('.flyout-track').forEach(t => {
+            t.classList.toggle('active', t.dataset.audioSrc === src);
+        });
+    }
+
+    function showPlayer() {
+        player?.classList.add('active');
+        player?.setAttribute('aria-hidden', 'false');
+    }
+
+    function closePlayer() {
+        player?.classList.remove('active');
+        player?.setAttribute('aria-hidden', 'true');
+        setPlayState(false);
+        audio.src = '';
+        if (heroLabel) heroLabel.textContent = 'Listening to right now...';
+        if (heroTrack) heroTrack.textContent = 'My Top 4 Tracks';
+        document.querySelectorAll('.flyout-track').forEach(t => t.classList.remove('active'));
+    }
+
+    function updateVolume(val) {
+        audio.volume = val / 100;
+        if (volFill) volFill.style.height = val + '%';
+        if (val == 0) {
+            musicState.isMuted = true;
+            muteBtn?.classList.add('muted');
+        } else {
+            musicState.isMuted = false;
+            muteBtn?.classList.remove('muted');
+        }
+    }
+
+    volSlider?.addEventListener('input', (e) => {
+        musicState.currentVolume = e.target.value;
+        updateVolume(musicState.currentVolume);
+    });
+
+    document.querySelectorAll('.flyout-track').forEach(track => {
+        track.addEventListener('click', (e) => {
+            e.stopPropagation();
+            playTrack(track);
+        });
+    });
+
+    heroMeta?.addEventListener('click', (e) => {
+        if (window.innerWidth <= 900) {
+            const isBadge = e.target.closest('.spotify-badge');
+            if (isBadge) {
+                const flyout = $('spotifyFlyout');
+                if (flyout) {
+                    const isVisible = flyout.style.opacity === '1';
+                    flyout.style.opacity = isVisible ? '0' : '1';
+                    flyout.style.visibility = isVisible ? 'hidden' : 'visible';
+                    flyout.style.transform = isVisible ? 'translateY(10px) scale(0.98)' : 'translateY(0) scale(1)';
+                }
+                return;
+            }
+        }
+
+        if (audio.src && audio.src !== window.location.href) {
+            player?.classList.toggle('active');
+        }
+    });
+
+    playPauseBtn?.addEventListener('click', () => {
+        if (audio.src && audio.src !== window.location.href) setPlayState(!musicState.isPlaying);
+    });
+    closeBtn?.addEventListener('click', closePlayer);
+    
+    muteBtn?.addEventListener('click', () => {
+        musicState.isMuted = !musicState.isMuted;
+        audio.muted = musicState.isMuted;
+        muteBtn?.classList.toggle('muted', musicState.isMuted);
+        if (musicState.isMuted) {
+            updateVolume(0);
+            volSlider.value = 0;
+        } else {
+            updateVolume(musicState.currentVolume);
+            volSlider.value = musicState.currentVolume;
+        }
+    });
+
+    audio?.addEventListener('timeupdate', () => {
+        if (!audio.duration || isDragging) return;
+        musicState.duration = audio.duration;
+        const pct = (audio.currentTime / musicState.duration) * 100;
+        if (progressBar) progressBar.style.width = pct + '%';
+    });
+    audio?.addEventListener('ended', () => closePlayer());
+
+    let isDragging = false;
+    const seek = (e) => {
+        const rect = progressWrap.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        if (progressBar) progressBar.style.width = (pct * 100) + '%';
+        if (!isDragging) audio.currentTime = pct * audio.duration;
+    };
+    progressWrap?.addEventListener('mousedown', (e) => { isDragging = true; seek(e); });
+    document.addEventListener('mousemove', (e) => { if (isDragging) seek(e); });
+    document.addEventListener('mouseup', (e) => { if (isDragging) { isDragging = false; seek(e); } });
+
+    pillImgWrap?.addEventListener('click', () => {
+        pillTooltip?.classList.add('show');
+        setTimeout(() => pillTooltip?.classList.remove('show'), 2000);
+    });
 
 })();
 
