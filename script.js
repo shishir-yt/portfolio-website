@@ -1129,14 +1129,13 @@ if (footerCopy && newYearTrigger) {
     // Initial run after page layout settles
     setTimeout(updateKaraokeReveal, 150);
 
-    // --- Enhanced Music Experience (Restored) ---
+    // --- Enhanced Music Experience ---
     const audio        = $('siteAudio');
     const player       = $('floatingPlayer');
     const playPauseBtn = $('playerPlayPause');
     const closeBtn     = $('playerClose');
     const muteBtn      = $('playerMute');
     const progressBar  = $('playerProgressBar');
-    const progressThumb= $('playerProgressThumb');
     const progressWrap = $('pillProgressContainer');
     const trackImg     = $('playerTrackImg');
     const trackTitle   = $('playerTrackTitle');
@@ -1148,11 +1147,13 @@ if (footerCopy && newYearTrigger) {
     const heroTrack    = $('spotifyTrackName');
     const volSlider    = $('volumeSlider');
     const volFill      = document.querySelector('.volume-level-fill');
+    const spotifyFlyout = $('spotifyFlyout');
+
+    if (!audio) return; // No audio element, bail out
 
     const musicState = {
         isPlaying: false,
-        isMuted: false,
-        duration: 30,
+        isMuted:   false,
         currentVolume: 100
     };
 
@@ -1163,9 +1164,9 @@ if (footerCopy && newYearTrigger) {
         musicState.isPlaying = playing;
         const playI  = playPauseBtn?.querySelector('.play-icon');
         const pauseI = playPauseBtn?.querySelector('.pause-icon');
-        
+
         if (playing) {
-            audio.play().catch(e => console.log('Audio blocked', e));
+            audio.play().catch(() => {});
             if (playI)  playI.style.display = 'none';
             if (pauseI) pauseI.style.display = 'block';
             player?.classList.add('is-playing');
@@ -1181,15 +1182,16 @@ if (footerCopy && newYearTrigger) {
         }
     }
 
-    function playTrack(data) {
-        const src = data.audioSrc || data.dataset?.audioSrc;
+    function playTrack(el) {
+        // Normalize — always read from dataset
+        const src    = el.dataset.audioSrc;
+        const title  = el.dataset.title;
+        const artist = el.dataset.artist;
+        const img    = el.dataset.img;
         if (!src) return;
 
-        const title = data.title || data.dataset?.title;
-        const artist = data.artist || data.dataset?.artist;
-        const img = data.img || data.dataset?.img;
-
-        if (audio.src === src) {
+        // Toggle play/pause if same track
+        if (audio.src.endsWith(src) || audio.src === src) {
             setPlayState(!musicState.isPlaying);
             return;
         }
@@ -1197,17 +1199,26 @@ if (footerCopy && newYearTrigger) {
         audio.src = src;
         audio.load();
 
-        if (trackImg)    trackImg.src = img;
-        if (trackTitle)  trackTitle.textContent = title;
-        if (trackArtist) trackArtist.textContent = artist;
-        if (heroTrack)   heroTrack.textContent = title;
-        
+        // Update album art with fallback
+        if (trackImg) {
+            trackImg.src = img || '';
+            trackImg.onerror = () => {
+                trackImg.style.opacity = '0';
+            };
+            trackImg.onload = () => {
+                trackImg.style.opacity = '1';
+            };
+        }
+        if (trackTitle)  trackTitle.textContent  = title  || 'Unknown Track';
+        if (trackArtist) trackArtist.textContent = artist || 'Unknown Artist';
+        if (heroTrack)   heroTrack.textContent   = title  || '';
+
         if (progressBar) progressBar.style.width = '0%';
-        if (progressThumb) progressThumb.style.left = '0%';
 
         setPlayState(true);
         showPlayer();
 
+        // Mark active track
         document.querySelectorAll('.flyout-track').forEach(t => {
             t.classList.toggle('active', t.dataset.audioSrc === src);
         });
@@ -1229,91 +1240,130 @@ if (footerCopy && newYearTrigger) {
     }
 
     function updateVolume(val) {
-        audio.volume = val / 100;
-        if (volFill) volFill.style.height = val + '%';
-        if (val == 0) {
-            musicState.isMuted = true;
-            muteBtn?.classList.add('muted');
-        } else {
-            musicState.isMuted = false;
-            muteBtn?.classList.remove('muted');
-        }
+        const v = parseInt(val, 10);
+        audio.volume = Math.max(0, Math.min(1, v / 100));
+        if (volFill) volFill.style.height = v + '%';
+        const muted = v === 0;
+        musicState.isMuted = muted;
+        muteBtn?.classList.toggle('muted', muted);
     }
 
+    // Volume slider
     volSlider?.addEventListener('input', (e) => {
-        musicState.currentVolume = e.target.value;
+        musicState.currentVolume = parseInt(e.target.value, 10);
         updateVolume(musicState.currentVolume);
     });
 
+    // Flyout track click + keyboard
     document.querySelectorAll('.flyout-track').forEach(track => {
+        track.setAttribute('tabindex', '0');
+        track.setAttribute('role', 'button');
         track.addEventListener('click', (e) => {
             e.stopPropagation();
             playTrack(track);
         });
+        track.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                playTrack(track);
+            }
+        });
     });
 
-    heroMeta?.addEventListener('click', (e) => {
-        if (window.innerWidth <= 900) {
-            const isBadge = e.target.closest('.spotify-badge');
-            if (isBadge) {
-                const flyout = $('spotifyFlyout');
-                if (flyout) {
-                    const isVisible = flyout.style.opacity === '1';
-                    flyout.style.opacity = isVisible ? '0' : '1';
-                    flyout.style.visibility = isVisible ? 'hidden' : 'visible';
-                    flyout.style.transform = isVisible ? 'translateY(10px) scale(0.98)' : 'translateY(0) scale(1)';
-                }
-                return;
-            }
+    // Mobile: toggle flyout via badge click
+    const spotifyBadge = heroMeta?.querySelector('.spotify-badge');
+    spotifyBadge?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.innerWidth <= 900 && spotifyFlyout) {
+            spotifyFlyout.classList.toggle('force-open');
         }
+    });
 
-        if (audio.src && audio.src !== window.location.href) {
-            player?.classList.toggle('active');
+    // Close flyout on outside click (mobile)
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 900 && spotifyFlyout) {
+            if (!heroMeta?.contains(e.target)) {
+                spotifyFlyout.classList.remove('force-open');
+            }
         }
     });
 
     playPauseBtn?.addEventListener('click', () => {
-        if (audio.src && audio.src !== window.location.href) setPlayState(!musicState.isPlaying);
-    });
-    closeBtn?.addEventListener('click', closePlayer);
-    
-    muteBtn?.addEventListener('click', () => {
-        musicState.isMuted = !musicState.isMuted;
-        audio.muted = musicState.isMuted;
-        muteBtn?.classList.toggle('muted', musicState.isMuted);
-        if (musicState.isMuted) {
-            updateVolume(0);
-            volSlider.value = 0;
-        } else {
-            updateVolume(musicState.currentVolume);
-            volSlider.value = musicState.currentVolume;
+        if (audio.src && !audio.src.endsWith(window.location.pathname)) {
+            setPlayState(!musicState.isPlaying);
         }
     });
 
-    audio?.addEventListener('timeupdate', () => {
+    closeBtn?.addEventListener('click', closePlayer);
+
+    muteBtn?.addEventListener('click', () => {
+        musicState.isMuted = !musicState.isMuted;
+        audio.muted = musicState.isMuted;
+        if (musicState.isMuted) {
+            if (volFill) volFill.style.height = '0%';
+            if (volSlider) volSlider.value = 0;
+            muteBtn.classList.add('muted');
+        } else {
+            updateVolume(musicState.currentVolume);
+            if (volSlider) volSlider.value = musicState.currentVolume;
+            muteBtn.classList.remove('muted');
+        }
+    });
+
+    // Progress bar update
+    audio.addEventListener('timeupdate', () => {
         if (!audio.duration || isDragging) return;
-        musicState.duration = audio.duration;
-        const pct = (audio.currentTime / musicState.duration) * 100;
+        const pct = (audio.currentTime / audio.duration) * 100;
         if (progressBar) progressBar.style.width = pct + '%';
     });
-    audio?.addEventListener('ended', () => closePlayer());
 
+    audio.addEventListener('ended', () => closePlayer());
+
+    audio.addEventListener('error', () => {
+        // Audio failed to load — show friendly state
+        if (trackTitle) trackTitle.textContent = 'Preview unavailable';
+        setPlayState(false);
+    });
+
+    // Seek with drag
     let isDragging = false;
-    const seek = (e) => {
-        const rect = progressWrap.getBoundingClientRect();
-        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-        if (progressBar) progressBar.style.width = (pct * 100) + '%';
-        if (!isDragging) audio.currentTime = pct * audio.duration;
-    };
-    progressWrap?.addEventListener('mousedown', (e) => { isDragging = true; seek(e); });
-    document.addEventListener('mousemove', (e) => { if (isDragging) seek(e); });
-    document.addEventListener('mouseup', (e) => { if (isDragging) { isDragging = false; seek(e); } });
 
+    function seekTo(e) {
+        if (!progressWrap) return;
+        const rect = progressWrap.getBoundingClientRect();
+        const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        if (progressBar) progressBar.style.width = (pct * 100) + '%';
+        if (audio.duration) audio.currentTime = pct * audio.duration;
+    }
+
+    progressWrap?.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        seekTo(e);
+    });
+    document.addEventListener('mousemove', (e) => { if (isDragging) seekTo(e); });
+    document.addEventListener('mouseup',  (e) => {
+        if (isDragging) {
+            isDragging = false;
+            seekTo(e);
+        }
+    });
+
+    // Touch seek support
+    progressWrap?.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        if (touch) seekTo(touch);
+    }, { passive: true });
+
+    // Album art tooltip
     pillImgWrap?.addEventListener('click', () => {
-        pillTooltip?.classList.add('show');
-        setTimeout(() => pillTooltip?.classList.remove('show'), 2000);
+        if (!pillTooltip) return;
+        pillTooltip.classList.add('show');
+        setTimeout(() => pillTooltip.classList.remove('show'), 2200);
     });
 
 })();
+
+
+
 
 
