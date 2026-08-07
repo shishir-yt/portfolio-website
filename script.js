@@ -788,17 +788,90 @@ document.querySelectorAll('[data-carousel]').forEach(el => {
     });
 });
 
-// ===== WEATHER TOOLTIP MOBILE =====
-const weatherBadge = document.querySelector('.weather-badge');
-if (weatherBadge) {
-    weatherBadge.addEventListener('click', (e) => {
-        if (window.innerWidth <= 900) {
-            weatherBadge.classList.toggle('active');
-            e.stopPropagation();
+// ===== FLEET & WEATHER TOOLTIP EDGE-AWARE POSITIONING =====
+function positionTooltip(element, isFleet = false) {
+    if (!element) return;
+    const rect = element.getBoundingClientRect();
+    const itemCenter = rect.left + rect.width / 2;
+    const screenWidth = window.innerWidth;
+    const padding = 16;
+    const defaultWidth = isFleet ? 220 : 260;
+    const tooltipWidth = Math.min(defaultWidth, screenWidth - padding * 2);
+    const halfTooltip = tooltipWidth / 2;
+
+    let leftOffset;
+    let transform;
+
+    if (itemCenter - halfTooltip < padding) {
+        leftOffset = Math.max(0, padding - rect.left);
+        transform = 'translateX(0)';
+    } else if (itemCenter + halfTooltip > screenWidth - padding) {
+        leftOffset = (screenWidth - padding - tooltipWidth) - rect.left;
+        transform = 'translateX(0)';
+    } else {
+        leftOffset = '50%';
+        transform = 'translateX(-50%)';
+    }
+
+    const isTopOverflow = rect.top < 130;
+    const bottomVal = isTopOverflow ? 'auto' : (isFleet ? 'calc(100% + 10px)' : 'calc(100% + 14px)');
+    const topVal = isTopOverflow ? 'calc(100% + 10px)' : 'auto';
+
+    if (isFleet) {
+        element.style.setProperty('--tt-left', typeof leftOffset === 'number' ? `${leftOffset}px` : leftOffset);
+        element.style.setProperty('--tt-transform', transform);
+        element.style.setProperty('--tt-width', `${tooltipWidth}px`);
+        element.style.setProperty('--tt-bottom', bottomVal);
+        element.style.setProperty('--tt-top', topVal);
+    } else {
+        element.style.setProperty('--wtt-left', typeof leftOffset === 'number' ? `${leftOffset}px` : leftOffset);
+        element.style.setProperty('--wtt-transform', transform);
+        element.style.setProperty('--wtt-width', `${tooltipWidth}px`);
+        element.style.setProperty('--wtt-bottom', bottomVal);
+        element.style.setProperty('--wtt-top', topVal);
+    }
+}
+
+const fleetItems = document.querySelectorAll('.fleet-item');
+fleetItems.forEach(item => {
+    item.addEventListener('mouseenter', () => positionTooltip(item, true));
+    item.addEventListener('focus', () => positionTooltip(item, true));
+
+    item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        positionTooltip(item, true);
+        const isActive = item.classList.contains('active');
+        fleetItems.forEach(fi => fi.classList.remove('active'));
+        if (!isActive) {
+            item.classList.add('active');
         }
     });
-    document.addEventListener('click', () => weatherBadge.classList.remove('active'));
+});
+
+const weatherBadge = document.querySelector('.weather-badge');
+if (weatherBadge) {
+    weatherBadge.addEventListener('mouseenter', () => positionTooltip(weatherBadge, false));
+    weatherBadge.addEventListener('click', (e) => {
+        e.stopPropagation();
+        positionTooltip(weatherBadge, false);
+        weatherBadge.classList.toggle('active');
+    });
 }
+
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.fleet-item')) {
+        fleetItems.forEach(fi => fi.classList.remove('active'));
+    }
+    if (!e.target.closest('.weather-badge')) {
+        weatherBadge?.classList.remove('active');
+    }
+});
+
+window.addEventListener('resize', () => {
+    const activeFleet = document.querySelector('.fleet-item.active');
+    if (activeFleet) positionTooltip(activeFleet, true);
+    if (weatherBadge?.classList.contains('active')) positionTooltip(weatherBadge, false);
+});
 
 // ===== GAMIFIED MOMO EASTER EGG =====
 const momoBtn = document.getElementById('momoEasterEgg');
@@ -1021,18 +1094,7 @@ if (footerCopy && newYearTrigger) {
         lastScroll = currentScroll;
     });
 
-    // --- Weather Tooltip Toggle (Mobile) ---
-    const weatherBadge = document.querySelector('.weather-badge');
-    const weatherTooltip = document.querySelector('.weather-tooltip');
-    
-    weatherBadge?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        weatherTooltip?.classList.toggle('active');
-    });
-    
-    document.addEventListener('click', () => {
-        weatherTooltip?.classList.remove('active');
-    });
+
     
     // --- Hero Multilingual Name Cycle ---
     const initNameCycle = () => {

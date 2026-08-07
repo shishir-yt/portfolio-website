@@ -1132,10 +1132,12 @@ body.cursor-hello .cursor{opacity:0}
 
 .weather-tooltip {
     position: absolute;
-    bottom: calc(100% + 14px);
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    width: 260px;
+    bottom: var(--wtt-bottom, calc(100% + 14px));
+    top: var(--wtt-top, auto);
+    left: var(--wtt-left, 50%);
+    transform: var(--wtt-transform, translateX(-50%)) translateY(10px);
+    width: var(--wtt-width, 260px);
+    max-width: calc(100vw - 32px);
     padding: 16px;
     background: var(--surface);
     color: var(--t2);
@@ -1147,31 +1149,25 @@ body.cursor-hello .cursor{opacity:0}
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s var(--ease);
+    transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), visibility 0.4s;
     z-index: 110;
     text-align: left;
     pointer-events: none;
     white-space: normal;
 }
 .weather-badge:hover .weather-tooltip,
+.weather-badge.active .weather-tooltip,
 .weather-tooltip.active {
     opacity: 1 !important;
     visibility: visible !important;
-    transform: translateX(-50%) translateY(0) !important;
+    transform: var(--wtt-transform, translateX(-50%)) translateY(0) !important;
     pointer-events: all;
 }
 
 @media(max-width: 600px) {
     .weather-tooltip {
-        left: 0 !important;
-        transform: translateY(10px) !important;
-        width: 280px;
+        width: var(--wtt-width, 280px);
         max-width: calc(100vw - 32px);
-    }
-    .weather-badge:hover .weather-tooltip,
-    .weather-tooltip.active {
-        transform: translateY(0) !important;
-        left: 0 !important;
     }
 }
 
@@ -1365,11 +1361,41 @@ body.cursor-hello .cursor{opacity:0}
 .fleet-title{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:.8rem;color:var(--t2);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
 .aviation-codes{display:flex;gap:12px;flex-wrap:wrap}
 .fleet-item{font-family:var(--mono);font-size:.8rem;letter-spacing:.05em;color:var(--t3);padding:8px 20px;border:1px solid var(--border);border-radius:30px;transition:all .4s var(--ease);cursor:pointer;background:rgba(255,255,255,0.02);position:relative}
-.fleet-item:hover{color:var(--bg);background:var(--accent);border-color:var(--accent)}
+.fleet-item:hover, .fleet-item.active, .fleet-item:focus-visible{color:var(--bg);background:var(--accent);border-color:var(--accent)}
 
 /* Tooltip */
-.fleet-item::after{content:attr(data-info);position:absolute;bottom:120%;left:50%;transform:translateX(-50%) translateY(10px);width:200px;padding:12px;background:var(--surface);color:var(--t2);font-family:var(--sans);font-size:0.75rem;line-height:1.4;border-radius:8px;border:1px solid var(--border);opacity:0;visibility:hidden;transition:all 0.3s var(--ease);z-index:10;pointer-events:none;text-align:left;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
-.fleet-item:hover::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.fleet-item::after{
+    content:attr(data-info);
+    position:absolute;
+    bottom:var(--tt-bottom, calc(100% + 10px));
+    top:var(--tt-top, auto);
+    left:var(--tt-left, 50%);
+    transform:var(--tt-transform, translateX(-50%)) translateY(10px);
+    width:var(--tt-width, 220px);
+    max-width:calc(100vw - 32px);
+    padding:12px 14px;
+    background:var(--surface);
+    color:var(--t2);
+    font-family:var(--sans);
+    font-size:0.75rem;
+    line-height:1.45;
+    border-radius:10px;
+    border:1px solid var(--border);
+    opacity:0;
+    visibility:hidden;
+    transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+    z-index:120;
+    pointer-events:none;
+    text-align:left;
+    box-shadow:0 12px 36px rgba(0,0,0,0.45);
+}
+.fleet-item:hover::after,
+.fleet-item.active::after,
+.fleet-item:focus-visible::after{
+    opacity:1;
+    visibility:visible;
+    transform:var(--tt-transform, translateX(-50%)) translateY(0);
+}
 
 /* ===== REELS SECTION ===== */
 .reels-section{padding:var(--s12) 0;background:var(--bg)}
@@ -1623,6 +1649,9 @@ body.cursor-hello .cursor{opacity:0}
     .about-cols { grid-template-columns: 1fr; }
     
     .bites-grid, .films-grid { grid-template-columns: 1fr; }
+    .av-stat-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .scroll-top-indicator .scroll-label { display: none !important; }
+    .lightbox-cv .cv-viewer-container { width: 95%; height: 85%; }
 
     .pill-player {
         width: 100%; max-width: 100%; bottom: 0; left: 0; right: 0;
