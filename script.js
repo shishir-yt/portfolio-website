@@ -834,8 +834,10 @@ function positionTooltip(element, isFleet = false) {
 
 const fleetItems = document.querySelectorAll('.fleet-item');
 fleetItems.forEach(item => {
+    item.addEventListener('pointerenter', () => positionTooltip(item, true));
     item.addEventListener('mouseenter', () => positionTooltip(item, true));
     item.addEventListener('focus', () => positionTooltip(item, true));
+    item.addEventListener('touchstart', () => positionTooltip(item, true), { passive: true });
 
     item.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -850,7 +852,9 @@ fleetItems.forEach(item => {
 
 const weatherBadge = document.querySelector('.weather-badge');
 if (weatherBadge) {
+    weatherBadge.addEventListener('pointerenter', () => positionTooltip(weatherBadge, false));
     weatherBadge.addEventListener('mouseenter', () => positionTooltip(weatherBadge, false));
+    weatherBadge.addEventListener('touchstart', () => positionTooltip(weatherBadge, false), { passive: true });
     weatherBadge.addEventListener('click', (e) => {
         e.stopPropagation();
         positionTooltip(weatherBadge, false);

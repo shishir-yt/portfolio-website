@@ -1653,6 +1653,18 @@ body.cursor-hello .cursor{opacity:0}
     .scroll-top-indicator .scroll-label { display: none !important; }
     .lightbox-cv .cv-viewer-container { width: 95%; height: 85%; }
 
+    .fleet-item::after {
+        left: var(--tt-left, 0) !important;
+        transform: var(--tt-transform, translateY(10px)) !important;
+        width: var(--tt-width, min(240px, calc(100vw - 40px))) !important;
+        max-width: calc(100vw - 40px) !important;
+    }
+    .fleet-item:hover::after,
+    .fleet-item.active::after,
+    .fleet-item:focus-visible::after {
+        transform: var(--tt-transform, translateY(0)) !important;
+    }
+
     .pill-player {
         width: 100%; max-width: 100%; bottom: 0; left: 0; right: 0;
         transform: translate3d(0, 100%, 0) scale(1);
