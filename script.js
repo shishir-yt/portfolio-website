@@ -1429,6 +1429,186 @@ if (footerCopy && newYearTrigger) {
 
 })();
 
+// ===== 3D NEPALI PASSPORT SCROLL ENGINE =====
+(() => {
+    const pinSpacer = document.getElementById('passportPinSpacer');
+    const passport3d = document.getElementById('passport3d');
+    const coverFront = document.getElementById('passportCoverFront');
+    const spread1 = document.getElementById('spread1');
+    const spread2 = document.getElementById('spread2');
+    const spread3 = document.getElementById('spread3');
+    const progressFill = document.getElementById('passportProgressFill');
+    const hintText = document.getElementById('passportHintText');
+
+    // Stamp elements
+    const stampNepalDepart = document.getElementById('stampNepalDepart');
+    const stampIndiaArrive = document.getElementById('stampIndiaArrive');
+    const stampIndiaDepart = document.getElementById('stampIndiaDepart');
+    const stampSingapore = document.getElementById('stampSingapore');
+    const stampPhilippinesArrive = document.getElementById('stampPhilippinesArrive');
+    const stampPhilippinesDepart = document.getElementById('stampPhilippinesDepart');
+    const stampNepalArrive = document.getElementById('stampNepalArrive');
+
+    if (!pinSpacer || !passport3d || !coverFront) return;
+
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+        coverFront.style.transform = 'rotateY(-180deg)';
+        if (spread1) spread1.style.transform = 'rotateY(-180deg)';
+        if (spread2) spread2.style.transform = 'rotateY(-180deg)';
+        if (spread3) spread3.style.transform = 'rotateY(-180deg)';
+        [stampNepalDepart, stampIndiaArrive, stampIndiaDepart, stampSingapore, stampPhilippinesArrive, stampPhilippinesDepart, stampNepalArrive].forEach(s => s?.classList.add('stamped'));
+        if (hintText) hintText.textContent = 'Nepali Passport • Travel History';
+        if (progressFill) progressFill.style.width = '100%';
+        return;
+    }
+
+    // Lerp smoothing state
+    let currentProgress = 0;
+    let targetProgress = 0;
+    const LERP_FACTOR = 0.12;
+    let isAnimating = false;
+
+    // Easing helper — applies custom ease curve to a 0-1 range within a phase
+    function phaseEase(t) {
+        // Slight deceleration curve for natural page movement
+        return t < 0.5
+            ? 2 * t * t
+            : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    }
+
+    // Compute spread angle with easing within phase range
+    function computeSpreadAngle(progress, phaseStart, phaseEnd) {
+        if (progress < phaseStart) return 0;
+        if (progress >= phaseEnd) return -180;
+        const t = (progress - phaseStart) / (phaseEnd - phaseStart);
+        return phaseEase(t) * -180;
+    }
+
+    // Dynamic shadow on spread based on rotation angle
+    function updateSpreadShadow(spreadEl, angle) {
+        if (!spreadEl) return;
+        // Shadow is strongest when page is near 90deg (vertical)
+        const absAngle = Math.abs(angle);
+        const shadowStrength = Math.sin((absAngle / 180) * Math.PI);
+        spreadEl.style.setProperty('--page-shadow', shadowStrength.toFixed(3));
+    }
+
+    function applyPassportState(progress) {
+        // Update progress bar
+        if (progressFill) progressFill.style.width = `${(progress * 100).toFixed(1)}%`;
+
+        // Subtle 3D tilt reaction
+        const tiltX = 10 - (progress * 6);
+        const tiltY = (progress * 5 - 2.5);
+        passport3d.style.transform = `rotateX(${tiltX.toFixed(1)}deg) rotateY(${tiltY.toFixed(1)}deg)`;
+
+        // Phase 1: Cover Opening (0.00 -> 0.12)
+        const coverAngle = computeSpreadAngle(progress, 0, 0.12);
+        coverFront.style.transform = `rotateY(${coverAngle.toFixed(1)}deg)`;
+
+        // Phase 2: Spread 1 — Pages 1 & 2 (0.15 -> 0.38)
+        const spread1Angle = computeSpreadAngle(progress, 0.15, 0.38);
+        if (spread1) {
+            spread1.style.transform = `rotateY(${spread1Angle.toFixed(1)}deg)`;
+            updateSpreadShadow(spread1, spread1Angle);
+        }
+
+        // Stamps on Spread 1
+        toggleStamp(stampNepalDepart, progress >= 0.18);
+        toggleStamp(stampIndiaArrive, progress >= 0.25);
+
+        // Phase 3: Spread 2 — Pages 3 & 4 (0.42 -> 0.62)
+        const spread2Angle = computeSpreadAngle(progress, 0.42, 0.62);
+        if (spread2) {
+            spread2.style.transform = `rotateY(${spread2Angle.toFixed(1)}deg)`;
+            updateSpreadShadow(spread2, spread2Angle);
+        }
+
+        // Stamps on Spread 2
+        toggleStamp(stampIndiaDepart, progress >= 0.45);
+        toggleStamp(stampSingapore, progress >= 0.52);
+
+        // Phase 4: Spread 3 — Pages 5 & 6 (0.66 -> 0.85)
+        const spread3Angle = computeSpreadAngle(progress, 0.66, 0.85);
+        if (spread3) {
+            spread3.style.transform = `rotateY(${spread3Angle.toFixed(1)}deg)`;
+            updateSpreadShadow(spread3, spread3Angle);
+        }
+
+        // Stamps on Spread 3
+        toggleStamp(stampPhilippinesArrive, progress >= 0.68);
+        toggleStamp(stampPhilippinesDepart, progress >= 0.74);
+        toggleStamp(stampNepalArrive, progress >= 0.80);
+
+        // Hint Text Updates
+        if (hintText) {
+            const hints = [
+                [0.12, 'Scroll to open passport'],
+                [0.38, 'Kathmandu (KTM) → New Delhi (DEL)'],
+                [0.62, 'New Delhi → Singapore (SIN)'],
+                [0.83, 'Manila (MNL) → Kathmandu Return'],
+                [1.01, 'Passport Logbook Complete']
+            ];
+            for (let i = 0; i < hints.length; i++) {
+                if (progress < hints[i][0]) {
+                    if (hintText.textContent !== hints[i][1]) {
+                        hintText.textContent = hints[i][1];
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    function toggleStamp(el, show) {
+        if (!el) return;
+        if (show) {
+            el.classList.add('stamped');
+        } else {
+            el.classList.remove('stamped');
+        }
+    }
+
+    function animationLoop() {
+        // Lerp towards target
+        const diff = targetProgress - currentProgress;
+        if (Math.abs(diff) > 0.0005) {
+            currentProgress += diff * LERP_FACTOR;
+            applyPassportState(currentProgress);
+            requestAnimationFrame(animationLoop);
+        } else {
+            currentProgress = targetProgress;
+            applyPassportState(currentProgress);
+            isAnimating = false;
+        }
+    }
+
+    function updateTargetFromScroll() {
+        const rect = pinSpacer.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const totalScrollRange = rect.height - windowHeight;
+
+        if (totalScrollRange <= 0) return;
+
+        let rawProgress = -rect.top / totalScrollRange;
+        targetProgress = Math.max(0, Math.min(1, rawProgress));
+
+        if (!isAnimating) {
+            isAnimating = true;
+            requestAnimationFrame(animationLoop);
+        }
+    }
+
+    window.addEventListener('scroll', updateTargetFromScroll, { passive: true });
+    window.addEventListener('resize', updateTargetFromScroll, { passive: true });
+    // Initialize immediately with no lerp
+    updateTargetFromScroll();
+    currentProgress = targetProgress;
+    applyPassportState(currentProgress);
+})();
+
 
 
 

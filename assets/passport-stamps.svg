@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+  <defs>
+    <!-- Filter for realistic rubber stamp ink texture -->
+    <filter id="stamp-ink-filter" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.45" numOctaves="3" result="noise" />
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.85 0" in="noise" result="alphaNoise" />
+      <feComposite in="SourceGraphic" in2="alphaNoise" operator="in" />
+    </filter>
+
+    <!-- NEPAL TIA DEPARTURE STAMP -->
+    <g id="stamp-nepal-depart">
+      <rect x="0" y="0" width="160" height="90" rx="6" fill="none" stroke="#2d7a4c" stroke-width="2.5" stroke-dasharray="80 2 40 1" />
+      <rect x="5" y="5" width="150" height="80" rx="4" fill="none" stroke="#2d7a4c" stroke-width="1.2" />
+      <text x="80" y="22" font-family="'IBM Plex Sans', sans-serif" font-size="9" font-weight="700" fill="#2d7a4c" text-anchor="middle" letter-spacing="1">NEPAL IMMIGRATION</text>
+      <text x="80" y="34" font-family="'IBM Plex Sans', sans-serif" font-size="8" font-weight="600" fill="#2d7a4c" text-anchor="middle">TRIBHUVAN INT'L AIRPORT</text>
+      <line x1="15" y1="40" x2="145" y2="40" stroke="#2d7a4c" stroke-width="1" />
+      <text x="80" y="56" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#2d7a4c" text-anchor="middle" letter-spacing="1.5">DEPARTED</text>
+      <text x="80" y="72" font-family="'Space Mono', monospace" font-size="11" font-weight="700" fill="#2d7a4c" text-anchor="middle">18 OCT 2024</text>
+      <text x="80" y="81" font-family="'IBM Plex Sans', sans-serif" font-size="7" font-weight="500" fill="#2d7a4c" text-anchor="middle">KTM / SEC-04</text>
+    </g>
+
+    <!-- NEPAL TIA ARRIVAL STAMP -->
+    <g id="stamp-nepal-arrive">
+      <rect x="0" y="0" width="160" height="90" rx="6" fill="none" stroke="#b82e2e" stroke-width="2.5" />
+      <rect x="5" y="5" width="150" height="80" rx="4" fill="none" stroke="#b82e2e" stroke-width="1.2" stroke-dasharray="100 1 30 1" />
+      <text x="80" y="22" font-family="'IBM Plex Sans', sans-serif" font-size="9" font-weight="700" fill="#b82e2e" text-anchor="middle" letter-spacing="1">NEPAL IMMIGRATION</text>
+      <text x="80" y="34" font-family="'IBM Plex Sans', sans-serif" font-size="8" font-weight="600" fill="#b82e2e" text-anchor="middle">KATHMANDU (TIA)</text>
+      <line x1="15" y1="40" x2="145" y2="40" stroke="#b82e2e" stroke-width="1" />
+      <text x="80" y="56" font-family="'Space Mono', monospace" font-size="14" font-weight="700" fill="#b82e2e" text-anchor="middle" letter-spacing="1.5">ARRIVED</text>
+      <text x="80" y="72" font-family="'Space Mono', monospace" font-size="11" font-weight="700" fill="#b82e2e" text-anchor="middle">05 NOV 2024</text>
+      <text x="80" y="81" font-family="'IBM Plex Sans', sans-serif" font-size="7" font-weight="500" fill="#b82e2e" text-anchor="middle">PERMITTED TO REMAIN</text>
+    </g>
+
+    <!-- INDIA DEL ARRIVAL STAMP -->
+    <g id="stamp-india-arrive">
+      <path d="M 15 0 L 145 0 C 155 0 160 10 160 20 L 160 70 C 160 80 155 90 145 90 L 15 90 C 5 90 0 80 0 70 L 0 20 C 0 10 5 0 15 0 Z" fill="none" stroke="#1d4ed8" stroke-width="2.2" />
+      <text x="80" y="20" font-family="'IBM Plex Sans', sans-serif" font-size="8.5" font-weight="700" fill="#1d4ed8" text-anchor="middle" letter-spacing="0.8">INDIAN IMMIGRATION</text>
+      <text x="80" y="32" font-family="'IBM Plex Sans', sans-serif" font-size="7.5" font-weight="600" fill="#1d4ed8" text-anchor="middle">DELHI AIRPORT (DEL)</text>
+      <line x1="12" y1="38" x2="148" y2="38" stroke="#1d4ed8" stroke-width="1" />
+      <text x="80" y="54" font-family="'Space Mono', monospace" font-size="13" font-weight="700" fill="#1d4ed8" text-anchor="middle" letter-spacing="1">★ ARRIVED ★</text>
+      <text x="80" y="70" font-family="'Space Mono', monospace" font-size="11" font-weight="700" fill="#1d4ed8" text-anchor="middle">19 OCT 2024</text>
+      <text x="80" y="81" font-family="'IBM Plex Sans', sans-serif" font-size="6.5" fill="#1d4ed8" text-anchor="middle">IMMIGRATION OFFICER - 12</text>
+    </g>
+
+    <!-- INDIA DEL DEPARTURE STAMP -->
+    <g id="stamp-india-depart">
+      <circle cx="50" cy="50" r="45" fill="none" stroke="#9333ea" stroke-width="2" stroke-dasharray="120 2 60 1" />
+      <circle cx="50" cy="50" r="40" fill="none" stroke="#9333ea" stroke-width="1" />
+      <path id="india-arc-top" d="M 15 50 A 35 35 0 0 1 85 50" fill="none" />
+      <text font-family="'IBM Plex Sans', sans-serif" font-size="6.5" font-weight="700" fill="#9333ea" text-anchor="middle">
+        <textPath href="#india-arc-top" startOffset="50%">INDIAN IMMIGRATION</textPath>
+      </text>
+      <text x="50" y="44" font-family="'Space Mono', monospace" font-size="10" font-weight="700" fill="#9333ea" text-anchor="middle">EXIT</text>
+      <text x="50" y="56" font-family="'Space Mono', monospace" font-size="9" font-weight="700" fill="#9333ea" text-anchor="middle">24 OCT 24</text>
+      <text x="50" y="68" font-family="'IBM Plex Sans', sans-serif" font-size="6.5" font-weight="600" fill="#9333ea" text-anchor="middle">DELHI (DEL)</text>
+    </g>
+
+    <!-- SINGAPORE SIN PASS STAMP -->
+    <g id="stamp-singapore">
+      <polygon points="20,0 130,0 150,42 130,84 20,84 0,42" fill="none" stroke="#047857" stroke-width="2.2" />
+      <text x="75" y="20" font-family="'IBM Plex Sans', sans-serif" font-size="8.5" font-weight="700" fill="#047857" text-anchor="middle" letter-spacing="0.5">SINGAPORE IMMIGRATION</text>
+      <text x="75" y="32" font-family="'IBM Plex Sans', sans-serif" font-size="7.5" font-weight="600" fill="#047857" text-anchor="middle">CHANGI AIRPORT (SIN)</text>
+      <line x1="18" y1="38" x2="132" y2="38" stroke="#047857" stroke-width="1" />
+      <text x="75" y="53" font-family="'Space Mono', monospace" font-size="11" font-weight="700" fill="#047857" text-anchor="middle">PASS FOR SOCIAL VISIT</text>
+      <text x="75" y="68" font-family="'Space Mono', monospace" font-size="10.5" font-weight="700" fill="#047857" text-anchor="middle">28 OCT 2024</text>
+      <text x="75" y="78" font-family="'IBM Plex Sans', sans-serif" font-size="6.5" fill="#047857" text-anchor="middle">UNTIL 27 NOV 2024</text>
+    </g>
+
+    <!-- PHILIPPINES MNL NAIA ARRIVAL STAMP -->
+    <g id="stamp-philippines-arrive">
+      <rect x="0" y="0" width="155" height="85" rx="10" fill="none" stroke="#0284c7" stroke-width="2.2" />
+      <rect x="4" y="4" width="147" height="77" rx="7" fill="none" stroke="#0284c7" stroke-width="1" stroke-dasharray="70 2 30 1" />
+      <text x="77.5" y="20" font-family="'IBM Plex Sans', sans-serif" font-size="8" font-weight="700" fill="#0284c7" text-anchor="middle" letter-spacing="0.8">BUREAU OF IMMIGRATION</text>
+      <text x="77.5" y="31" font-family="'IBM Plex Sans', sans-serif" font-size="7.5" font-weight="600" fill="#0284c7" text-anchor="middle">PHILIPPINES • NAIA MNL</text>
+      <line x1="12" y1="37" x2="143" y2="37" stroke="#0284c7" stroke-width="1" />
+      <text x="77.5" y="53" font-family="'Space Mono', monospace" font-size="13" font-weight="700" fill="#0284c7" text-anchor="middle" letter-spacing="1">ARRIVED</text>
+      <text x="77.5" y="68" font-family="'Space Mono', monospace" font-size="10.5" font-weight="700" fill="#0284c7" text-anchor="middle">01 NOV 2024</text>
+      <text x="77.5" y="78" font-family="'IBM Plex Sans', sans-serif" font-size="6.5" fill="#0284c7" text-anchor="middle">CLASS: 9(A) • ADMITTED</text>
+    </g>
+
+    <!-- PHILIPPINES MNL NAIA DEPARTURE STAMP -->
+    <g id="stamp-philippines-depart">
+      <ellipse cx="70" cy="40" rx="65" ry="36" fill="none" stroke="#c05621" stroke-width="2" stroke-dasharray="90 2 40 1" />
+      <text x="70" y="22" font-family="'IBM Plex Sans', sans-serif" font-size="7.5" font-weight="700" fill="#c05621" text-anchor="middle">PHILIPPINES DEPARTED</text>
+      <text x="70" y="38" font-family="'Space Mono', monospace" font-size="11" font-weight="700" fill="#c05621" text-anchor="middle">04 NOV 2024</text>
+      <text x="70" y="52" font-family="'IBM Plex Sans', sans-serif" font-size="7" font-weight="600" fill="#c05621" text-anchor="middle">NAIA TERMINAL 3</text>
+      <text x="70" y="62" font-family="'IBM Plex Sans', sans-serif" font-size="6" fill="#c05621" text-anchor="middle">OFFICER ID: 884</text>
+    </g>
+  </defs>
+</svg>

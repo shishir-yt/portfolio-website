@@ -1337,17 +1337,508 @@ body.cursor-hello .cursor{opacity:0}
 
 /* ===== AVIATION PASSPORT ===== */
 .aviation{padding:var(--s12) 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2)}
-.aviation-inner{max-width:1400px;margin:0 auto}
-.aviation-blueprint{background:#000;border-color:rgba(212,181,120,0.2)}
-.av-bg-img{width: 100%; height: 100%; object-fit: contain; opacity:0.6 !important; mix-blend-mode: screen !important; filter: brightness(1.2) contrast(1.1)}
-.aviation-title{font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;font-style:italic}
-.aviation-desc{font-size:.9rem;color:var(--t2);max-width:500px;line-height:1.6}
-.aviation-grid{display:block;margin-bottom:32px}
-.av-card{position:relative;border-radius:12px;overflow:hidden;background:#050505;border:1px solid rgba(255,255,255,0.08);flex-direction:column;display:flex;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
-.av-map-area{position:relative;width:100%;background:rgba(255,255,255,0.02);overflow:hidden;aspect-ratio: 1.87 / 1;}
-.av-map-overlay{position:relative;padding:24px 32px;background:rgba(10,10,10,0.8);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--border)}
-.av-stat-row{display:flex;gap:32px;flex-wrap:wrap;justify-content:space-between;pointer-events:auto;}
-.av-stat{display:flex;flex-direction:column;gap:4px;position:relative}
+.aviation-inner{max-width:1400px;margin:0 auto;padding:0 var(--container-p)}
+/* ===== 3D NEPALI PASSPORT EXPERIENCE ===== */
+.aviation-pin-spacer {
+    position: relative;
+    height: 280vh; /* Pinned scroll range */
+    margin-bottom: 40px;
+}
+
+.passport-stage {
+    position: sticky;
+    top: calc(var(--nav-h) + 10px);
+    height: calc(100vh - var(--nav-h) - 40px);
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    perspective: 1500px;
+    perspective-origin: 50% 45%;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 40%, rgba(212, 181, 120, 0.05) 0%, transparent 70%);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+}
+
+.passport-3d {
+    position: relative;
+    width: 320px;
+    height: 460px;
+    transform-style: preserve-3d;
+    transition: transform 0.08s linear;
+    transform: rotateX(12deg) rotateY(0deg);
+}
+
+/* Passport Covers */
+.passport-cover {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    border-radius: 4px 8px 8px 4px;
+    will-change: transform;
+}
+
+.passport-cover.front {
+    z-index: 10;
+    transform: rotateY(0deg);
+}
+
+.passport-cover.front .cover-outer::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
+    border-radius: 4px 0 0 4px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.passport-cover.back {
+    z-index: 1;
+    transform: rotateY(0deg);
+}
+
+.passport-cover.back .cover-outer {
+    border-radius: 8px 4px 4px 8px;
+}
+
+/* Outer Cover — Nepali Dark Brown & Gold Foil */
+.cover-outer {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    background-color: #3A1E13;
+    background-image: url('assets/passport-cover-texture.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px 8px 8px 4px;
+    border: none;
+    box-shadow:
+        inset 3px 0 8px rgba(255, 245, 220, 0.08),
+        inset -1px 0 4px rgba(0, 0, 0, 0.4),
+        0 12px 32px rgba(0, 0, 0, 0.55),
+        0 2px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    overflow: hidden;
+}
+
+.cover-outer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.2) 100%),
+        linear-gradient(90deg, rgba(0,0,0,0.25) 0%, transparent 8%, transparent 92%, rgba(0,0,0,0.1) 100%),
+        radial-gradient(ellipse at 45% 35%, rgba(255, 245, 220, 0.06) 0%, transparent 50%);
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.cover-outer::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 60%, transparent 100%);
+    border-radius: 4px 0 0 4px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.cover-emblem-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #d4a84b;
+    text-shadow:
+        0 1px 0 rgba(180, 140, 60, 0.4),
+        0 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 2px rgba(255, 220, 150, 0.3);
+    position: relative;
+    z-index: 3;
+}
+
+.cover-text {
+    letter-spacing: 0.12em;
+    font-weight: 700;
+}
+.cover-text.devanagari {
+    font-family: var(--sans);
+    font-size: 1.25rem;
+}
+.cover-text.english {
+    font-family: var(--mono);
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+.cover-text.devanagari.sub {
+    font-size: 1.05rem;
+    margin-top: 6px;
+}
+.cover-text.english.sub {
+    font-size: 0.85rem;
+}
+
+.nepal-emblem-gold {
+    color: #d4a84b;
+    filter: drop-shadow(0 1px 0 rgba(180, 140, 60, 0.3)) drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+    margin: 8px 0;
+}
+
+.biometric-icon {
+    margin-top: 16px;
+    color: #d4a84b;
+    opacity: 0.85;
+}
+
+/* Inner Cover Endpaper */
+.cover-inner {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    background: #e6e0d4;
+    border-radius: 8px 4px 4px 8px;
+    overflow: hidden;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.15);
+}
+
+.security-guilloche {
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    background-image:
+        repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 8px, rgba(100, 80, 60, 0.15) 8.5px, transparent 9px, transparent 18px),
+        repeating-linear-gradient(0deg, transparent 0, transparent 6px, rgba(100, 80, 60, 0.08) 6.5px, transparent 7px, transparent 14px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 6px, rgba(100, 80, 60, 0.08) 6.5px, transparent 7px, transparent 14px);
+    pointer-events: none;
+}
+
+.cover-inner-text {
+    position: relative;
+    z-index: 2;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: #554e42;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.npl-seal-motif {
+    font-size: 2.2rem;
+    font-weight: 800;
+    opacity: 0.15;
+    display: block;
+    color: #3b352b;
+}
+
+/* Passport Pages & Spreads */
+.passport-pages-stack {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+}
+
+.passport-page-block {
+    position: absolute;
+    inset: 0;
+    background: #f2ece0;
+    border-radius: 4px 8px 8px 4px;
+    z-index: 0;
+    box-shadow:
+        inset 0 0 10px rgba(0,0,0,0.06),
+        2px 0 0 #e8e2d4,
+        4px 0 0 #e0dace;
+}
+
+[data-theme="light"] .passport-page-block {
+    background: #f5f1e8;
+}
+
+.passport-spread {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+    will-change: transform;
+}
+
+.passport-spread.spread-1 { z-index: 5; }
+.passport-spread.spread-2 { z-index: 4; }
+.passport-spread.spread-3 { z-index: 3; }
+
+.passport-spread::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -30px;
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,0,0,0.12) 0%, transparent 100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 10;
+    backface-visibility: hidden;
+}
+
+.passport-spread .page {
+    width: 320px;
+    height: 460px;
+    background: #f2ece0;
+    background-image:
+        radial-gradient(ellipse at 30% 20%, rgba(200, 180, 140, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 80%, rgba(180, 160, 120, 0.06) 0%, transparent 40%);
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 4px 8px 8px 4px;
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.2);
+    border: 1px solid rgba(180, 170, 150, 0.3);
+}
+
+.passport-spread .page-left {
+    transform: rotateY(180deg);
+    border-radius: 8px 4px 4px 8px;
+}
+
+.passport-header-strip {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: #6b6255;
+    border-bottom: 1px solid #d4ceb8;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    letter-spacing: 0.08em;
+}
+
+.page-content {
+    position: relative;
+    z-index: 2;
+    padding: 18px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mini Passport Identity Card */
+.id-card-mini {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid #d8d0c2;
+    border-radius: 8px;
+    padding: 10px;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: #2b251d;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.id-header {
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid #e0d8c8;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+}
+
+.id-body {
+    display: flex;
+    gap: 8px;
+}
+
+.id-photo-placeholder {
+    width: 50px;
+    height: 64px;
+    background: #e8e2d4;
+    border: 1px solid #c8c0b0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.id-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.id-field span {
+    font-size: 0.52rem;
+    color: #8c8272;
+    display: block;
+}
+
+.mrz-zone {
+    margin-top: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    background: rgba(0,0,0,0.03);
+    padding: 4px;
+    border-radius: 4px;
+    color: #1a150e;
+    line-height: 1.25;
+}
+
+/* Stamps Slot & Animation */
+.stamp-slot {
+    margin: 6px 0;
+    opacity: 0;
+    transform: scale(1.06) translateY(-4px);
+    transition: opacity 0.3s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+    will-change: transform, opacity;
+}
+
+.stamp-slot.stamped {
+    opacity: 0.88;
+    transform: scale(1) translateY(0) rotate(var(--stamp-deg, -3deg));
+}
+
+/* Passport Controls & Hints */
+.passport-control-bar {
+    position: absolute;
+    bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    z-index: 30;
+}
+
+.passport-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--t2);
+    background: rgba(10,10,10,0.75);
+    backdrop-filter: blur(8px);
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+
+.hint-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+}
+
+.passport-progress-track {
+    width: 130px;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.passport-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.1s linear;
+}
+
+.passport-stats-overlay {
+    margin-top: 32px;
+    width: 100%;
+    border-radius: 12px;
+}
+
+/* Light Theme Overrides */
+[data-theme="light"] .cover-inner { background: #efebe4; }
+[data-theme="light"] .passport-spread .page { background: #f5f1e8; }
+[data-theme="light"] .passport-page-block { background: #f5f1e8; }
+[data-theme="light"] .passport-stage { background: radial-gradient(circle at 50% 40%, rgba(180, 160, 120, 0.06) 0%, transparent 70%); }
+
+/* Responsive Scaling for Mobile */
+@media(max-width: 768px) {
+    .aviation-pin-spacer { height: 240vh; }
+    .passport-stage {
+        perspective: 1100px;
+        min-height: 420px;
+    }
+    .passport-3d, .passport-spread .page {
+        width: 260px;
+        height: 374px;
+    }
+    .passport-page-block {
+        width: 260px;
+        height: 374px;
+    }
+    .cover-outer { padding: 20px 14px; }
+    .cover-text.devanagari { font-size: 1.05rem; }
+    .cover-text.english { font-size: 0.85rem; }
+    .nepal-emblem-gold svg { width: 85px; height: 85px; }
+    .passport-spread::after { display: none; }
+}
+
+@media(max-width: 480px) {
+    .aviation-pin-spacer { height: 220vh; }
+    .passport-stage {
+        perspective: 900px;
+        min-height: 380px;
+    }
+    .passport-3d, .passport-spread .page {
+        width: 230px;
+        height: 331px;
+    }
+    .passport-page-block {
+        width: 230px;
+        height: 331px;
+    }
+    .page-content { padding: 12px; }
+    .stamp-slot svg { transform: scale(0.75); transform-origin: left top; }
+    .cover-outer { padding: 16px 12px; }
+    .nepal-emblem-gold svg { width: 70px; height: 70px; }
+    .cover-text.devanagari { font-size: 0.95rem; }
+    .cover-text.english { font-size: 0.78rem; }
+    .cover-text.devanagari.sub { font-size: 0.88rem; }
+    .cover-text.english.sub { font-size: 0.72rem; }
+}
+
+@media(max-width: 380px) {
+    .passport-3d, .passport-spread .page {
+        width: 200px;
+        height: 288px;
+    }
+    .passport-page-block {
+        width: 200px;
+        height: 288px;
+    }
+    .page-content { padding: 10px; }
+    .stamp-slot svg { transform: scale(0.65); transform-origin: left top; }
+    .id-card-mini { padding: 6px; font-size: 0.55rem; }
+    .mrz-zone { font-size: 0.42rem; }
+}
 
 /* Light theme overrides for airborne */
 [data-theme="light"] .aviation-blueprint{background:#e8e6df;border-color:rgba(0,0,0,0.1)}
@@ -1357,7 +1848,7 @@ body.cursor-hello .cursor{opacity:0}
 [data-theme="light"] .aviation-desc{color:var(--t2)}
 [data-theme="light"] .fleet-item{background:rgba(0,0,0,0.03);color:var(--t2)}
 
-.fleet-wrap{display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--border);padding-top:24px}
+.fleet-wrap{display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--border);padding-top:32px;margin-top:8px}
 .fleet-title{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:.8rem;color:var(--t2);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
 .aviation-codes{display:flex;gap:12px;flex-wrap:wrap}
 .fleet-item{font-family:var(--mono);font-size:.8rem;letter-spacing:.05em;color:var(--t3);padding:8px 20px;border:1px solid var(--border);border-radius:30px;transition:all .4s var(--ease);cursor:pointer;background:rgba(255,255,255,0.02);position:relative}
@@ -1685,6 +2176,19 @@ body.cursor-hello .cursor{opacity:0}
 @media(max-width: 380px) {
     :root { --container-p: var(--s2); }
     .hero-name { font-size: 2.8rem; }
+    
+    .passport-3d, .passport-spread .page {
+        width: 200px;
+        height: 288px;
+    }
+    .passport-page-block {
+        width: 200px;
+        height: 288px;
+    }
+    .page-content { padding: 10px; }
+    .stamp-slot svg { transform: scale(0.65); transform-origin: left top; }
+    .id-card-mini { padding: 6px; font-size: 0.55rem; }
+    .mrz-zone { font-size: 0.42rem; }
 }
 
 /* ===== SPOTIFY SECTION ===== */
